@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="rose-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff4b5c"/>
+      <stop offset="100%" stop-color="#b00020"/>
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="46" fill="#0b0b0f" stroke="url(#rose-grad)" stroke-width="5"/>
+  <path d="M38 35 L58 50 L38 65" stroke="url(#rose-grad)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="62" y="60" width="16" height="7" fill="url(#rose-grad)" rx="2"/>
+</svg>
