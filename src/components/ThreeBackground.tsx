@@ -43,7 +43,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const globeRadius = isMobile ? 16 : 20;
     const globeGeo = new THREE.SphereGeometry(globeRadius, 26, 26);
     const globeMat = new THREE.MeshBasicMaterial({
-      color: 0x9333ea, // Vibrant Purple
+      color: 0x9333ea,
       wireframe: true,
       transparent: true,
       opacity: 0.32,
@@ -54,7 +54,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     // 2. Inner Glowing Core (Deep Violet / Magenta)
     const innerCoreGeo = new THREE.IcosahedronGeometry(globeRadius * 0.7, 1);
     const innerCoreMat = new THREE.MeshBasicMaterial({
-      color: 0xc084fc, // Soft Violet
+      color: 0xc084fc,
       wireframe: true,
       transparent: true,
       opacity: 0.22,
@@ -65,7 +65,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     // 3. Orbital Equatorial Rings (Neon Red / Crimson)
     const ringGeo = new THREE.TorusGeometry(globeRadius * 1.35, 0.45, 8, 56);
     const ringMat1 = new THREE.MeshBasicMaterial({
-      color: 0xf43f5e, // Neon Red / Rose
+      color: 0xf43f5e,
       transparent: true,
       opacity: 0.5,
     });
@@ -74,7 +74,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     globeGroup.add(ringMesh1);
 
     const ringMat2 = new THREE.MeshBasicMaterial({
-      color: 0xe11d48, // Crimson Red
+      color: 0xe11d48,
       transparent: true,
       opacity: 0.4,
     });
@@ -83,7 +83,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     globeGroup.add(ringMesh2);
 
     const ringMat3 = new THREE.MeshBasicMaterial({
-      color: 0xa855f7, // Purple accent ring
+      color: 0xa855f7,
       transparent: true,
       opacity: 0.3,
     });
@@ -91,7 +91,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     ringMesh3.rotation.z = Math.PI / 4;
     globeGroup.add(ringMesh3);
 
-    // --- 4. Harmonized Subtle Particle Atmosphere ---
+    // --- 4. Ambient Particle Atmosphere ---
     const particleCount = isMobile ? 120 : 380;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
@@ -131,6 +131,71 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
+    // --- 5. Interactive Click-to-Burst Shockwave Particle System ---
+    const burstCount = 70;
+    const burstGeo = new THREE.BufferGeometry();
+    const burstPos = new Float32Array(burstCount * 3);
+    const burstVels: { x: number; y: number; z: number }[] = [];
+    const burstColors = new Float32Array(burstCount * 3);
+
+    for (let i = 0; i < burstCount; i++) {
+      const i3 = i * 3;
+      burstPos[i3] = 0;
+      burstPos[i3 + 1] = 0;
+      burstPos[i3 + 2] = 0;
+
+      const angle = Math.random() * Math.PI * 2;
+      const phi = Math.acos(Math.random() * 2 - 1);
+      const speed = 0.8 + Math.random() * 1.6;
+
+      burstVels.push({
+        x: Math.sin(phi) * Math.cos(angle) * speed,
+        y: Math.sin(phi) * Math.sin(angle) * speed,
+        z: Math.cos(phi) * speed,
+      });
+
+      const bColor = Math.random() > 0.5 ? cRed : cPurple;
+      burstColors[i3] = bColor.r;
+      burstColors[i3 + 1] = bColor.g;
+      burstColors[i3 + 2] = bColor.b;
+    }
+
+    burstGeo.setAttribute("position", new THREE.BufferAttribute(burstPos, 3));
+    burstGeo.setAttribute("color", new THREE.BufferAttribute(burstColors, 3));
+
+    const burstMat = new THREE.PointsMaterial({
+      size: 2.2,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0,
+      blending: THREE.AdditiveBlending,
+    });
+
+    const burstMesh = new THREE.Points(burstGeo, burstMat);
+    scene.add(burstMesh);
+
+    let burstLife = 0;
+    let globeScaleTarget = 1;
+    let globeScaleCurrent = 1;
+
+    // Trigger shockwave burst on click anywhere
+    const handleGlobalClick = () => {
+      burstLife = 1.0;
+      globeScaleCurrent = 1.12; // Spring pop
+
+      const posAttr = burstGeo.attributes.position as THREE.BufferAttribute;
+      const arr = posAttr.array as Float32Array;
+      for (let i = 0; i < burstCount; i++) {
+        const i3 = i * 3;
+        arr[i3] = (Math.random() - 0.5) * 4;
+        arr[i3 + 1] = (Math.random() - 0.5) * 4;
+        arr[i3 + 2] = (Math.random() - 0.5) * 4;
+      }
+      posAttr.needsUpdate = true;
+    };
+
+    window.addEventListener("click", handleGlobalClick);
+
     // --- Mouse Interactivity ---
     let mouseX = 0;
     let mouseY = 0;
@@ -162,7 +227,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
 
     window.addEventListener("resize", handleResize, { passive: true });
 
-    // --- Efficient Animation Loop ---
+    // --- Animation Loop ---
     let animationFrameId: number;
     let clock = new THREE.Clock();
 
@@ -173,6 +238,10 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       // Smooth mouse lerp
       mouseX += (targetX - mouseX) * 0.04;
       mouseY += (targetY - mouseY) * 0.04;
+
+      // Globe Scale Spring Recovery
+      globeScaleCurrent += (globeScaleTarget - globeScaleCurrent) * 0.08;
+      globeGroup.scale.set(globeScaleCurrent, globeScaleCurrent, globeScaleCurrent);
 
       // Globe & Rings Rotation
       globeGroup.rotation.y = elapsed * 0.12 + mouseX * 0.015;
@@ -188,6 +257,25 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       particles.rotation.y = elapsed * 0.03;
       particles.rotation.x = Math.sin(elapsed * 0.02) * 0.05;
 
+      // Update Particle Burst on Click
+      if (burstLife > 0.01) {
+        burstLife -= 0.02;
+        burstMat.opacity = burstLife * 0.9;
+
+        const posAttr = burstGeo.attributes.position as THREE.BufferAttribute;
+        const arr = posAttr.array as Float32Array;
+
+        for (let i = 0; i < burstCount; i++) {
+          const i3 = i * 3;
+          arr[i3] += burstVels[i].x * 1.4;
+          arr[i3 + 1] += burstVels[i].y * 1.4;
+          arr[i3 + 2] += burstVels[i].z * 1.4;
+        }
+        posAttr.needsUpdate = true;
+      } else {
+        burstMat.opacity = 0;
+      }
+
       renderer.render(scene, camera);
     };
 
@@ -195,6 +283,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("click", handleGlobalClick);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
       if (container.contains(renderer.domElement)) {
@@ -211,6 +300,8 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       ringMat3.dispose();
       particleGeo.dispose();
       particleMat.dispose();
+      burstGeo.dispose();
+      burstMat.dispose();
     };
   }, [interactive]);
 

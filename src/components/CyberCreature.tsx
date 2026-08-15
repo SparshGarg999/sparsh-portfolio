@@ -18,12 +18,12 @@ export const CyberCreature: React.FC = () => {
       const dx = e.clientX - creatureCenterX;
       const dy = e.clientY - creatureCenterY;
       const distance = Math.hypot(dx, dy);
-      const maxOffset = 5; // Max pupil travel distance in px
+      const maxOffset = 4.5;
 
       if (distance === 0) {
         setEyeOffset({ x: 0, y: 0 });
       } else {
-        const clampedDist = Math.min(distance / 50, 1) * maxOffset;
+        const clampedDist = Math.min(distance / 60, 1) * maxOffset;
         const angle = Math.atan2(dy, dx);
         setEyeOffset({
           x: Math.cos(angle) * clampedDist,
@@ -40,17 +40,17 @@ export const CyberCreature: React.FC = () => {
   useEffect(() => {
     const handleGlobalClick = () => {
       setIsBlinking(true);
-      setTimeout(() => setIsBlinking(false), 180);
+      setTimeout(() => setIsBlinking(false), 160);
     };
 
     window.addEventListener("click", handleGlobalClick);
 
     const randomBlinkInterval = setInterval(() => {
-      if (Math.random() > 0.6) {
+      if (Math.random() > 0.5) {
         setIsBlinking(true);
-        setTimeout(() => setIsBlinking(false), 180);
+        setTimeout(() => setIsBlinking(false), 160);
       }
-    }, 3500);
+    }, 3800);
 
     return () => {
       window.removeEventListener("click", handleGlobalClick);
@@ -61,69 +61,73 @@ export const CyberCreature: React.FC = () => {
   return (
     <motion.div
       ref={creatureRef}
-      initial={{ opacity: 0, scale: 0.8, y: 20 }}
-      animate={{ opacity: 1, scale: 1, y: [0, -6, 0] }}
-      transition={{
-        y: { duration: 3, repeat: Infinity, ease: "easeInOut" },
-        opacity: { duration: 0.5 },
-      }}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="fixed bottom-6 left-6 z-40 flex items-center gap-3 cursor-pointer select-none pointer-events-auto group"
-      title="Cyber Companion: Eyes follow your cursor & blinks when you click!"
+      className="fixed bottom-5 left-5 z-40 flex items-center gap-2.5 cursor-pointer select-none pointer-events-auto group"
+      title="Nova: Eyes track your cursor & blinks when you click!"
     >
       {/* Creature Avatar */}
-      <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-b from-purple-900/90 via-slate-950 to-slate-950 border border-purple-500/50 shadow-[0_0_20px_rgba(168,85,247,0.35)] backdrop-blur-md flex items-center justify-center p-2">
-        {/* Antenna / Cyber Horns */}
-        <div className="absolute -top-2 left-3 w-1.5 h-3 rounded-t-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)] animate-pulse" />
-        <div className="absolute -top-2 right-3 w-1.5 h-3 rounded-t-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)] animate-pulse" />
+      <motion.div
+        animate={{ y: [0, -4, 0] }}
+        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+        className="relative w-12 h-12 rounded-2xl bg-gradient-to-b from-purple-900/90 via-slate-950 to-slate-950 border border-purple-500/50 shadow-[0_0_20px_rgba(168,85,247,0.35)] backdrop-blur-md flex items-center justify-center p-1.5 hover:border-rose-500/70 transition-colors"
+      >
+        {/* Antennas */}
+        <div className="absolute -top-1.5 left-2.5 w-1.5 h-2.5 rounded-t-full bg-rose-500 shadow-[0_0_6px_rgba(244,63,94,0.8)] animate-pulse" />
+        <div className="absolute -top-1.5 right-2.5 w-1.5 h-2.5 rounded-t-full bg-rose-500 shadow-[0_0_6px_rgba(244,63,94,0.8)] animate-pulse" />
 
-        {/* Head Display / Face Plate */}
-        <div className="relative w-11 h-9 rounded-xl bg-slate-950 border border-purple-500/40 flex items-center justify-center gap-2 px-2 shadow-inner">
-          {/* Left Eye Socket */}
-          <div className="relative w-3.5 h-3.5 rounded-full bg-slate-900 border border-rose-500/50 flex items-center justify-center overflow-hidden">
-            {/* Pupil */}
+        {/* Head Display */}
+        <div className="relative w-9 h-8 rounded-xl bg-slate-950 border border-purple-500/40 flex items-center justify-center gap-1.5 px-1.5 shadow-inner">
+          {/* Left Eye */}
+          <div className="relative w-3 h-3 rounded-full bg-slate-900 border border-rose-500/50 flex items-center justify-center overflow-hidden">
             <motion.div
               animate={{
                 x: eyeOffset.x,
                 y: eyeOffset.y,
                 scaleY: isBlinking ? 0.05 : 1,
               }}
-              transition={{ duration: isBlinking ? 0.08 : 0.15, ease: "easeOut" }}
-              className="w-2 h-2 rounded-full bg-gradient-to-r from-rose-400 to-pink-500 shadow-[0_0_6px_rgba(244,63,94,1)]"
+              transition={{ duration: isBlinking ? 0.08 : 0.12, ease: "easeOut" }}
+              className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-rose-400 to-pink-500 shadow-[0_0_5px_rgba(244,63,94,1)]"
             />
           </div>
 
-          {/* Right Eye Socket */}
-          <div className="relative w-3.5 h-3.5 rounded-full bg-slate-900 border border-rose-500/50 flex items-center justify-center overflow-hidden">
-            {/* Pupil */}
+          {/* Right Eye */}
+          <div className="relative w-3 h-3 rounded-full bg-slate-900 border border-rose-500/50 flex items-center justify-center overflow-hidden">
             <motion.div
               animate={{
                 x: eyeOffset.x,
                 y: eyeOffset.y,
                 scaleY: isBlinking ? 0.05 : 1,
               }}
-              transition={{ duration: isBlinking ? 0.08 : 0.15, ease: "easeOut" }}
-              className="w-2 h-2 rounded-full bg-gradient-to-r from-rose-400 to-pink-500 shadow-[0_0_6px_rgba(244,63,94,1)]"
+              transition={{ duration: isBlinking ? 0.08 : 0.12, ease: "easeOut" }}
+              className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-rose-400 to-pink-500 shadow-[0_0_5px_rgba(244,63,94,1)]"
             />
           </div>
 
           {/* Cute Smile Line */}
-          <div className="absolute bottom-1 w-2.5 h-0.5 rounded-full bg-purple-400/80" />
+          <div className="absolute bottom-1 w-2 h-0.5 rounded-full bg-purple-400/80" />
         </div>
 
-        {/* Status Indicator */}
-        <span className="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+        {/* Online Status Dot */}
+        <span className="absolute -bottom-0.5 -right-0.5 flex h-2 w-2">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-rose-500" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500" />
         </span>
-      </div>
+      </motion.div>
 
-      {/* Speech Bubble on Hover or Interaction */}
-      <div className="hidden sm:flex flex-col bg-slate-900/90 border border-purple-500/30 px-3 py-1.5 rounded-xl shadow-lg backdrop-blur-md text-[11px] font-mono text-purple-200">
-        <span className="font-bold text-rose-400">Byte // Cyber Companion</span>
-        <span className="text-[10px] text-slate-400">Watching cursor · Click to blink!</span>
-      </div>
+      {/* Compact Hover Tooltip (Shown on hover only, preventing hero card overlap) */}
+      {isHovered && (
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="hidden sm:flex flex-col bg-slate-950/95 border border-purple-500/40 px-2.5 py-1.5 rounded-xl shadow-xl backdrop-blur-md text-[10px] font-mono text-purple-200"
+        >
+          <span className="font-bold text-rose-400">Nova // Mascot</span>
+          <span className="text-[9px] text-slate-400">Tracking cursor · Click anywhere to blink!</span>
+        </motion.div>
+      )}
     </motion.div>
   );
 };

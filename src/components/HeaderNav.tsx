@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Github, Linkedin, Mail, Menu, X, Sparkles, FileText } from "lucide-react";
+import { Github, Linkedin, Menu, X } from "lucide-react";
 
 export const HeaderNav: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -15,18 +15,18 @@ export const HeaderNav: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { name: "About", href: "#about", num: "01" },
-    { name: "Contributions", href: "#contributions", num: "02" },
-    { name: "Projects", href: "#work", num: "03" },
-    { name: "Skills", href: "#skills", num: "04" },
-    { name: "Contact", href: "#contact", num: "05" },
+    { name: "About", href: "#about" },
+    { name: "Contributions", href: "#contributions" },
+    { name: "Projects", href: "#work" },
+    { name: "Skills", href: "#skills" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-slate-950/85 backdrop-blur-xl border-b border-purple-500/20 py-3 shadow-lg shadow-black/40"
+          ? "bg-slate-950/90 backdrop-blur-xl border-b border-purple-500/20 py-3 shadow-lg shadow-black/40"
           : "bg-transparent py-4 sm:py-5"
       }`}
     >
@@ -47,16 +47,15 @@ export const HeaderNav: React.FC = () => {
           </div>
         </a>
 
-        {/* Desktop Nav Links */}
-        <nav className="hidden md:flex items-center gap-7 font-mono text-xs font-semibold text-slate-300">
+        {/* Desktop Nav Links (Clean, No Numbers) */}
+        <nav className="hidden md:flex items-center gap-8 font-mono text-xs font-semibold text-slate-300">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="hover:text-purple-400 transition-colors flex items-center gap-1 group"
+              className="hover:text-purple-400 transition-colors"
             >
-              <span className="text-[10px] text-purple-400/80 group-hover:text-rose-400">{link.num}.</span>
-              <span>{link.name}</span>
+              {link.name}
             </a>
           ))}
         </nav>
@@ -116,7 +115,6 @@ export const HeaderNav: React.FC = () => {
                 className="text-slate-300 hover:text-purple-400 py-1 flex items-center justify-between border-b border-slate-900"
               >
                 <span>{link.name}</span>
-                <span className="text-xs text-purple-400">{link.num}</span>
               </a>
             ))}
             <div className="flex items-center gap-3 pt-2">

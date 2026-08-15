@@ -13,18 +13,18 @@ import Contact from "./Contact";
 import Footer from "./Footer";
 
 // --- Role Rotator ---
-const RoleRotator = () => {
-  const roles = [
-    "Software Developer @ Genpact",
-    "Multi-Agent AI Architect",
-    "Merged Contributor (Google, Meta, MS)",
-    "LeetCode Knight (1900+ Rating)",
+const FocusRotator = () => {
+  const focuses = [
+    "Autonomous Multi-Agent AI Architectures",
+    "Enterprise ServiceNow & Esker Workflows",
+    "High-Performance Open-Source Runtimes",
+    "Scalable Full-Stack Engineering Systems",
   ];
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % roles.length);
+      setIndex((prev) => (prev + 1) % focuses.length);
     }, 2800);
     return () => clearInterval(interval);
   }, []);
@@ -33,14 +33,14 @@ const RoleRotator = () => {
     <span className="inline-flex items-center relative h-[1.3em] overflow-hidden align-bottom">
       <AnimatePresence mode="wait">
         <motion.span
-          key={roles[index]}
+          key={focuses[index]}
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -20, opacity: 0 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
           className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-rose-400 to-pink-400 font-extrabold"
         >
-          {roles[index]}
+          {focuses[index]}
         </motion.span>
       </AnimatePresence>
     </span>
@@ -50,10 +50,10 @@ const RoleRotator = () => {
 export const Index: React.FC = () => {
   return (
     <div className="min-h-screen relative bg-slate-950 text-white selection:bg-purple-500 selection:text-white font-sans pt-16 sm:pt-20">
-      {/* Pinned Fixed Top Navigation */}
+      {/* Pinned Fixed Top Navigation (Clean, No Numbers) */}
       <HeaderNav />
 
-      {/* Interactive Cursor-Tracking & Blinking Cyber Creature Mascot */}
+      {/* Interactive Cursor-Tracking & Blinking Cyber Mascot (Nova) */}
       <CyberCreature />
 
       {/* Single Unified AI Cyber Assistant & Terminal Hub */}
@@ -61,7 +61,7 @@ export const Index: React.FC = () => {
 
       {/* --- HERO SECTION WITH 3D PURPLE GLOBE & RED ORBITS --- */}
       <section className="relative min-h-[90vh] sm:min-h-[92vh] flex flex-col justify-between px-5 sm:px-8 md:px-14 py-16 sm:py-20 overflow-hidden bg-slate-950">
-        {/* Three.js 3D WebGL Purple Globe & Neon Red Orbits */}
+        {/* Three.js 3D WebGL Purple Globe & Neon Red Orbits with Shockwave Bursts */}
         <ThreeBackground interactive={true} />
 
         {/* Ambient Top Glow */}
@@ -79,7 +79,7 @@ export const Index: React.FC = () => {
             className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 font-mono text-[11px] sm:text-xs font-bold mb-4 sm:mb-6 backdrop-blur-md"
           >
             <Sparkles size={12} className="text-rose-400 animate-spin" />
-            <span>INTERACTIVE 3D AI ARCHITECT & DEVELOPER PORTFOLIO</span>
+            <span>SOFTWARE DEVELOPER @ GENPACT · LEETCODE KNIGHT · OPEN SOURCE</span>
           </motion.div>
 
           {/* Main Headline */}
@@ -95,14 +95,14 @@ export const Index: React.FC = () => {
             </span>
           </motion.h1>
 
-          {/* Subtitle */}
+          {/* Grammatically Crisp Subtitle */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-base sm:text-xl md:text-2xl font-semibold text-slate-300 mb-6 sm:mb-8"
           >
-            I engineer <RoleRotator />
+            Specializing in <FocusRotator />
           </motion.div>
 
           {/* Action CTAs */}
@@ -116,7 +116,7 @@ export const Index: React.FC = () => {
               href="#contributions"
               className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-rose-600 hover:from-purple-500 hover:to-rose-500 text-white font-mono font-bold text-xs tracking-wider uppercase transition-all shadow-[0_0_20px_rgba(168,85,247,0.35)] flex items-center gap-2"
             >
-              <span>Merged & Active PRs</span>
+              <span>Code Contributions</span>
               <GitMerge size={14} />
             </a>
 
@@ -132,7 +132,7 @@ export const Index: React.FC = () => {
               href="#contact"
               className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-transparent hover:bg-purple-500/10 border border-purple-500/40 text-purple-300 hover:text-white font-mono font-bold text-xs tracking-wider uppercase transition-all flex items-center gap-2"
             >
-              <span>Contact</span>
+              <span>Get In Touch</span>
               <Mail size={14} />
             </a>
           </motion.div>
@@ -183,12 +183,12 @@ export const Index: React.FC = () => {
         </motion.div>
       </section>
 
-      {/* --- 01. ABOUT & EXECUTIVE SUMMARY SECTION --- */}
+      {/* --- ABOUT & EXECUTIVE SUMMARY SECTION --- */}
       <section id="about" className="py-20 md:py-28 px-5 sm:px-8 md:px-14 bg-slate-950 border-t border-slate-900">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             <div className="lg:col-span-4">
-              <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest block mb-2">01. Background & Journey</span>
+              <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest block mb-2">Background & Journey</span>
               <h2 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
                 Architecting <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-rose-400">
@@ -221,19 +221,19 @@ export const Index: React.FC = () => {
         </div>
       </section>
 
-      {/* --- 02. CATEGORIZED OPEN-SOURCE MATRIX (MERGED & ACTIVE) --- */}
+      {/* --- OPEN-SOURCE CODE CONTRIBUTIONS (TOP 6) --- */}
       <ContributionsMatrix />
 
-      {/* --- 03. FEATURED 3D SYSTEMS & PROJECTS --- */}
+      {/* --- FEATURED 3D SYSTEMS & PROJECTS --- */}
       <div id="work">
         <SelectedWorks />
       </div>
 
-      {/* --- 04. CATEGORIZED SKILLS & ARSENAL --- */}
+      {/* --- CATEGORIZED TECH STACK --- */}
       <section id="skills" className="py-20 md:py-28 px-5 sm:px-8 md:px-14 bg-slate-950 border-t border-slate-900">
         <div className="max-w-6xl mx-auto">
           <div className="mb-12">
-            <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest block mb-2">04. Tech Stack</span>
+            <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest block mb-2">Tech Stack</span>
             <h2 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
               Categorized Engineering Arsenal
             </h2>
@@ -311,7 +311,7 @@ export const Index: React.FC = () => {
         </div>
       </section>
 
-      {/* --- 05. CONTACT SECTION --- */}
+      {/* --- CONTACT SECTION --- */}
       <div id="contact">
         <Contact />
       </div>

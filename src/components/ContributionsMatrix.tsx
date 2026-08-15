@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, GitMerge, GitPullRequest, CheckCircle2, Clock, Sparkles } from "lucide-react";
+import { ExternalLink, GitMerge, GitPullRequest, CheckCircle2, Clock, Sparkles, Github } from "lucide-react";
 
 interface Contribution {
   org: string;
@@ -29,6 +29,18 @@ const contributions: Contribution[] = [
     icon: "🧠",
   },
   {
+    org: "Facebook / Meta",
+    repo: "facebook/react",
+    prNumber: "DevTools",
+    title: "React DevTools Store Suspense Child Reorder Crash Fix",
+    impact: "Fixed a crash in DevTools Store triggered during child reordering on filtered Suspense component boundaries within renderer.js.",
+    tech: ["TypeScript", "React Internals", "DevTools"],
+    prUrl: "https://github.com/facebook/react",
+    status: "MERGED",
+    category: "merged",
+    icon: "⚛️",
+  },
+  {
     org: "Microsoft",
     repo: "microsoft/vscode",
     prNumber: "PR #324132",
@@ -39,30 +51,6 @@ const contributions: Contribution[] = [
     status: "MERGED",
     category: "merged",
     icon: "💻",
-  },
-  {
-    org: "Microsoft",
-    repo: "microsoft/winget-pkgs",
-    prNumber: "PR #403418",
-    title: "Windows Package Manager Manifest Additions & Validation",
-    impact: "Engineered validated package manifests, installer verification scripts, and automated submission workflows.",
-    tech: ["YAML", "PowerShell", "CI/CD"],
-    prUrl: "https://github.com/microsoft/winget-pkgs/pull/403418",
-    status: "MERGED",
-    category: "merged",
-    icon: "📦",
-  },
-  {
-    org: "Microsoft",
-    repo: "microsoft/winget-pkgs",
-    prNumber: "PR #400574",
-    title: "Winget Package Installer Automation Pipeline",
-    impact: "Automated installer lifecycle checks, package schema synchronization, and telemetry logging.",
-    tech: ["YAML", "PowerShell", "Package Automation"],
-    prUrl: "https://github.com/microsoft/winget-pkgs/pull/400574",
-    status: "MERGED",
-    category: "merged",
-    icon: "📦",
   },
   {
     org: "Cloud Native Computing Foundation",
@@ -77,16 +65,16 @@ const contributions: Contribution[] = [
     icon: "☸️",
   },
   {
-    org: "Facebook / Meta",
-    repo: "facebook/react",
-    prNumber: "DevTools",
-    title: "React DevTools Store Suspense Child Reorder Crash Fix",
-    impact: "Fixed a crash in DevTools Store triggered during child reordering on filtered Suspense component boundaries within renderer.js.",
-    tech: ["TypeScript", "React Internals", "DevTools"],
-    prUrl: "https://github.com/facebook/react",
+    org: "Microsoft",
+    repo: "microsoft/winget-pkgs",
+    prNumber: "PR #403418",
+    title: "Windows Package Manager Manifest Additions & Automation",
+    impact: "Engineered validated package manifests, installer verification scripts, and automated submission pipelines.",
+    tech: ["YAML", "PowerShell", "CI/CD"],
+    prUrl: "https://github.com/microsoft/winget-pkgs/pull/403418",
     status: "MERGED",
     category: "merged",
-    icon: "⚛️",
+    icon: "📦",
   },
   {
     org: "Microsoft",
@@ -100,51 +88,9 @@ const contributions: Contribution[] = [
     category: "merged",
     icon: "🔷",
   },
-  {
-    org: "Career-Ops",
-    repo: "santifer/career-ops",
-    prNumber: "PR #1864",
-    title: "Path Resolution Modules & SQLite Concurrency Guard",
-    impact: "Engineered resilient path resolution modules, SSRF security guards, and SQLite locking strategies.",
-    tech: ["JavaScript", "Go", "SQLite", "Security"],
-    prUrl: "https://github.com/santifer/career-ops/pull/1864",
-    status: "MERGED",
-    category: "merged",
-    icon: "🚀",
-  },
-  {
-    org: "Open Source AI Tooling",
-    repo: "SparshGarg999/NEXUS",
-    prNumber: "Active RFC",
-    title: "Multi-Agent Async WebSocket Telemetry Streaming Module",
-    impact: "Active architectural PR adding asynchronous token-level citation streaming and task dependency graphs for multi-agent workflows.",
-    tech: ["Python", "FastAPI", "WebSockets", "LangChain"],
-    prUrl: "https://github.com/SparshGarg999/NEXUS",
-    status: "ACTIVE / IN-REVIEW",
-    category: "active",
-    icon: "⚡",
-  },
-  {
-    org: "Career-Ops Community",
-    repo: "santifer/career-ops",
-    prNumber: "Active PR",
-    title: "Batch Candidate Profile Ingestion & Validation Pipeline",
-    impact: "Open PR implementing batch resume parser schema validation, multi-threaded regex matching, and CLI progress indicators.",
-    tech: ["TypeScript", "Node.js", "Jest"],
-    prUrl: "https://github.com/santifer/career-ops/pulls",
-    status: "ACTIVE / IN-REVIEW",
-    category: "active",
-    icon: "🔄",
-  },
 ];
 
 export const ContributionsMatrix: React.FC = () => {
-  const [filter, setFilter] = useState<"all" | "merged" | "active">("all");
-
-  const filteredItems = contributions.filter(
-    (c) => filter === "all" || c.category === filter
-  );
-
   return (
     <section id="contributions" className="relative py-20 md:py-28 px-4 sm:px-6 md:px-12 lg:px-16 bg-slate-950 text-white overflow-hidden border-t border-slate-900">
       {/* Background Glow */}
@@ -156,125 +102,98 @@ export const ContributionsMatrix: React.FC = () => {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 font-mono text-xs font-bold mb-3">
               <Sparkles size={13} />
-              OPEN-SOURCE IMPACT & VERIFIED CODE CONTRIBUTIONS
+              OPEN-SOURCE CODE CONTRIBUTIONS
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white uppercase">
-              Global Ecosystem <br className="hidden sm:block" />
+              Open Source <br className="hidden sm:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-rose-400 to-pink-400">
-                Contributions Matrix
+                Contributions
               </span>
             </h2>
           </div>
 
-          {/* Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-xl bg-slate-900 border border-slate-800 self-start md:self-auto">
-            <button
-              onClick={() => setFilter("all")}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
-                filter === "all"
-                  ? "bg-purple-600 text-white shadow-[0_0_15px_rgba(168,85,247,0.4)]"
-                  : "text-slate-400 hover:text-white"
-              }`}
-            >
-              All ({contributions.length})
-            </button>
-            <button
-              onClick={() => setFilter("merged")}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
-                filter === "merged"
-                  ? "bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.4)]"
-                  : "text-slate-400 hover:text-emerald-400"
-              }`}
-            >
-              <CheckCircle2 size={13} />
-              Merged PRs ({contributions.filter((c) => c.category === "merged").length})
-            </button>
-            <button
-              onClick={() => setFilter("active")}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
-                filter === "active"
-                  ? "bg-amber-500 text-black shadow-[0_0_15px_rgba(245,158,11,0.4)]"
-                  : "text-slate-400 hover:text-amber-400"
-              }`}
-            >
-              <Clock size={13} />
-              Active / Open ({contributions.filter((c) => c.category === "active").length})
-            </button>
-          </div>
+          <p className="max-w-md text-slate-400 text-xs sm:text-sm leading-relaxed">
+            Featured code contributions merged into the world's most critical open-source software libraries, runtimes, and developer tooling.
+          </p>
         </div>
 
-        {/* Contributions Grid */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <AnimatePresence>
-            {filteredItems.map((c) => (
-              <motion.div
-                key={c.repo + c.title}
-                layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3 }}
-                className="flex flex-col justify-between p-5 sm:p-6 rounded-2xl bg-slate-900/70 border border-slate-800/90 hover:border-purple-500/50 transition-all duration-300 backdrop-blur-md shadow-lg shadow-black/30 group"
-              >
-                <div>
-                  {/* Top Meta */}
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl">{c.icon}</span>
-                      <div>
-                        <span className="text-[11px] font-mono font-bold text-slate-400 block leading-tight">{c.org}</span>
-                        <span className="text-xs font-mono text-purple-400 font-semibold">{c.repo}</span>
-                      </div>
+        {/* 6 Top-Tier Contributions Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {contributions.map((c) => (
+            <motion.div
+              key={c.repo + c.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
+              className="flex flex-col justify-between p-5 sm:p-6 rounded-2xl bg-slate-900/70 border border-slate-800/90 hover:border-purple-500/50 transition-all duration-300 backdrop-blur-md shadow-lg shadow-black/30 group"
+            >
+              <div>
+                {/* Top Meta */}
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">{c.icon}</span>
+                    <div>
+                      <span className="text-[11px] font-mono font-bold text-slate-400 block leading-tight">{c.org}</span>
+                      <span className="text-xs font-mono text-purple-400 font-semibold">{c.repo}</span>
                     </div>
+                  </div>
 
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md font-mono text-[10px] font-bold bg-emerald-500/15 border border-emerald-500/40 text-emerald-400">
+                    <GitMerge size={11} />
+                    {c.status}
+                  </span>
+                </div>
+
+                {/* Title & Description */}
+                <h3 className="text-base font-bold text-white group-hover:text-purple-300 transition-colors mb-2 leading-snug">
+                  {c.title}
+                </h3>
+                <p className="text-xs text-slate-400 leading-relaxed mb-5">
+                  {c.impact}
+                </p>
+              </div>
+
+              {/* Tech Badges & Direct PR Link */}
+              <div>
+                <div className="flex flex-wrap gap-1 mb-4">
+                  {c.tech.map((t) => (
                     <span
-                      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md font-mono text-[10px] font-bold ${
-                        c.status === "MERGED"
-                          ? "bg-emerald-500/15 border border-emerald-500/40 text-emerald-400"
-                          : "bg-amber-500/15 border border-amber-500/40 text-amber-400"
-                      }`}
+                      key={t}
+                      className="px-2 py-0.5 rounded bg-slate-800/80 border border-slate-700/60 text-[10px] font-mono text-slate-300"
                     >
-                      {c.status === "MERGED" ? <GitMerge size={11} /> : <GitPullRequest size={11} />}
-                      {c.status}
+                      {t}
                     </span>
-                  </div>
-
-                  {/* Title & Description */}
-                  <h3 className="text-base font-bold text-white group-hover:text-purple-300 transition-colors mb-2 leading-snug">
-                    {c.title}
-                  </h3>
-                  <p className="text-xs text-slate-400 leading-relaxed mb-5">
-                    {c.impact}
-                  </p>
+                  ))}
                 </div>
 
-                {/* Tech Badges & Direct PR Link */}
-                <div>
-                  <div className="flex flex-wrap gap-1 mb-4">
-                    {c.tech.map((t) => (
-                      <span
-                        key={t}
-                        className="px-2 py-0.5 rounded bg-slate-800/80 border border-slate-700/60 text-[10px] font-mono text-slate-300"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
+                <a
+                  href={c.prUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-400 group-hover:text-rose-400 hover:underline transition-colors"
+                >
+                  <span>View Merged PR ({c.prNumber})</span>
+                  <ExternalLink size={12} />
+                </a>
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
-                  <a
-                    href={c.prUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-400 group-hover:text-rose-400 hover:underline transition-colors"
-                  >
-                    <span>View Merged PR ({c.prNumber})</span>
-                    <ExternalLink size={12} />
-                  </a>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        {/* View More on GitHub CTA */}
+        <div className="mt-10 text-center">
+          <a
+            href="https://github.com/SparshGarg999"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white font-mono text-xs font-bold transition-all shadow-md"
+          >
+            <Github size={14} />
+            <span>Explore All Repositories & PRs on GitHub</span>
+            <ExternalLink size={12} />
+          </a>
+        </div>
       </div>
     </section>
   );
