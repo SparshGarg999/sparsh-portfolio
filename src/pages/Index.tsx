@@ -15,7 +15,7 @@ import Footer from "./Footer";
 const FocusRotator = () => {
   const focuses = [
     "Autonomous Multi-Agent AI Architectures",
-    "Enterprise ServiceNow & Esker Workflows",
+    "Enterprise LLM Workflows & RAG Systems",
     "High-Performance Open-Source Runtimes",
     "Scalable Full-Stack Engineering Systems",
   ];
@@ -49,15 +49,15 @@ const FocusRotator = () => {
 export const Index: React.FC = () => {
   return (
     <div className="min-h-screen relative bg-slate-950 text-white selection:bg-purple-500 selection:text-white font-sans pt-16 sm:pt-20">
-      {/* Pinned Fixed Top Navigation with Embedded Nova Mascot */}
+      {/* Pinned Fixed Top Navigation */}
       <HeaderNav />
 
-      {/* Single Unified AI Cyber Assistant & Terminal Hub */}
+      {/* Interactive Nova AI Agent Hub (Docked in bottom-right) */}
       <UnifiedAICyberHub />
 
-      {/* --- HERO SECTION WITH 3D PURPLE & CYAN CORE GLOBE & RED ORBITS --- */}
+      {/* --- HERO SECTION WITH 3D PURPLE GLOBE & MAGENTA ENERGY CORE --- */}
       <section className="relative min-h-[90vh] sm:min-h-[92vh] flex flex-col justify-between px-5 sm:px-8 md:px-14 py-16 sm:py-20 overflow-hidden bg-slate-950">
-        {/* Three.js 3D WebGL Globe with Smooth Black Hole Singularity Attraction */}
+        {/* Three.js 3D WebGL Globe with Swirling Magenta Energy Ball Core */}
         <ThreeBackground interactive={true} />
 
         {/* Ambient Top Glow */}
@@ -75,7 +75,7 @@ export const Index: React.FC = () => {
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 font-mono text-[11px] font-bold mb-4 sm:mb-6 backdrop-blur-md"
           >
             <Sparkles size={11} className="text-rose-400" />
-            <span>SPARSH GARG · SYSTEMS & AI ARCHITECT</span>
+            <span>AI ENGINEER @ GENPACT · LEETCODE KNIGHT · OPEN SOURCE</span>
           </motion.div>
 
           {/* Main Headline */}
@@ -165,7 +165,7 @@ export const Index: React.FC = () => {
               <span>ENTERPRISE AI</span>
             </div>
             <p className="text-lg sm:text-2xl font-black text-white">Genpact</p>
-            <p className="text-[10px] font-mono text-slate-400">ServiceNow & LLM Automations</p>
+            <p className="text-[10px] font-mono text-slate-400">AI Engineer & LLM Automations</p>
           </div>
 
           <div>
@@ -195,7 +195,7 @@ export const Index: React.FC = () => {
 
             <div className="lg:col-span-8 space-y-6 text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
               <p>
-                I am a Software Developer at <strong className="text-white font-semibold">Genpact</strong>, engineering autonomous multi-agent AI systems, ServiceNow workflows, and Esker order-to-cash automations integrated with Large Language Models.
+                I am an AI Engineer at <strong className="text-white font-semibold">Genpact</strong>, architecting autonomous multi-agent AI systems, Large Language Model workflows, and advanced RAG pipelines for enterprise-scale automations.
               </p>
               <p>
                 As a core open-source contributor, I have authored merged PRs in tier-1 repositories including <strong className="text-white">Google TensorFlow</strong> (XLA constant propagation), <strong className="text-white">Facebook React</strong> (DevTools Store Suspense fix), <strong className="text-white">Microsoft VS Code</strong>, and <strong className="text-white">Kubernetes</strong>.
@@ -217,7 +217,7 @@ export const Index: React.FC = () => {
         </div>
       </section>
 
-      {/* --- OPEN-SOURCE CODE CONTRIBUTIONS (6 DIVERSE CARDS, 1 MICROSOFT) --- */}
+      {/* --- OPEN-SOURCE CODE CONTRIBUTIONS --- */}
       <ContributionsMatrix />
 
       {/* --- FEATURED 3D SYSTEMS & PROJECTS --- */}
@@ -295,7 +295,7 @@ export const Index: React.FC = () => {
                 </div>
                 <h3 className="text-sm font-mono font-bold text-white uppercase mb-3">Cloud & Enterprise</h3>
                 <div className="flex flex-wrap gap-1.5">
-                  {["Kubernetes", "Docker", "ServiceNow", "PostgreSQL", "MongoDB", "Git / GitHub"].map((s) => (
+                  {["Kubernetes", "Docker", "PostgreSQL", "MongoDB", "Redis", "Git / GitHub"].map((s) => (
                     <span key={s} className="px-2.5 py-1 rounded-md bg-slate-800/80 text-[11px] font-mono text-slate-300">
                       {s}
                     </span>

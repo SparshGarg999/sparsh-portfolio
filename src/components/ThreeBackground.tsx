@@ -51,24 +51,24 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const globeMesh = new THREE.Mesh(globeGeo, globeMat);
     globeGroup.add(globeMesh);
 
-    // --- 2. SUPER-BRIGHT FLOWING ENERGY BALL CORE ---
-    // Layer A: Outer Plasma Energy Current Lattice (Electric Cyan / Ice Blue)
+    // --- 2. SUPER-BRIGHT FLOWING MAGENTA & GOLDEN-AMBER ENERGY BALL CORE ---
+    // Layer A: Outer Plasma Energy Current Lattice (Vibrant Electric Neon Magenta)
     const plasmaRadius = globeRadius * 0.65;
     const plasmaGeo = new THREE.IcosahedronGeometry(plasmaRadius, 3);
     const plasmaPosAttr = plasmaGeo.attributes.position as THREE.BufferAttribute;
     const originalPlasmaPositions = new Float32Array(plasmaPosAttr.array);
 
     const plasmaMat = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8, // High-Luminosity Electric Cyan
+      color: 0xe879f9, // Electric Neon Magenta (Harmonized with Purple & Crimson)
       wireframe: true,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.85,
       blending: THREE.AdditiveBlending,
     });
     const plasmaMesh = new THREE.Mesh(plasmaGeo, plasmaMat);
     globeGroup.add(plasmaMesh);
 
-    // Layer B: Swirling Mid Energy Vortex (Radiant Neon Crimson / Magenta)
+    // Layer B: Swirling Mid Energy Vortex (Radiant Golden-Rose / Neon Crimson)
     const vortexRadius = globeRadius * 0.48;
     const vortexGeo = new THREE.IcosahedronGeometry(vortexRadius, 2);
     const vortexMat = new THREE.MeshBasicMaterial({
@@ -81,7 +81,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const vortexMesh = new THREE.Mesh(vortexGeo, vortexMat);
     globeGroup.add(vortexMesh);
 
-    // Layer C: Ultra-Bright White/Gold High-Energy Fusion Core
+    // Layer C: Ultra-Bright White/Gold Fusion Core
     const nucleusRadius = globeRadius * 0.32;
     const nucleusGeo = new THREE.SphereGeometry(nucleusRadius, 20, 20);
     const nucleusMat = new THREE.MeshBasicMaterial({
@@ -94,57 +94,57 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const nucleusMesh = new THREE.Mesh(nucleusGeo, nucleusMat);
     globeGroup.add(nucleusMesh);
 
-    // Layer D: Inner Solid Radiant Glow Sphere
+    // Layer D: Inner Solid Radiant Golden-Rose Glow Sphere
     const innerGlowGeo = new THREE.SphereGeometry(nucleusRadius * 0.75, 16, 16);
     const innerGlowMat = new THREE.MeshBasicMaterial({
-      color: 0xfb7185, // Vibrant Rose Glow
+      color: 0xf59e0b, // Amber Gold Core Glow
       transparent: true,
-      opacity: 0.65,
+      opacity: 0.7,
       blending: THREE.AdditiveBlending,
     });
     const innerGlowMesh = new THREE.Mesh(innerGlowGeo, innerGlowMat);
     globeGroup.add(innerGlowMesh);
 
-    // --- 3. Glowing Orbital Rings (Neon Red & Crimson) ---
+    // --- 3. Glowing Orbital Rings (Neon Red, Crimson, and Magenta) ---
     const ringGeo = new THREE.TorusGeometry(globeRadius * 1.38, 0.45, 8, 64);
     const ringMat1 = new THREE.MeshBasicMaterial({
-      color: 0xf43f5e,
+      color: 0xf43f5e, // Neon Red / Rose
       transparent: true,
-      opacity: 0.55,
+      opacity: 0.6,
     });
     const ringMesh1 = new THREE.Mesh(ringGeo, ringMat1);
     ringMesh1.rotation.x = Math.PI / 2.3;
     globeGroup.add(ringMesh1);
 
     const ringMat2 = new THREE.MeshBasicMaterial({
-      color: 0xe11d48,
+      color: 0xe11d48, // Crimson Red
       transparent: true,
-      opacity: 0.45,
+      opacity: 0.5,
     });
     const ringMesh2 = new THREE.Mesh(ringGeo, ringMat2);
     ringMesh2.rotation.y = Math.PI / 3.2;
     globeGroup.add(ringMesh2);
 
     const ringMat3 = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8,
+      color: 0xd946ef, // Electric Magenta Accent Ring
       transparent: true,
-      opacity: 0.3,
+      opacity: 0.4,
     });
     const ringMesh3 = new THREE.Mesh(ringGeo, ringMat3);
     ringMesh3.rotation.z = Math.PI / 4.2;
     globeGroup.add(ringMesh3);
 
-    // 4. Subtle Orbiting Photon Beacons
+    // 4. Orbiting Glowing Light Satellites
     const beaconCount = 3;
     const beaconMeshes: THREE.Mesh[] = [];
     const beaconGeo = new THREE.SphereGeometry(0.45, 6, 6);
-    const beaconColors = [0x38bdf8, 0xf43f5e, 0xa855f7];
+    const beaconColors = [0xe879f9, 0xf43f5e, 0xf59e0b];
 
     for (let b = 0; b < beaconCount; b++) {
       const bMat = new THREE.MeshBasicMaterial({
         color: beaconColors[b],
         transparent: true,
-        opacity: 0.85,
+        opacity: 0.9,
       });
       const bMesh = new THREE.Mesh(beaconGeo, bMat);
       globeGroup.add(bMesh);
@@ -170,8 +170,8 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
 
     const cPurple = new THREE.Color(0xa855f7);
     const cRed = new THREE.Color(0xf43f5e);
-    const cCyan = new THREE.Color(0x38bdf8);
-    const cWhite = new THREE.Color(0xffffff);
+    const cMagenta = new THREE.Color(0xe879f9);
+    const cGold = new THREE.Color(0xf59e0b);
 
     // Uniform 360-degree spherical distribution
     for (let i = 0; i < particleCount; i++) {
@@ -206,7 +206,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
 
       const colorRoll = Math.random();
       const chosenColor =
-        colorRoll > 0.65 ? cPurple : colorRoll > 0.35 ? cRed : colorRoll > 0.15 ? cCyan : cWhite;
+        colorRoll > 0.65 ? cPurple : colorRoll > 0.35 ? cRed : colorRoll > 0.15 ? cMagenta : cGold;
 
       colors[i3] = chosenColor.r;
       colors[i3 + 1] = chosenColor.g;
@@ -241,7 +241,6 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       const mouseNdcX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       const mouseNdcY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
 
-      // Unproject 2D click into 3D world space at globe depth
       const vector = new THREE.Vector3(mouseNdcX, mouseNdcY, 0.5);
       vector.unproject(camera);
       const dir = vector.sub(camera.position).normalize();
@@ -309,8 +308,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       globeGroup.rotation.y = elapsed * 0.1 + mouseX * 0.015;
       globeGroup.rotation.x = Math.sin(elapsed * 0.06) * 0.08 - mouseY * 0.015;
 
-      // 🌀 FLOWING ENERGY BALL ANIMATION:
-      // A. Surface Current Waves on Cyan Plasma Lattice
+      // 🌀 FLOWING MAGENTA ENERGY BALL ANIMATION:
       const currentPos = plasmaPosAttr.array as Float32Array;
       const vCount = currentPos.length / 3;
 
@@ -332,7 +330,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       }
       plasmaPosAttr.needsUpdate = true;
 
-      // B. Counter-Rotating Energy Vortex
+      // Counter-Rotating Energy Layers
       plasmaMesh.rotation.y = -elapsed * 0.28;
       plasmaMesh.rotation.z = elapsed * 0.18;
 
@@ -341,7 +339,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       const vortexPulse = 1 + Math.sin(elapsed * 4.0) * 0.06;
       vortexMesh.scale.set(vortexPulse, vortexPulse, vortexPulse);
 
-      // C. High-Energy White Fusion Nucleus Rapid Core Shimmer
+      // High-Energy Fusion Nucleus Shimmer
       nucleusMesh.rotation.x = elapsed * 0.5;
       nucleusMesh.rotation.z = -elapsed * 0.45;
       const corePulse = 1 + Math.sin(elapsed * 5.0) * 0.04;
@@ -381,7 +379,6 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
         const i3 = i * 3;
         const p = particleData[i];
 
-        // Gentle ambient breathing
         const ambientDrift = Math.sin(elapsed * 0.6 * p.driftSpeed + p.theta * 2 + p.phi) * 0.8;
 
         let totalDisplacementX = 0;
