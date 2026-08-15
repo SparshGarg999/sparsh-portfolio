@@ -39,7 +39,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const globeGroup = new THREE.Group();
     scene.add(globeGroup);
 
-    // 1. Central Wireframe Cyber Sphere (Vibrant Purple / Violet - HERO FOCUS)
+    // 1. Central Wireframe Cyber Sphere (Vibrant Purple / Violet - Hero Outer Lattice)
     const globeRadius = isMobile ? 16 : 20;
     const globeGeo = new THREE.SphereGeometry(globeRadius, 26, 26);
     const globeMat = new THREE.MeshBasicMaterial({
@@ -51,67 +51,61 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const globeMesh = new THREE.Mesh(globeGeo, globeMat);
     globeGroup.add(globeMesh);
 
-    // 2. Inner Glowing Core (Electric Cyan Ice Blue)
-    const innerCoreGeo = new THREE.IcosahedronGeometry(globeRadius * 0.65, 2);
-    const innerCoreMat = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8, // Electric Cyan Ice Blue
-      wireframe: true,
-      transparent: true,
-      opacity: 0.35,
-    });
-    const innerCoreMesh = new THREE.Mesh(innerCoreGeo, innerCoreMat);
-    globeGroup.add(innerCoreMesh);
+    // --- 2. SUPER-BRIGHT FLOWING ENERGY BALL CORE ---
+    // Layer A: Outer Plasma Energy Current Lattice (Electric Cyan / Ice Blue)
+    const plasmaRadius = globeRadius * 0.65;
+    const plasmaGeo = new THREE.IcosahedronGeometry(plasmaRadius, 3);
+    const plasmaPosAttr = plasmaGeo.attributes.position as THREE.BufferAttribute;
+    const originalPlasmaPositions = new Float32Array(plasmaPosAttr.array);
 
-    // 3. Innermost Radiant Red Nucleus / Solar Reactor Ball
-    const nucleusRadius = globeRadius * 0.28;
-    const nucleusGeo = new THREE.SphereGeometry(nucleusRadius, 16, 16);
-    const nucleusMat = new THREE.MeshBasicMaterial({
-      color: 0xf43f5e, // Radiant Rose/Red Core
+    const plasmaMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8, // High-Luminosity Electric Cyan
       wireframe: true,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.8,
+      blending: THREE.AdditiveBlending,
+    });
+    const plasmaMesh = new THREE.Mesh(plasmaGeo, plasmaMat);
+    globeGroup.add(plasmaMesh);
+
+    // Layer B: Swirling Mid Energy Vortex (Radiant Neon Crimson / Magenta)
+    const vortexRadius = globeRadius * 0.48;
+    const vortexGeo = new THREE.IcosahedronGeometry(vortexRadius, 2);
+    const vortexMat = new THREE.MeshBasicMaterial({
+      color: 0xf43f5e, // Radiant Neon Crimson
+      wireframe: true,
+      transparent: true,
+      opacity: 0.85,
+      blending: THREE.AdditiveBlending,
+    });
+    const vortexMesh = new THREE.Mesh(vortexGeo, vortexMat);
+    globeGroup.add(vortexMesh);
+
+    // Layer C: Ultra-Bright White/Gold High-Energy Fusion Core
+    const nucleusRadius = globeRadius * 0.32;
+    const nucleusGeo = new THREE.SphereGeometry(nucleusRadius, 20, 20);
+    const nucleusMat = new THREE.MeshBasicMaterial({
+      color: 0xffffff, // Blinding White-Hot Fusion Heart
+      wireframe: true,
+      transparent: true,
+      opacity: 0.95,
+      blending: THREE.AdditiveBlending,
     });
     const nucleusMesh = new THREE.Mesh(nucleusGeo, nucleusMat);
     globeGroup.add(nucleusMesh);
 
-    // 4. Heat Energy Solar Rays / Corona Filaments radiating from Red Nucleus
-    const rayCount = 18;
-    const rayGroup = new THREE.Group();
-    const rayLines: THREE.Line[] = [];
+    // Layer D: Inner Solid Radiant Glow Sphere
+    const innerGlowGeo = new THREE.SphereGeometry(nucleusRadius * 0.75, 16, 16);
+    const innerGlowMat = new THREE.MeshBasicMaterial({
+      color: 0xfb7185, // Vibrant Rose Glow
+      transparent: true,
+      opacity: 0.65,
+      blending: THREE.AdditiveBlending,
+    });
+    const innerGlowMesh = new THREE.Mesh(innerGlowGeo, innerGlowMat);
+    globeGroup.add(innerGlowMesh);
 
-    for (let r = 0; r < rayCount; r++) {
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(Math.random() * 2 - 1);
-      const innerR = nucleusRadius * 0.9;
-      const outerR = nucleusRadius * (1.8 + Math.random() * 1.4);
-
-      const p1 = new THREE.Vector3(
-        innerR * Math.sin(phi) * Math.cos(theta),
-        innerR * Math.sin(phi) * Math.sin(theta),
-        innerR * Math.cos(phi)
-      );
-
-      const p2 = new THREE.Vector3(
-        outerR * Math.sin(phi) * Math.cos(theta),
-        outerR * Math.sin(phi) * Math.sin(theta),
-        outerR * Math.cos(phi)
-      );
-
-      const rayGeo = new THREE.BufferGeometry().setFromPoints([p1, p2]);
-      const rayMat = new THREE.LineBasicMaterial({
-        color: Math.random() > 0.4 ? 0xf43f5e : 0xfb7185,
-        transparent: true,
-        opacity: 0.4 + Math.random() * 0.35,
-        blending: THREE.AdditiveBlending,
-      });
-
-      const line = new THREE.Line(rayGeo, rayMat);
-      rayGroup.add(line);
-      rayLines.push(line);
-    }
-    globeGroup.add(rayGroup);
-
-    // 5. Glowing Orbital Rings (Neon Red & Crimson)
+    // --- 3. Glowing Orbital Rings (Neon Red & Crimson) ---
     const ringGeo = new THREE.TorusGeometry(globeRadius * 1.38, 0.45, 8, 64);
     const ringMat1 = new THREE.MeshBasicMaterial({
       color: 0xf43f5e,
@@ -140,7 +134,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     ringMesh3.rotation.z = Math.PI / 4.2;
     globeGroup.add(ringMesh3);
 
-    // 6. Delicate Orbiting Beacons (Reduced Size for sleek hero focus)
+    // 4. Subtle Orbiting Photon Beacons
     const beaconCount = 3;
     const beaconMeshes: THREE.Mesh[] = [];
     const beaconGeo = new THREE.SphereGeometry(0.45, 6, 6);
@@ -157,7 +151,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       beaconMeshes.push(bMesh);
     }
 
-    // --- 7. Delicate Fine Particle Field (Smaller size so Globe is the Hero) ---
+    // --- 5. Delicate Fine Particle Field (Globe is Hero) ---
     const particleCount = isMobile ? 160 : 360;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
@@ -222,7 +216,6 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     particleGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     particleGeo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
-    // Delicate stardust size so the 3D globe is the undisputed hero
     const particleMat = new THREE.PointsMaterial({
       size: isMobile ? 0.75 : 0.95,
       vertexColors: true,
@@ -234,12 +227,12 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
-    // --- 8. Localized Click Ripple Wave State (Only affects clicked location) ---
+    // --- 6. Localized Click Ripple Wave State ---
     interface LocalRipple {
       originX: number;
       originY: number;
       originZ: number;
-      progress: number; // 0 to 3.5
+      progress: number;
     }
     const activeRipples: LocalRipple[] = [];
 
@@ -248,7 +241,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       const mouseNdcX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       const mouseNdcY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
 
-      // Unproject 2D click point into 3D world space at globe depth (z ~ 0)
+      // Unproject 2D click into 3D world space at globe depth
       const vector = new THREE.Vector3(mouseNdcX, mouseNdcY, 0.5);
       vector.unproject(camera);
       const dir = vector.sub(camera.position).normalize();
@@ -262,7 +255,6 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
         progress: 0,
       });
 
-      // Keep maximum 3 concurrent localized ripples
       if (activeRipples.length > 3) {
         activeRipples.shift();
       }
@@ -301,7 +293,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
 
     window.addEventListener("resize", handleResize, { passive: true });
 
-    // --- Silky 60 FPS Fluid Animation Loop ---
+    // --- Silky 60 FPS Fluid Energy Animation Loop ---
     let animationFrameId: number;
     let clock = new THREE.Clock();
 
@@ -313,28 +305,56 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       mouseX += (targetX - mouseX) * 0.04;
       mouseY += (targetY - mouseY) * 0.04;
 
-      // Globe & Rings Rotation
+      // Outer Globe Rotation
       globeGroup.rotation.y = elapsed * 0.1 + mouseX * 0.015;
       globeGroup.rotation.x = Math.sin(elapsed * 0.06) * 0.08 - mouseY * 0.015;
 
-      // Pulse Cyan Inner Core
-      innerCoreMesh.rotation.y = -elapsed * 0.16;
-      innerCoreMesh.rotation.z = elapsed * 0.1;
-      const coreScale = 1 + Math.sin(elapsed * 1.5) * 0.03;
-      innerCoreMesh.scale.set(coreScale, coreScale, coreScale);
+      // 🌀 FLOWING ENERGY BALL ANIMATION:
+      // A. Surface Current Waves on Cyan Plasma Lattice
+      const currentPos = plasmaPosAttr.array as Float32Array;
+      const vCount = currentPos.length / 3;
 
-      // Animate Solar Heat Energy Rays / Corona from Red Nucleus
-      rayGroup.rotation.y = elapsed * 0.18;
-      rayGroup.rotation.z = -elapsed * 0.12;
-      const solarPulse = 1 + Math.sin(elapsed * 3.5) * 0.08;
-      rayGroup.scale.set(solarPulse, solarPulse, solarPulse);
+      for (let v = 0; v < vCount; v++) {
+        const v3 = v * 3;
+        const ox = originalPlasmaPositions[v3];
+        const oy = originalPlasmaPositions[v3 + 1];
+        const oz = originalPlasmaPositions[v3 + 2];
 
-      // Ring Rotations
+        // Fluid flowing energy displacement wave function
+        const wave =
+          Math.sin(elapsed * 3.2 + ox * 0.35 + oy * 0.4) * 0.08 +
+          Math.cos(elapsed * 2.4 + oz * 0.4) * 0.06;
+        const scale = 1 + wave;
+
+        currentPos[v3] = ox * scale;
+        currentPos[v3 + 1] = oy * scale;
+        currentPos[v3 + 2] = oz * scale;
+      }
+      plasmaPosAttr.needsUpdate = true;
+
+      // B. Counter-Rotating Energy Vortex
+      plasmaMesh.rotation.y = -elapsed * 0.28;
+      plasmaMesh.rotation.z = elapsed * 0.18;
+
+      vortexMesh.rotation.y = elapsed * 0.42;
+      vortexMesh.rotation.x = -elapsed * 0.32;
+      const vortexPulse = 1 + Math.sin(elapsed * 4.0) * 0.06;
+      vortexMesh.scale.set(vortexPulse, vortexPulse, vortexPulse);
+
+      // C. High-Energy White Fusion Nucleus Rapid Core Shimmer
+      nucleusMesh.rotation.x = elapsed * 0.5;
+      nucleusMesh.rotation.z = -elapsed * 0.45;
+      const corePulse = 1 + Math.sin(elapsed * 5.0) * 0.04;
+      nucleusMesh.scale.set(corePulse, corePulse, corePulse);
+
+      innerGlowMesh.scale.set(corePulse * 1.1, corePulse * 1.1, corePulse * 1.1);
+
+      // Rings Rotation
       ringMesh1.rotation.z = elapsed * 0.12;
       ringMesh2.rotation.x = elapsed * 0.1;
       ringMesh3.rotation.y = elapsed * 0.11;
 
-      // Animate Orbiting Beacons along rings
+      // Animate Orbiting Beacons
       const orbitR = globeRadius * 1.38;
       for (let b = 0; b < beaconCount; b++) {
         const bSpeed = elapsed * (0.6 + b * 0.2);
@@ -347,7 +367,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
 
       // Progress Localized Ripples
       for (let r = activeRipples.length - 1; r >= 0; r--) {
-        activeRipples[r].progress += 0.015; // Slow, fluid localized wave
+        activeRipples[r].progress += 0.015;
         if (activeRipples[r].progress > 3.2) {
           activeRipples.splice(r, 1);
         }
@@ -368,23 +388,21 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
         let totalDisplacementY = 0;
         let totalDisplacementZ = 0;
 
-        // Apply wave only if near a localized click point
         for (const rip of activeRipples) {
           const dx = p.baseX - rip.originX;
           const dy = p.baseY - rip.originY;
           const dz = p.baseZ - rip.originZ;
           const distFromClick = Math.hypot(dx, dy, dz);
 
-          const waveRadius = rip.progress * 24; // Expanding localized wavefront
-          const waveThickness = 18; // Width of the local ripple crest
+          const waveRadius = rip.progress * 24;
+          const waveThickness = 18;
           const distDiff = distFromClick - waveRadius;
 
           if (Math.abs(distDiff) < waveThickness && distFromClick > 0.1) {
             const envelope = Math.cos((distDiff / waveThickness) * (Math.PI / 2));
             const fade = Math.max(0, 1 - rip.progress / 3.2);
-            const intensity = envelope * fade * 4.5; // Subtle localized pulse
+            const intensity = envelope * fade * 4.5;
 
-            // Displace radially outward from click origin
             totalDisplacementX += (dx / distFromClick) * intensity;
             totalDisplacementY += (dy / distFromClick) * intensity;
             totalDisplacementZ += (dz / distFromClick) * intensity;
@@ -416,10 +434,14 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       renderer.dispose();
       globeGeo.dispose();
       globeMat.dispose();
-      innerCoreGeo.dispose();
-      innerCoreMat.dispose();
+      plasmaGeo.dispose();
+      plasmaMat.dispose();
+      vortexGeo.dispose();
+      vortexMat.dispose();
       nucleusGeo.dispose();
       nucleusMat.dispose();
+      innerGlowGeo.dispose();
+      innerGlowMat.dispose();
       ringGeo.dispose();
       ringMat1.dispose();
       ringMat2.dispose();
