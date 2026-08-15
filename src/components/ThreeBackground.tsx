@@ -39,19 +39,19 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const globeGroup = new THREE.Group();
     scene.add(globeGroup);
 
-    // 1. Central Wireframe Cyber Sphere (Vibrant Purple / Violet)
+    // 1. Central Wireframe Cyber Sphere (Vibrant Purple / Violet - HERO FOCUS)
     const globeRadius = isMobile ? 16 : 20;
     const globeGeo = new THREE.SphereGeometry(globeRadius, 26, 26);
     const globeMat = new THREE.MeshBasicMaterial({
       color: 0x9333ea, // Vibrant Purple
       wireframe: true,
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.38,
     });
     const globeMesh = new THREE.Mesh(globeGeo, globeMat);
     globeGroup.add(globeMesh);
 
-    // 2. Inner Glowing Core (Electric Cyan Ice Blue plasma core)
+    // 2. Inner Glowing Core (Electric Cyan Ice Blue)
     const innerCoreGeo = new THREE.IcosahedronGeometry(globeRadius * 0.65, 2);
     const innerCoreMat = new THREE.MeshBasicMaterial({
       color: 0x38bdf8, // Electric Cyan Ice Blue
@@ -62,73 +62,111 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const innerCoreMesh = new THREE.Mesh(innerCoreGeo, innerCoreMat);
     globeGroup.add(innerCoreMesh);
 
-    // 3. Center Energy Nucleus (Radiant Crimson Heart)
-    const nucleusGeo = new THREE.SphereGeometry(globeRadius * 0.28, 16, 16);
+    // 3. Innermost Radiant Red Nucleus / Solar Reactor Ball
+    const nucleusRadius = globeRadius * 0.28;
+    const nucleusGeo = new THREE.SphereGeometry(nucleusRadius, 16, 16);
     const nucleusMat = new THREE.MeshBasicMaterial({
-      color: 0xf43f5e, // Radiant Rose/Red Heart
+      color: 0xf43f5e, // Radiant Rose/Red Core
       wireframe: true,
       transparent: true,
-      opacity: 0.5,
+      opacity: 0.6,
     });
     const nucleusMesh = new THREE.Mesh(nucleusGeo, nucleusMat);
     globeGroup.add(nucleusMesh);
 
-    // 4. Glowing Orbital Rings (Neon Red & Crimson)
-    const ringGeo = new THREE.TorusGeometry(globeRadius * 1.38, 0.5, 8, 64);
+    // 4. Heat Energy Solar Rays / Corona Filaments radiating from Red Nucleus
+    const rayCount = 18;
+    const rayGroup = new THREE.Group();
+    const rayLines: THREE.Line[] = [];
+
+    for (let r = 0; r < rayCount; r++) {
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(Math.random() * 2 - 1);
+      const innerR = nucleusRadius * 0.9;
+      const outerR = nucleusRadius * (1.8 + Math.random() * 1.4);
+
+      const p1 = new THREE.Vector3(
+        innerR * Math.sin(phi) * Math.cos(theta),
+        innerR * Math.sin(phi) * Math.sin(theta),
+        innerR * Math.cos(phi)
+      );
+
+      const p2 = new THREE.Vector3(
+        outerR * Math.sin(phi) * Math.cos(theta),
+        outerR * Math.sin(phi) * Math.sin(theta),
+        outerR * Math.cos(phi)
+      );
+
+      const rayGeo = new THREE.BufferGeometry().setFromPoints([p1, p2]);
+      const rayMat = new THREE.LineBasicMaterial({
+        color: Math.random() > 0.4 ? 0xf43f5e : 0xfb7185,
+        transparent: true,
+        opacity: 0.4 + Math.random() * 0.35,
+        blending: THREE.AdditiveBlending,
+      });
+
+      const line = new THREE.Line(rayGeo, rayMat);
+      rayGroup.add(line);
+      rayLines.push(line);
+    }
+    globeGroup.add(rayGroup);
+
+    // 5. Glowing Orbital Rings (Neon Red & Crimson)
+    const ringGeo = new THREE.TorusGeometry(globeRadius * 1.38, 0.45, 8, 64);
     const ringMat1 = new THREE.MeshBasicMaterial({
-      color: 0xf43f5e, // Neon Red / Rose
+      color: 0xf43f5e,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.55,
     });
     const ringMesh1 = new THREE.Mesh(ringGeo, ringMat1);
     ringMesh1.rotation.x = Math.PI / 2.3;
     globeGroup.add(ringMesh1);
 
     const ringMat2 = new THREE.MeshBasicMaterial({
-      color: 0xe11d48, // Crimson Red
+      color: 0xe11d48,
       transparent: true,
-      opacity: 0.5,
+      opacity: 0.45,
     });
     const ringMesh2 = new THREE.Mesh(ringGeo, ringMat2);
     ringMesh2.rotation.y = Math.PI / 3.2;
     globeGroup.add(ringMesh2);
 
     const ringMat3 = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8, // Glowing Cyan Accent Ring
+      color: 0x38bdf8,
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.3,
     });
     const ringMesh3 = new THREE.Mesh(ringGeo, ringMat3);
     ringMesh3.rotation.z = Math.PI / 4.2;
     globeGroup.add(ringMesh3);
 
-    // 5. Orbiting Glowing Light Satellites
-    const beaconCount = 4;
+    // 6. Delicate Orbiting Beacons (Reduced Size for sleek hero focus)
+    const beaconCount = 3;
     const beaconMeshes: THREE.Mesh[] = [];
-    const beaconGeo = new THREE.SphereGeometry(0.8, 8, 8);
-    const beaconColors = [0x38bdf8, 0xf43f5e, 0xa855f7, 0xf43f5e];
+    const beaconGeo = new THREE.SphereGeometry(0.45, 6, 6);
+    const beaconColors = [0x38bdf8, 0xf43f5e, 0xa855f7];
 
     for (let b = 0; b < beaconCount; b++) {
       const bMat = new THREE.MeshBasicMaterial({
         color: beaconColors[b],
         transparent: true,
-        opacity: 0.9,
+        opacity: 0.85,
       });
       const bMesh = new THREE.Mesh(beaconGeo, bMat);
       globeGroup.add(bMesh);
       beaconMeshes.push(bMesh);
     }
 
-    // --- 6. Uniform Spherical Particle Field with Slow-Motion Fluid Organic Ripple ---
-    const particleCount = isMobile ? 180 : 420;
+    // --- 7. Delicate Fine Particle Field (Smaller size so Globe is the Hero) ---
+    const particleCount = isMobile ? 160 : 360;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
 
     interface ParticleData {
-      nx: number;
-      ny: number;
-      nz: number;
+      baseX: number;
+      baseY: number;
+      baseZ: number;
       r: number;
       theta: number;
       phi: number;
@@ -148,24 +186,28 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       const v = Math.random();
       const theta = u * 2.0 * Math.PI;
       const phi = Math.acos(2.0 * v - 1.0);
-      const r = globeRadius * 1.45 + Math.random() * (isMobile ? 35 : 55);
+      const r = globeRadius * 1.45 + Math.random() * (isMobile ? 32 : 50);
 
       const nx = Math.sin(phi) * Math.cos(theta);
       const ny = Math.sin(phi) * Math.sin(theta);
       const nz = Math.cos(phi);
 
-      positions[i3] = nx * r;
-      positions[i3 + 1] = ny * r;
-      positions[i3 + 2] = nz * r;
+      const px = nx * r;
+      const py = ny * r;
+      const pz = nz * r;
+
+      positions[i3] = px;
+      positions[i3 + 1] = py;
+      positions[i3 + 2] = pz;
 
       particleData.push({
-        nx,
-        ny,
-        nz,
+        baseX: px,
+        baseY: py,
+        baseZ: pz,
         r,
         theta,
         phi,
-        driftSpeed: 0.3 + Math.random() * 0.4,
+        driftSpeed: 0.2 + Math.random() * 0.4,
       });
 
       const colorRoll = Math.random();
@@ -180,28 +222,53 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     particleGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     particleGeo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
+    // Delicate stardust size so the 3D globe is the undisputed hero
     const particleMat = new THREE.PointsMaterial({
-      size: isMobile ? 1.4 : 1.7,
+      size: isMobile ? 0.75 : 0.95,
       vertexColors: true,
       transparent: true,
-      opacity: 0.65,
+      opacity: 0.55,
       blending: THREE.AdditiveBlending,
     });
 
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
-    // --- Slow-Motion Organic Fluid Ripple State ---
-    let rippleProgress = 999; // 999 = idle, 0 to 4.0 = active slow graceful ripple
-    let globeImpulse = 0;
+    // --- 8. Localized Click Ripple Wave State (Only affects clicked location) ---
+    interface LocalRipple {
+      originX: number;
+      originY: number;
+      originZ: number;
+      progress: number; // 0 to 3.5
+    }
+    const activeRipples: LocalRipple[] = [];
 
-    const handleGlobalClick = () => {
-      // Trigger slow graceful fluid wave (over ~3.5s)
-      rippleProgress = 0;
-      globeImpulse = 1.0;
+    const handleContainerClick = (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect();
+      const mouseNdcX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const mouseNdcY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+
+      // Unproject 2D click point into 3D world space at globe depth (z ~ 0)
+      const vector = new THREE.Vector3(mouseNdcX, mouseNdcY, 0.5);
+      vector.unproject(camera);
+      const dir = vector.sub(camera.position).normalize();
+      const distanceToZ0 = -camera.position.z / dir.z;
+      const clickWorld = camera.position.clone().add(dir.multiplyScalar(distanceToZ0));
+
+      activeRipples.push({
+        originX: clickWorld.x,
+        originY: clickWorld.y,
+        originZ: clickWorld.z,
+        progress: 0,
+      });
+
+      // Keep maximum 3 concurrent localized ripples
+      if (activeRipples.length > 3) {
+        activeRipples.shift();
+      }
     };
 
-    window.addEventListener("click", handleGlobalClick);
+    window.addEventListener("click", handleContainerClick);
 
     // --- Mouse Interactivity ---
     let mouseX = 0;
@@ -250,23 +317,24 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       globeGroup.rotation.y = elapsed * 0.1 + mouseX * 0.015;
       globeGroup.rotation.x = Math.sin(elapsed * 0.06) * 0.08 - mouseY * 0.015;
 
-      // Gentle Pulse Cyan Inner Core
+      // Pulse Cyan Inner Core
       innerCoreMesh.rotation.y = -elapsed * 0.16;
       innerCoreMesh.rotation.z = elapsed * 0.1;
-      globeImpulse *= 0.96; // Smooth, slow decay
-      const coreScale = 1 + Math.sin(elapsed * 1.5) * 0.03 + globeImpulse * 0.08;
+      const coreScale = 1 + Math.sin(elapsed * 1.5) * 0.03;
       innerCoreMesh.scale.set(coreScale, coreScale, coreScale);
 
-      // Nucleus Spin
-      nucleusMesh.rotation.x = elapsed * 0.2;
-      nucleusMesh.rotation.y = -elapsed * 0.18;
+      // Animate Solar Heat Energy Rays / Corona from Red Nucleus
+      rayGroup.rotation.y = elapsed * 0.18;
+      rayGroup.rotation.z = -elapsed * 0.12;
+      const solarPulse = 1 + Math.sin(elapsed * 3.5) * 0.08;
+      rayGroup.scale.set(solarPulse, solarPulse, solarPulse);
 
       // Ring Rotations
       ringMesh1.rotation.z = elapsed * 0.12;
       ringMesh2.rotation.x = elapsed * 0.1;
       ringMesh3.rotation.y = elapsed * 0.11;
 
-      // Animate Orbiting Beacons smoothly along rings
+      // Animate Orbiting Beacons along rings
       const orbitR = globeRadius * 1.38;
       for (let b = 0; b < beaconCount; b++) {
         const bSpeed = elapsed * (0.6 + b * 0.2);
@@ -277,44 +345,60 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
         );
       }
 
-      // Slow-Motion Organic Fluid Wave across particles
-      const posAttr = particleGeo.attributes.position as THREE.BufferAttribute;
-      const posArr = posAttr.array as Float32Array;
-
-      // Advance slow graceful wave progress
-      if (rippleProgress < 4.0) {
-        rippleProgress += 0.012; // Slow, fluid propagation (takes ~3.5 seconds)
+      // Progress Localized Ripples
+      for (let r = activeRipples.length - 1; r >= 0; r--) {
+        activeRipples[r].progress += 0.015; // Slow, fluid localized wave
+        if (activeRipples[r].progress > 3.2) {
+          activeRipples.splice(r, 1);
+        }
       }
 
-      const waveRadius = globeRadius + rippleProgress * 22; // Gentle outward wavefront speed
-      const waveThickness = 28; // Wide, soft, silky wave crest
+      // Update Particle Positions (Localized ripple strictly around clicked point)
+      const posAttr = particleGeo.attributes.position as THREE.BufferAttribute;
+      const posArr = posAttr.array as Float32Array;
 
       for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
         const p = particleData[i];
 
-        // Continuous gentle floating organic breathing
-        const organicDrift = Math.sin(elapsed * 0.7 * p.driftSpeed + p.theta * 2 + p.phi) * 1.8;
+        // Gentle ambient breathing
+        const ambientDrift = Math.sin(elapsed * 0.6 * p.driftSpeed + p.theta * 2 + p.phi) * 0.8;
 
-        // Slow graceful ripple wave calculation
-        let rippleDisplacement = 0;
-        if (rippleProgress < 4.0) {
-          const distDiff = p.r - waveRadius;
-          if (Math.abs(distDiff) < waveThickness) {
+        let totalDisplacementX = 0;
+        let totalDisplacementY = 0;
+        let totalDisplacementZ = 0;
+
+        // Apply wave only if near a localized click point
+        for (const rip of activeRipples) {
+          const dx = p.baseX - rip.originX;
+          const dy = p.baseY - rip.originY;
+          const dz = p.baseZ - rip.originZ;
+          const distFromClick = Math.hypot(dx, dy, dz);
+
+          const waveRadius = rip.progress * 24; // Expanding localized wavefront
+          const waveThickness = 18; // Width of the local ripple crest
+          const distDiff = distFromClick - waveRadius;
+
+          if (Math.abs(distDiff) < waveThickness && distFromClick > 0.1) {
             const envelope = Math.cos((distDiff / waveThickness) * (Math.PI / 2));
-            const fade = Math.max(0, 1 - rippleProgress / 4.0);
-            rippleDisplacement = envelope * fade * 8.5; // Soft, undulating silky rise
+            const fade = Math.max(0, 1 - rip.progress / 3.2);
+            const intensity = envelope * fade * 4.5; // Subtle localized pulse
+
+            // Displace radially outward from click origin
+            totalDisplacementX += (dx / distFromClick) * intensity;
+            totalDisplacementY += (dy / distFromClick) * intensity;
+            totalDisplacementZ += (dz / distFromClick) * intensity;
           }
         }
 
-        const finalR = p.r + organicDrift + rippleDisplacement;
-        posArr[i3] = p.nx * finalR;
-        posArr[i3 + 1] = p.ny * finalR;
-        posArr[i3 + 2] = p.nz * finalR;
+        const scale = (p.r + ambientDrift) / p.r;
+        posArr[i3] = p.baseX * scale + totalDisplacementX;
+        posArr[i3 + 1] = p.baseY * scale + totalDisplacementY;
+        posArr[i3 + 2] = p.baseZ * scale + totalDisplacementZ;
       }
       posAttr.needsUpdate = true;
 
-      particles.rotation.y = elapsed * 0.015;
+      particles.rotation.y = elapsed * 0.012;
 
       renderer.render(scene, camera);
     };
@@ -323,7 +407,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("click", handleGlobalClick);
+      window.removeEventListener("click", handleContainerClick);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
       if (container.contains(renderer.domElement)) {
