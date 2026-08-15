@@ -51,7 +51,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const globeMesh = new THREE.Mesh(globeGeo, globeMat);
     globeGroup.add(globeMesh);
 
-    // 2. Inner Glowing Core (Electric Cyan / Ice Blue plasma core that creates high contrast)
+    // 2. Inner Glowing Core (Electric Cyan Ice Blue plasma core)
     const innerCoreGeo = new THREE.IcosahedronGeometry(globeRadius * 0.65, 2);
     const innerCoreMat = new THREE.MeshBasicMaterial({
       color: 0x38bdf8, // Electric Cyan Ice Blue
@@ -62,18 +62,18 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const innerCoreMesh = new THREE.Mesh(innerCoreGeo, innerCoreMat);
     globeGroup.add(innerCoreMesh);
 
-    // 3. Ultra-Dense Center Energy Nucleus
-    const nucleusGeo = new THREE.SphereGeometry(globeRadius * 0.3, 16, 16);
+    // 3. Center Energy Nucleus (Radiant Crimson Heart)
+    const nucleusGeo = new THREE.SphereGeometry(globeRadius * 0.28, 16, 16);
     const nucleusMat = new THREE.MeshBasicMaterial({
       color: 0xf43f5e, // Radiant Rose/Red Heart
       wireframe: true,
       transparent: true,
-      opacity: 0.45,
+      opacity: 0.5,
     });
     const nucleusMesh = new THREE.Mesh(nucleusGeo, nucleusMat);
     globeGroup.add(nucleusMesh);
 
-    // 4. Glowing Orbital Rings (Neon Red & Crimson with High Opacity)
+    // 4. Glowing Orbital Rings (Neon Red & Crimson)
     const ringGeo = new THREE.TorusGeometry(globeRadius * 1.38, 0.5, 8, 64);
     const ringMat1 = new THREE.MeshBasicMaterial({
       color: 0xf43f5e, // Neon Red / Rose
@@ -102,7 +102,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     ringMesh3.rotation.z = Math.PI / 4.2;
     globeGroup.add(ringMesh3);
 
-    // --- 5. Orbiting Glowing Light Beacons / Satellites ---
+    // 5. Orbiting Glowing Light Satellites
     const beaconCount = 4;
     const beaconMeshes: THREE.Mesh[] = [];
     const beaconGeo = new THREE.SphereGeometry(0.8, 8, 8);
@@ -119,39 +119,51 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       beaconMeshes.push(bMesh);
     }
 
-    // --- 6. Particle Field with Smooth Blackhole Gravitational Singularity ---
+    // --- 6. Uniform Spherical Particle Field with Outward Ripple Wave on Click ---
     const particleCount = isMobile ? 180 : 420;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
-    const originPositions: { x: number; y: number; z: number; speed: number; angle: number; r: number }[] = [];
     const colors = new Float32Array(particleCount * 3);
+
+    interface ParticleData {
+      nx: number;
+      ny: number;
+      nz: number;
+      r: number;
+      initialAngle: number;
+      speed: number;
+    }
+    const particleData: ParticleData[] = [];
 
     const cPurple = new THREE.Color(0xa855f7);
     const cRed = new THREE.Color(0xf43f5e);
     const cCyan = new THREE.Color(0x38bdf8);
     const cWhite = new THREE.Color(0xffffff);
 
+    // Uniform 360-degree spherical distribution
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3;
-      const r = globeRadius * 1.4 + Math.random() * (isMobile ? 40 : 65);
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(Math.random() * 2 - 1);
+      const u = Math.random();
+      const v = Math.random();
+      const theta = u * 2.0 * Math.PI;
+      const phi = Math.acos(2.0 * v - 1.0);
+      const r = globeRadius * 1.45 + Math.random() * (isMobile ? 35 : 55);
 
-      const px = r * Math.sin(phi) * Math.cos(theta);
-      const py = r * Math.sin(phi) * Math.sin(theta);
-      const pz = r * Math.cos(phi);
+      const nx = Math.sin(phi) * Math.cos(theta);
+      const ny = Math.sin(phi) * Math.sin(theta);
+      const nz = Math.cos(phi);
 
-      positions[i3] = px;
-      positions[i3 + 1] = py;
-      positions[i3 + 2] = pz;
+      positions[i3] = nx * r;
+      positions[i3 + 1] = ny * r;
+      positions[i3 + 2] = nz * r;
 
-      originPositions.push({
-        x: px,
-        y: py,
-        z: pz,
-        speed: 0.2 + Math.random() * 0.5,
-        angle: theta,
-        r: r,
+      particleData.push({
+        nx,
+        ny,
+        nz,
+        r,
+        initialAngle: theta,
+        speed: 0.3 + Math.random() * 0.5,
       });
 
       const colorRoll = Math.random();
@@ -177,16 +189,14 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
-    // --- Black Hole Gravitational Pull State ---
-    let blackHoleTarget = 0; // 0 = normal orbit, 1 = maximum gravitational collapse
-    let blackHoleCurrent = 0;
+    // --- Outward Harmonic Ripple Wave State ---
+    let rippleProgress = 999; // 999 = idle, 0 to 2.5 = active ripple wave
+    let globeImpulse = 0;
 
     const handleGlobalClick = () => {
-      // Trigger smooth black hole gravitational collapse
-      blackHoleTarget = 1.0;
-      setTimeout(() => {
-        blackHoleTarget = 0; // Smooth recovery back to orbit
-      }, 700);
+      // Trigger smooth outward harmonic ripple wave
+      rippleProgress = 0;
+      globeImpulse = 1.0;
     };
 
     window.addEventListener("click", handleGlobalClick);
@@ -234,9 +244,6 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       mouseX += (targetX - mouseX) * 0.04;
       mouseY += (targetY - mouseY) * 0.04;
 
-      // Smooth Black Hole Gravitational Lerp
-      blackHoleCurrent += (blackHoleTarget - blackHoleCurrent) * 0.07;
-
       // Globe & Rings Rotation
       globeGroup.rotation.y = elapsed * 0.12 + mouseX * 0.015;
       globeGroup.rotation.x = Math.sin(elapsed * 0.08) * 0.1 - mouseY * 0.015;
@@ -244,7 +251,8 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       // Pulse Cyan Inner Core
       innerCoreMesh.rotation.y = -elapsed * 0.22;
       innerCoreMesh.rotation.z = elapsed * 0.15;
-      const coreScale = 1 + Math.sin(elapsed * 2) * 0.04 + blackHoleCurrent * 0.25;
+      globeImpulse *= 0.92;
+      const coreScale = 1 + Math.sin(elapsed * 2) * 0.04 + globeImpulse * 0.12;
       innerCoreMesh.scale.set(coreScale, coreScale, coreScale);
 
       // Nucleus Spin
@@ -267,30 +275,34 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
         );
       }
 
-      // Gravitational Particle Dynamics (Smooth Black Hole Attraction on Click)
+      // Smooth Harmonic Ripple Wave on Particles
       const posAttr = particleGeo.attributes.position as THREE.BufferAttribute;
       const posArr = posAttr.array as Float32Array;
 
-      for (let i = 0; i < particleCount; i++) {
-        const i3 = i * 3;
-        const orig = originPositions[i];
+      if (rippleProgress < 2.5) {
+        rippleProgress += 0.04;
+        const waveRadius = globeRadius + rippleProgress * 32; // Expanding wavefront
+        const waveThickness = 14; // Width of the ripple crest
 
-        // Orbit drift
-        const currentAngle = orig.angle + elapsed * 0.04 * orig.speed;
-        const currentRadius = orig.r * (1 - blackHoleCurrent * 0.75); // Shrinks inward toward 25% radius on blackhole pull
+        for (let i = 0; i < particleCount; i++) {
+          const i3 = i * 3;
+          const p = particleData[i];
+          const distDiff = p.r - waveRadius;
 
-        // Tangential vortex rotation when collapsing
-        const vortexAngle = currentAngle + blackHoleCurrent * 1.8;
+          let waveDisplacement = 0;
+          if (Math.abs(distDiff) < waveThickness) {
+            const envelope = Math.cos((distDiff / waveThickness) * (Math.PI / 2));
+            const fade = Math.max(0, 1 - rippleProgress / 2.5);
+            waveDisplacement = envelope * fade * 7.5; // Smooth outward displacement
+          }
 
-        const targetPx = (orig.x / orig.r) * currentRadius * Math.cos(vortexAngle);
-        const targetPy = (orig.y / orig.r) * currentRadius;
-        const targetPz = (orig.z / orig.r) * currentRadius * Math.sin(vortexAngle);
-
-        posArr[i3] += (targetPx - posArr[i3]) * 0.08;
-        posArr[i3 + 1] += (targetPy - posArr[i3 + 1]) * 0.08;
-        posArr[i3 + 2] += (targetPz - posArr[i3 + 2]) * 0.08;
+          const currentR = p.r + waveDisplacement;
+          posArr[i3] = p.nx * currentR;
+          posArr[i3 + 1] = p.ny * currentR;
+          posArr[i3 + 2] = p.nz * currentR;
+        }
+        posAttr.needsUpdate = true;
       }
-      posAttr.needsUpdate = true;
 
       particles.rotation.y = elapsed * 0.02;
 
