@@ -12,7 +12,6 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     if (!containerRef.current) return;
     const container = containerRef.current;
 
-    // Detect mobile device
     const isMobile = window.innerWidth < 768;
 
     // --- Scene, Camera, Renderer ---
@@ -36,26 +35,26 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 1.5));
     container.appendChild(renderer.domElement);
 
-    // --- 3D Holographic Cyber Globe Group ---
+    // --- 3D Holographic Purple Globe Group with Red Orbits ---
     const globeGroup = new THREE.Group();
     scene.add(globeGroup);
 
-    // 1. Central Wireframe Cyber Sphere (Crisp & Focused)
+    // 1. Central Wireframe Cyber Sphere (Vibrant Purple / Violet)
     const globeRadius = isMobile ? 16 : 20;
-    const globeGeo = new THREE.SphereGeometry(globeRadius, 24, 24);
+    const globeGeo = new THREE.SphereGeometry(globeRadius, 26, 26);
     const globeMat = new THREE.MeshBasicMaterial({
-      color: 0x06b6d4, // Cyan
+      color: 0x9333ea, // Vibrant Purple
       wireframe: true,
       transparent: true,
-      opacity: 0.28,
+      opacity: 0.32,
     });
     const globeMesh = new THREE.Mesh(globeGeo, globeMat);
     globeGroup.add(globeMesh);
 
-    // 2. Inner Glowing Core
+    // 2. Inner Glowing Core (Deep Violet / Magenta)
     const innerCoreGeo = new THREE.IcosahedronGeometry(globeRadius * 0.7, 1);
     const innerCoreMat = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8,
+      color: 0xc084fc, // Soft Violet
       wireframe: true,
       transparent: true,
       opacity: 0.22,
@@ -63,36 +62,44 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const innerCoreMesh = new THREE.Mesh(innerCoreGeo, innerCoreMat);
     globeGroup.add(innerCoreMesh);
 
-    // 3. Orbital Equatorial Rings (Cyan & Indigo)
-    const ringGeo = new THREE.TorusGeometry(globeRadius * 1.35, 0.4, 8, 48);
+    // 3. Orbital Equatorial Rings (Neon Red / Crimson)
+    const ringGeo = new THREE.TorusGeometry(globeRadius * 1.35, 0.45, 8, 56);
     const ringMat1 = new THREE.MeshBasicMaterial({
-      color: 0x00f0ff,
+      color: 0xf43f5e, // Neon Red / Rose
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.5,
     });
     const ringMesh1 = new THREE.Mesh(ringGeo, ringMat1);
-    ringMesh1.rotation.x = Math.PI / 2.5;
+    ringMesh1.rotation.x = Math.PI / 2.4;
     globeGroup.add(ringMesh1);
 
     const ringMat2 = new THREE.MeshBasicMaterial({
-      color: 0x818cf8,
+      color: 0xe11d48, // Crimson Red
       transparent: true,
-      opacity: 0.25,
+      opacity: 0.4,
     });
     const ringMesh2 = new THREE.Mesh(ringGeo, ringMat2);
     ringMesh2.rotation.y = Math.PI / 3;
     globeGroup.add(ringMesh2);
 
+    const ringMat3 = new THREE.MeshBasicMaterial({
+      color: 0xa855f7, // Purple accent ring
+      transparent: true,
+      opacity: 0.3,
+    });
+    const ringMesh3 = new THREE.Mesh(ringGeo, ringMat3);
+    ringMesh3.rotation.z = Math.PI / 4;
+    globeGroup.add(ringMesh3);
+
     // --- 4. Harmonized Subtle Particle Atmosphere ---
-    // Reduced count from 1800 to 380 (120 on mobile) to eliminate all lag
     const particleCount = isMobile ? 120 : 380;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
 
-    const cCyan = new THREE.Color(0x06b6d4);
-    const cSky = new THREE.Color(0x38bdf8);
-    const cDeep = new THREE.Color(0x6366f1);
+    const cPurple = new THREE.Color(0xa855f7);
+    const cRed = new THREE.Color(0xf43f5e);
+    const cDeep = new THREE.Color(0x7c3aed);
 
     for (let i = 0; i < particleCount; i++) {
       const i3 = i * 3;
@@ -104,7 +111,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       positions[i3 + 1] = r * Math.sin(phi) * Math.sin(theta);
       positions[i3 + 2] = r * Math.cos(phi);
 
-      const chosenColor = Math.random() > 0.6 ? cCyan : Math.random() > 0.3 ? cSky : cDeep;
+      const chosenColor = Math.random() > 0.6 ? cPurple : Math.random() > 0.3 ? cRed : cDeep;
       colors[i3] = chosenColor.r;
       colors[i3 + 1] = chosenColor.g;
       colors[i3 + 2] = chosenColor.b;
@@ -117,14 +124,14 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       size: isMobile ? 1.2 : 1.5,
       vertexColors: true,
       transparent: true,
-      opacity: 0.45, // Soft, non-overshadowing opacity
+      opacity: 0.45,
       blending: THREE.AdditiveBlending,
     });
 
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
-    // --- Mouse Interactivity (Throttled & Smooth) ---
+    // --- Mouse Interactivity ---
     let mouseX = 0;
     let mouseY = 0;
     let targetX = 0;
@@ -161,14 +168,13 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      const delta = clock.getDelta();
       const elapsed = clock.getElapsedTime();
 
       // Smooth mouse lerp
       mouseX += (targetX - mouseX) * 0.04;
       mouseY += (targetY - mouseY) * 0.04;
 
-      // Gentle continuous rotation
+      // Globe & Rings Rotation
       globeGroup.rotation.y = elapsed * 0.12 + mouseX * 0.015;
       globeGroup.rotation.x = Math.sin(elapsed * 0.08) * 0.1 - mouseY * 0.015;
 
@@ -177,6 +183,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
 
       ringMesh1.rotation.z = elapsed * 0.15;
       ringMesh2.rotation.x = elapsed * 0.12;
+      ringMesh3.rotation.y = elapsed * 0.14;
 
       particles.rotation.y = elapsed * 0.03;
       particles.rotation.x = Math.sin(elapsed * 0.02) * 0.05;
@@ -201,6 +208,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       ringGeo.dispose();
       ringMat1.dispose();
       ringMat2.dispose();
+      ringMat3.dispose();
       particleGeo.dispose();
       particleMat.dispose();
     };
@@ -210,7 +218,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     <div
       ref={containerRef}
       className="absolute inset-0 pointer-events-none z-0 overflow-hidden w-full h-full"
-      style={{ opacity: 0.9 }}
+      style={{ opacity: 0.95 }}
     />
   );
 };

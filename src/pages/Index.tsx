@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Github, Linkedin, Mail, ArrowUpRight, GitMerge, Award, Cpu, ShieldCheck, Sparkles, Terminal, Code2, Database, Layers, Globe, Layers3 } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowUpRight, GitMerge, Award, Cpu, ShieldCheck, Sparkles, Code2, Layers3, Globe } from "lucide-react";
 
-// Components
+// 3D & Cyber Components
+import HeaderNav from "@/components/HeaderNav";
 import ThreeBackground from "@/components/ThreeBackground";
-import CyberTerminal from "@/components/CyberTerminal";
-import AIAssistantWidget from "@/components/AIAssistantWidget";
+import CyberCreature from "@/components/CyberCreature";
+import UnifiedAICyberHub from "@/components/UnifiedAICyberHub";
 import ContributionsMatrix from "@/components/ContributionsMatrix";
 import SelectedWorks from "./SelectedWorks";
-import SkillsPhilosophy from "./SkillsPhilosophy";
 import Contact from "./Contact";
 import Footer from "./Footer";
-import Navigation from "@/components/Navigation";
 
 // --- Role Rotator ---
 const RoleRotator = () => {
@@ -39,7 +38,7 @@ const RoleRotator = () => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -20, opacity: 0 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
-          className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-rose-400 font-extrabold"
+          className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-rose-400 to-pink-400 font-extrabold"
         >
           {roles[index]}
         </motion.span>
@@ -48,65 +47,38 @@ const RoleRotator = () => {
   );
 };
 
-// --- Brand Logo ---
-const BrandLogo = () => (
-  <div className="fixed top-5 left-5 md:top-7 md:left-10 z-50 mix-blend-difference pointer-events-auto">
-    <a href="#" className="flex items-center gap-2.5 group">
-      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-rose-500 p-[1px]">
-        <div className="w-full h-full bg-black rounded-[7px] flex items-center justify-center font-mono font-black text-xs text-cyan-400 group-hover:text-white transition-colors">
-          SG
-        </div>
-      </div>
-      <h1 className="font-mono font-black text-base sm:text-lg tracking-tight text-white flex items-center gap-1.5">
-        SPARSH GARG
-        <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-      </h1>
-    </a>
-  </div>
-);
-
-// --- Quick Nav Bar ---
-const HeaderNavBar = () => (
-  <header className="fixed top-5 right-5 md:top-7 md:right-10 z-40 hidden md:flex items-center gap-6 px-5 py-2.5 rounded-full bg-slate-900/80 border border-slate-800/90 backdrop-blur-md font-mono text-xs text-slate-300">
-    <a href="#about" className="hover:text-cyan-400 transition-colors">01. About</a>
-    <a href="#contributions" className="hover:text-cyan-400 transition-colors">02. Contributions</a>
-    <a href="#work" className="hover:text-cyan-400 transition-colors">03. Projects</a>
-    <a href="#skills" className="hover:text-cyan-400 transition-colors">04. Skills</a>
-    <a href="#contact" className="hover:text-rose-400 text-rose-400/90 font-bold transition-colors">05. Contact</a>
-  </header>
-);
-
 export const Index: React.FC = () => {
   return (
-    <div className="min-h-screen relative bg-slate-950 text-white selection:bg-cyan-500 selection:text-black font-sans">
-      <BrandLogo />
-      <HeaderNavBar />
-      <Navigation />
+    <div className="min-h-screen relative bg-slate-950 text-white selection:bg-purple-500 selection:text-white font-sans pt-16 sm:pt-20">
+      {/* Pinned Fixed Top Navigation */}
+      <HeaderNav />
 
-      {/* Floating 3D Tools */}
-      <CyberTerminal />
-      <AIAssistantWidget />
+      {/* Interactive Cursor-Tracking & Blinking Cyber Creature Mascot */}
+      <CyberCreature />
 
-      {/* --- HERO SECTION WITH 3D WEBGL GLOBE --- */}
-      <section className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-between px-5 sm:px-8 md:px-14 py-20 sm:py-24 overflow-hidden bg-slate-950">
-        {/* Subtle, non-overshadowing 3D Globe & Particles */}
+      {/* Single Unified AI Cyber Assistant & Terminal Hub */}
+      <UnifiedAICyberHub />
+
+      {/* --- HERO SECTION WITH 3D PURPLE GLOBE & RED ORBITS --- */}
+      <section className="relative min-h-[90vh] sm:min-h-[92vh] flex flex-col justify-between px-5 sm:px-8 md:px-14 py-16 sm:py-20 overflow-hidden bg-slate-950">
+        {/* Three.js 3D WebGL Purple Globe & Neon Red Orbits */}
         <ThreeBackground interactive={true} />
 
         {/* Ambient Top Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] sm:w-[900px] h-[300px] bg-gradient-to-b from-cyan-500/10 via-indigo-500/5 to-transparent blur-3xl pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] sm:w-[900px] h-[300px] bg-gradient-to-b from-purple-500/15 via-rose-500/10 to-transparent blur-3xl pointer-events-none" />
 
-        <div className="h-6 sm:h-12" />
+        <div className="h-4 sm:h-8" />
 
-        {/* Hero Content */}
+        {/* Hero Headline Content */}
         <div className="relative z-10 max-w-4xl my-auto">
           {/* Badge Pill */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[11px] sm:text-xs font-bold mb-4 sm:mb-6 backdrop-blur-md"
+            className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 font-mono text-[11px] sm:text-xs font-bold mb-4 sm:mb-6 backdrop-blur-md"
           >
-            <Sparkles size={12} className="text-cyan-300 animate-spin" />
+            <Sparkles size={12} className="text-rose-400 animate-spin" />
             <span>INTERACTIVE 3D AI ARCHITECT & DEVELOPER PORTFOLIO</span>
           </motion.div>
 
@@ -118,7 +90,7 @@ export const Index: React.FC = () => {
             className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white uppercase leading-[0.95] mb-4 sm:mb-6"
           >
             DRIVEN <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-purple-300">
               BY LOGIC.
             </span>
           </motion.h1>
@@ -142,7 +114,7 @@ export const Index: React.FC = () => {
           >
             <a
               href="#contributions"
-              className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-mono font-bold text-xs tracking-wider uppercase transition-all shadow-[0_0_20px_rgba(6,182,212,0.35)] flex items-center gap-2"
+              className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-rose-600 hover:from-purple-500 hover:to-rose-500 text-white font-mono font-bold text-xs tracking-wider uppercase transition-all shadow-[0_0_20px_rgba(168,85,247,0.35)] flex items-center gap-2"
             >
               <span>Merged & Active PRs</span>
               <GitMerge size={14} />
@@ -158,7 +130,7 @@ export const Index: React.FC = () => {
 
             <a
               href="#contact"
-              className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-transparent hover:bg-rose-500/10 border border-rose-500/40 text-rose-400 hover:text-rose-300 font-mono font-bold text-xs tracking-wider uppercase transition-all flex items-center gap-2"
+              className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-transparent hover:bg-purple-500/10 border border-purple-500/40 text-purple-300 hover:text-white font-mono font-bold text-xs tracking-wider uppercase transition-all flex items-center gap-2"
             >
               <span>Contact</span>
               <Mail size={14} />
@@ -183,7 +155,7 @@ export const Index: React.FC = () => {
           </div>
 
           <div className="md:border-r border-slate-800 pr-2 sm:pr-4">
-            <div className="flex items-center gap-1.5 text-cyan-400 font-mono text-[11px] font-bold mb-1">
+            <div className="flex items-center gap-1.5 text-purple-400 font-mono text-[11px] font-bold mb-1">
               <GitMerge size={13} />
               <span>OPEN SOURCE</span>
             </div>
@@ -216,10 +188,10 @@ export const Index: React.FC = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             <div className="lg:col-span-4">
-              <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-2">01. Background & Journey</span>
+              <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest block mb-2">01. Background & Journey</span>
               <h2 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
                 Architecting <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-rose-400">
                   Intelligent Systems
                 </span>
               </h2>
@@ -261,7 +233,7 @@ export const Index: React.FC = () => {
       <section id="skills" className="py-20 md:py-28 px-5 sm:px-8 md:px-14 bg-slate-950 border-t border-slate-900">
         <div className="max-w-6xl mx-auto">
           <div className="mb-12">
-            <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-2">04. Tech Stack</span>
+            <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest block mb-2">04. Tech Stack</span>
             <h2 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
               Categorized Engineering Arsenal
             </h2>
@@ -288,7 +260,7 @@ export const Index: React.FC = () => {
             {/* Category 2: Languages */}
             <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-col justify-between">
               <div>
-                <div className="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-4">
+                <div className="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-4">
                   <Code2 size={18} />
                 </div>
                 <h3 className="text-sm font-mono font-bold text-white uppercase mb-3">Languages & Core</h3>
