@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Github, Linkedin, Menu, X } from "lucide-react";
+import CyberCreature from "./CyberCreature";
 
 export const HeaderNav: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -31,21 +32,28 @@ export const HeaderNav: React.FC = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 md:px-12 flex items-center justify-between">
-        {/* Brand Logo */}
-        <a href="#" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-rose-500 p-[1px]">
-            <div className="w-full h-full bg-black rounded-[7px] flex items-center justify-center font-mono font-black text-xs text-purple-400 group-hover:text-white transition-colors">
-              SG
+        {/* Brand Logo with Nova Mascot integrated */}
+        <div className="flex items-center gap-3">
+          <a href="#" className="flex items-center gap-2.5 group">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-rose-500 p-[1px]">
+              <div className="w-full h-full bg-black rounded-[7px] flex items-center justify-center font-mono font-black text-xs text-purple-400 group-hover:text-white transition-colors">
+                SG
+              </div>
             </div>
+            <div className="flex flex-col">
+              <span className="font-mono font-black text-sm sm:text-base tracking-tight text-white flex items-center gap-1.5 leading-none">
+                SPARSH GARG
+                <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+              </span>
+              <span className="text-[9px] font-mono text-slate-400 leading-tight">Software Developer @ Genpact</span>
+            </div>
+          </a>
+
+          {/* Nova Cyber Mascot Embedded at Top */}
+          <div className="hidden sm:block pl-1 border-l border-slate-800">
+            <CyberCreature />
           </div>
-          <div className="flex flex-col">
-            <span className="font-mono font-black text-sm sm:text-base tracking-tight text-white flex items-center gap-1.5 leading-none">
-              SPARSH GARG
-              <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-            </span>
-            <span className="text-[9px] font-mono text-slate-400 leading-tight">Software Developer @ Genpact</span>
-          </div>
-        </a>
+        </div>
 
         {/* Desktop Nav Links (Clean, No Numbers) */}
         <nav className="hidden md:flex items-center gap-8 font-mono text-xs font-semibold text-slate-300">
@@ -89,13 +97,16 @@ export const HeaderNav: React.FC = () => {
         </div>
 
         {/* Mobile Hamburger Toggle */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white"
-          aria-label="Toggle Navigation Menu"
-        >
-          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        <div className="flex sm:hidden items-center gap-2">
+          <CyberCreature />
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white"
+            aria-label="Toggle Navigation Menu"
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Drawer */}

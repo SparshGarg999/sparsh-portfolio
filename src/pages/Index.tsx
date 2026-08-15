@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Github, Linkedin, Mail, ArrowUpRight, GitMerge, Award, Cpu, ShieldCheck, Sparkles, Code2, Layers3, Globe } from "lucide-react";
+import { Mail, ArrowUpRight, GitMerge, Award, Cpu, ShieldCheck, Sparkles, Code2, Layers3, Globe } from "lucide-react";
 
 // 3D & Cyber Components
 import HeaderNav from "@/components/HeaderNav";
 import ThreeBackground from "@/components/ThreeBackground";
-import CyberCreature from "@/components/CyberCreature";
 import UnifiedAICyberHub from "@/components/UnifiedAICyberHub";
 import ContributionsMatrix from "@/components/ContributionsMatrix";
 import SelectedWorks from "./SelectedWorks";
@@ -50,18 +49,15 @@ const FocusRotator = () => {
 export const Index: React.FC = () => {
   return (
     <div className="min-h-screen relative bg-slate-950 text-white selection:bg-purple-500 selection:text-white font-sans pt-16 sm:pt-20">
-      {/* Pinned Fixed Top Navigation (Clean, No Numbers) */}
+      {/* Pinned Fixed Top Navigation with Embedded Nova Mascot */}
       <HeaderNav />
-
-      {/* Interactive Cursor-Tracking & Blinking Cyber Mascot (Nova) */}
-      <CyberCreature />
 
       {/* Single Unified AI Cyber Assistant & Terminal Hub */}
       <UnifiedAICyberHub />
 
       {/* --- HERO SECTION WITH 3D PURPLE GLOBE & RED ORBITS --- */}
       <section className="relative min-h-[90vh] sm:min-h-[92vh] flex flex-col justify-between px-5 sm:px-8 md:px-14 py-16 sm:py-20 overflow-hidden bg-slate-950">
-        {/* Three.js 3D WebGL Purple Globe & Neon Red Orbits with Shockwave Bursts */}
+        {/* Three.js 3D WebGL Purple Globe & Neon Red Orbits */}
         <ThreeBackground interactive={true} />
 
         {/* Ambient Top Glow */}
@@ -71,15 +67,15 @@ export const Index: React.FC = () => {
 
         {/* Hero Headline Content */}
         <div className="relative z-10 max-w-4xl my-auto">
-          {/* Badge Pill */}
+          {/* Sleek Minimalist Badge Pill */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 font-mono text-[11px] sm:text-xs font-bold mb-4 sm:mb-6 backdrop-blur-md"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 font-mono text-[11px] font-bold mb-4 sm:mb-6 backdrop-blur-md"
           >
-            <Sparkles size={12} className="text-rose-400 animate-spin" />
-            <span>SOFTWARE DEVELOPER @ GENPACT · LEETCODE KNIGHT · OPEN SOURCE</span>
+            <Sparkles size={11} className="text-rose-400" />
+            <span>SPARSH GARG · SYSTEMS & AI ARCHITECT</span>
           </motion.div>
 
           {/* Main Headline */}
@@ -202,7 +198,7 @@ export const Index: React.FC = () => {
                 I am a Software Developer at <strong className="text-white font-semibold">Genpact</strong>, engineering autonomous multi-agent AI systems, ServiceNow workflows, and Esker order-to-cash automations integrated with Large Language Models.
               </p>
               <p>
-                As a core open-source contributor, I have authored merged PRs in tier-1 repositories including <strong className="text-white">Google TensorFlow</strong> (XLA constant propagation), <strong className="text-white">Facebook React</strong> (DevTools Store Suspense fix), <strong className="text-white">Microsoft VS Code & Winget</strong>, and <strong className="text-white">Kubernetes</strong>.
+                As a core open-source contributor, I have authored merged PRs in tier-1 repositories including <strong className="text-white">Google TensorFlow</strong> (XLA constant propagation), <strong className="text-white">Facebook React</strong> (DevTools Store Suspense fix), <strong className="text-white">Microsoft VS Code</strong>, and <strong className="text-white">Kubernetes</strong>.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-800">
                 <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
@@ -221,7 +217,7 @@ export const Index: React.FC = () => {
         </div>
       </section>
 
-      {/* --- OPEN-SOURCE CODE CONTRIBUTIONS (TOP 6) --- */}
+      {/* --- OPEN-SOURCE CODE CONTRIBUTIONS (6 DIVERSE CARDS, 1 MICROSOFT) --- */}
       <ContributionsMatrix />
 
       {/* --- FEATURED 3D SYSTEMS & PROJECTS --- */}

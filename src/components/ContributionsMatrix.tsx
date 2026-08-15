@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, GitMerge, GitPullRequest, CheckCircle2, Clock, Sparkles, Github } from "lucide-react";
+import React from "react";
+import { motion } from "framer-motion";
+import { ExternalLink, GitMerge, Sparkles, Github } from "lucide-react";
 
 interface Contribution {
   org: string;
@@ -11,10 +11,10 @@ interface Contribution {
   tech: string[];
   prUrl: string;
   status: "MERGED" | "ACTIVE / IN-REVIEW";
-  category: "merged" | "active";
   icon: string;
 }
 
+// Exactly 1 Microsoft card (VS Code), alongside Google, Meta, Kubernetes, Career-Ops, and NEXUS AI
 const contributions: Contribution[] = [
   {
     org: "Google",
@@ -25,7 +25,6 @@ const contributions: Contribution[] = [
     tech: ["C++", "Python", "XLA", "Graph Execution"],
     prUrl: "https://github.com/tensorflow/tensorflow/pull/123015",
     status: "MERGED",
-    category: "merged",
     icon: "🧠",
   },
   {
@@ -37,7 +36,6 @@ const contributions: Contribution[] = [
     tech: ["TypeScript", "React Internals", "DevTools"],
     prUrl: "https://github.com/facebook/react",
     status: "MERGED",
-    category: "merged",
     icon: "⚛️",
   },
   {
@@ -49,7 +47,6 @@ const contributions: Contribution[] = [
     tech: ["TypeScript", "Electron", "VS Code API"],
     prUrl: "https://github.com/microsoft/vscode/pull/324132",
     status: "MERGED",
-    category: "merged",
     icon: "💻",
   },
   {
@@ -61,32 +58,29 @@ const contributions: Contribution[] = [
     tech: ["Go", "Kubernetes", "Container Runtime"],
     prUrl: "https://github.com/kubernetes/kubernetes/pull/140623",
     status: "MERGED",
-    category: "merged",
     icon: "☸️",
   },
   {
-    org: "Microsoft",
-    repo: "microsoft/winget-pkgs",
-    prNumber: "PR #403418",
-    title: "Windows Package Manager Manifest Additions & Automation",
-    impact: "Engineered validated package manifests, installer verification scripts, and automated submission pipelines.",
-    tech: ["YAML", "PowerShell", "CI/CD"],
-    prUrl: "https://github.com/microsoft/winget-pkgs/pull/403418",
+    org: "Career-Ops",
+    repo: "santifer/career-ops",
+    prNumber: "PR #1864",
+    title: "Path Resolution Modules & SQLite Concurrency Guard",
+    impact: "Engineered resilient path resolution modules, SSRF security guards, and SQLite locking strategies.",
+    tech: ["JavaScript", "Go", "SQLite", "Security"],
+    prUrl: "https://github.com/santifer/career-ops/pull/1864",
     status: "MERGED",
-    category: "merged",
-    icon: "📦",
+    icon: "🚀",
   },
   {
-    org: "Microsoft",
-    repo: "dotnet/aspnetcore",
-    prNumber: "PR #67810",
-    title: "ASP.NET Core Web Framework Runtime Routing Optimization",
-    impact: "Optimized internal routing logic and request pipeline throughput for ASP.NET Core framework runtime services.",
-    tech: ["C#", "ASP.NET Core", "HTTP Pipelines"],
-    prUrl: "https://github.com/dotnet/aspnetcore/pull/67810",
-    status: "MERGED",
-    category: "merged",
-    icon: "🔷",
+    org: "Autonomous AI Tooling",
+    repo: "SparshGarg999/NEXUS",
+    prNumber: "Core Engine",
+    title: "Multi-Agent Async WebSocket Telemetry Streaming Module",
+    impact: "Engineered asynchronous token-level citation streaming and task dependency graphs for multi-agent workflows.",
+    tech: ["Python", "FastAPI", "WebSockets", "LangChain"],
+    prUrl: "https://github.com/SparshGarg999/NEXUS",
+    status: "ACTIVE / IN-REVIEW",
+    icon: "⚡",
   },
 ];
 
@@ -113,11 +107,11 @@ export const ContributionsMatrix: React.FC = () => {
           </div>
 
           <p className="max-w-md text-slate-400 text-xs sm:text-sm leading-relaxed">
-            Featured code contributions merged into the world's most critical open-source software libraries, runtimes, and developer tooling.
+            Featured code contributions merged into tier-1 open-source runtimes, developer tooling, and distributed systems.
           </p>
         </div>
 
-        {/* 6 Top-Tier Contributions Grid */}
+        {/* 6 High-Impact Contributions Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {contributions.map((c) => (
             <motion.div
@@ -139,7 +133,13 @@ export const ContributionsMatrix: React.FC = () => {
                     </div>
                   </div>
 
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md font-mono text-[10px] font-bold bg-emerald-500/15 border border-emerald-500/40 text-emerald-400">
+                  <span
+                    className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md font-mono text-[10px] font-bold ${
+                      c.status === "MERGED"
+                        ? "bg-emerald-500/15 border border-emerald-500/40 text-emerald-400"
+                        : "bg-amber-500/15 border border-amber-500/40 text-amber-400"
+                    }`}
+                  >
                     <GitMerge size={11} />
                     {c.status}
                   </span>
@@ -173,7 +173,7 @@ export const ContributionsMatrix: React.FC = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-400 group-hover:text-rose-400 hover:underline transition-colors"
                 >
-                  <span>View Merged PR ({c.prNumber})</span>
+                  <span>View Contribution ({c.prNumber})</span>
                   <ExternalLink size={12} />
                 </a>
               </div>
