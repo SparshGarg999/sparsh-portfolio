@@ -1,297 +1,279 @@
-import { motion, useSpring, useMotionValue, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Github, Linkedin, Instagram, Mail } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { Github, Linkedin, Mail, ArrowUpRight, Terminal, Bot, Sparkles, ChevronDown, Award, GitMerge, Cpu, ShieldCheck } from "lucide-react";
 
-// Components
-import About from "./About";
-import SplashCursor from "@/components/SplashCursor";
+// 3D & Cyber Components
+import ThreeBackground from "@/components/ThreeBackground";
+import CyberTerminal from "@/components/CyberTerminal";
+import AIAssistantWidget from "@/components/AIAssistantWidget";
+import ContributionsMatrix from "@/components/ContributionsMatrix";
 import SelectedWorks from "./SelectedWorks";
-import VectorBridge from "./VectorBridge";
-import Footer from "./Footer";
+import SkillsPhilosophy from "./SkillsPhilosophy";
+import About from "./About";
 import Contact from "./Contact";
-import Testimonial from "./Testimonial";
+import Footer from "./Footer";
 import Navigation from "@/components/Navigation";
 
-// --- Text Rotator Component ---
+// --- Rotating Role Pill ---
 const TextRotator = () => {
-  const words = ["AI Agents", "RAG Workflows", "Enterprise Automations", "Open Source Contributions"];
+  const roles = [
+    "Multi-Agent AI Architect",
+    "Software Developer @ Genpact",
+    "Open Source Contributor (Google, Meta, MS)",
+    "LeetCode Knight (1900+ Rating)",
+  ];
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % words.length);
-    }, 2000);
+      setIndex((prev) => (prev + 1) % roles.length);
+    }, 2800);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <span className="inline-flex items-center relative h-[1.2em] overflow-hidden align-bottom">
+    <span className="inline-flex items-center relative h-[1.3em] overflow-hidden align-bottom">
       <AnimatePresence mode="wait">
         <motion.span
-          key={words[index]}
-          initial={{ y: 15, opacity: 0 }}
+          key={roles[index]}
+          initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -15, opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="text-rose-500 font-extrabold uppercase"
+          exit={{ y: -20, opacity: 0 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-rose-400 font-extrabold uppercase tracking-wide"
         >
-          {words[index]}
+          {roles[index]}
         </motion.span>
       </AnimatePresence>
     </span>
   );
 };
 
-// --- Cursor Follower ---
-const CursorFollower = () => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springConfig = { damping: 20, stiffness: 100, mass: 0.8 };
-  const x = useSpring(mouseX, springConfig);
-  const y = useSpring(mouseY, springConfig);
-
-  useEffect(() => {
-    const moveCursor = (e: MouseEvent) => {
-      mouseX.set(e.clientX - 12);
-      mouseY.set(e.clientY - 12);
-    };
-    window.addEventListener("mousemove", moveCursor);
-    return () => window.removeEventListener("mousemove", moveCursor);
-  }, [mouseX, mouseY]);
-
-  return (
-    <motion.div
-      className="fixed top-0 left-0 w-6 h-6 bg-rose-600/40 border border-rose-500/60 rounded-full pointer-events-none z-[9999] hidden lg:block backdrop-blur-[0.5px] shadow-[0_0_15px_rgba(239,68,68,0.5)]"
-      style={{ x, y }}
-    />
-  );
-};
-
+// --- Brand Header Logo ---
 const BrandLogo = () => (
-  <div className="fixed top-6 left-6 md:top-8 md:left-10 z-50 mix-blend-difference">
-    <h1 className="font-sans font-black text-2xl md:text-4xl tracking-tighter text-white flex items-start">
-      SPARSH GARG
-      <span className="text-xs md:text-lg font-medium ml-1 -mt-1 md:-mt-2">®</span>
-    </h1>
+  <div className="fixed top-6 left-6 md:top-8 md:left-10 z-50 mix-blend-difference pointer-events-auto">
+    <a href="#" className="flex items-center gap-2 group">
+      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-rose-500 p-[1px]">
+        <div className="w-full h-full bg-black rounded-[7px] flex items-center justify-center font-mono font-black text-xs text-cyan-400 group-hover:text-white transition-colors">
+          SG
+        </div>
+      </div>
+      <h1 className="font-mono font-black text-lg md:text-xl tracking-tight text-white flex items-center gap-1">
+        SPARSH GARG
+        <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+      </h1>
+    </a>
   </div>
 );
 
+// --- Live Availability Badge ---
 const AvailabilityBadge = () => (
   <motion.div
     initial={{ opacity: 0, y: -10 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.4, ease: "easeOut" }}
-    className="absolute z-10 left-1/2 -translate-x-1/2 hidden md:flex items-center gap-2 pointer-events-none"
-    style={{ top: "2.25rem" }}
+    className="fixed top-7 left-1/2 -translate-x-1/2 hidden md:flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 backdrop-blur-md z-40"
   >
-    <span className="relative flex h-1.5 w-1.5">
-      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-400" />
+    <span className="relative flex h-2 w-2">
+      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
     </span>
-    <span className="font-sans font-black text-[9px] tracking-[0.25em] uppercase text-white">
-      Available for work
+    <span className="font-mono font-bold text-[10px] tracking-widest uppercase text-slate-300">
+      Available for High-Impact Roles & AI Automations
     </span>
   </motion.div>
 );
 
+// --- Social Quick Links ---
 const SocialStrip = () => {
   const socials = [
     { label: "GitHub", href: "https://github.com/SparshGarg999" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/sparsh-garg-2bb2483b2/" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/sparsh-garg/" },
+    { label: "LeetCode", href: "https://leetcode.com/u/SparshGarg/" },
     { label: "Email", href: "mailto:sparshgarg307@gmail.com" },
   ];
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="absolute z-20 hidden md:flex flex-col items-center"
-      style={{ right: "64px", top: "112px", bottom: "194px", justifyContent: "center", gap: "1rem" }}
-    >
-      <span className="w-[1px] h-8 bg-white/30 flex-shrink-0" />
+    <div className="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 hidden md:flex flex-col items-center gap-5 z-30">
+      <span className="w-[1px] h-12 bg-gradient-to-b from-transparent to-cyan-500/50" />
       {socials.map(({ label, href }) => (
         <a
           key={label}
           href={href}
           target={href.startsWith("mailto") ? "_self" : "_blank"}
           rel="noopener noreferrer"
-          title={label}
-          className="group flex-shrink-0"
-          style={{ writingMode: "vertical-rl", textOrientation: "mixed" }}
+          className="group text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-slate-400 hover:text-cyan-400 transition-colors"
+          style={{ writingMode: "vertical-rl" }}
         >
-          <span className="font-sans font-black text-[10px] tracking-[0.22em] uppercase text-white group-hover:opacity-100 transition-opacity duration-300">
-            {label}
-          </span>
+          {label}
         </a>
       ))}
-      <span className="w-[1px] h-8 bg-white/30 flex-shrink-0" />
-    </motion.div>
+      <span className="w-[1px] h-12 bg-gradient-to-t from-transparent to-cyan-500/50" />
+    </div>
   );
 };
 
-const SpinningCTA = () => (
-  <motion.div
-    initial={{ opacity: 0, scale: 0.8 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-    className="absolute md:z-30 lg:z-10 hidden md:flex items-center justify-center"
-    style={{ bottom: "4rem", right: "4rem" }}
-  >
-    <style>{`
-      @keyframes ctaSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-      .cta-ring { animation: ctaSpin var(--cta-spin-duration, 10s) linear infinite; transform-origin: center; }
-      .cta-wrap:hover .cta-ring { --cta-spin-duration: 3s; }
-      .cta-wrap { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-      .cta-wrap:hover { transform: scale(1.08); }
-    `}</style>
-    <a href="#contact" className="cta-wrap group relative flex items-center justify-center w-[130px] h-[130px]" aria-label="Get in touch">
-      <svg viewBox="0 0 130 130" className="absolute inset-0 w-full h-full pointer-events-none">
-        <circle cx="65" cy="65" r="62" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="1.5" />
-      </svg>
-      <svg viewBox="0 0 130 130" className="cta-ring absolute inset-0 w-full h-full pointer-events-none">
-        <defs>
-          <path id="cta-circle-path" d="M65,65 m-50,0 a50,50 0 1,1 100,0 a50,50 0 1,1 -100,0" />
-        </defs>
-        <text fill="rgba(255,255,255,1)" fontSize="8.5" fontFamily="'Inter', sans-serif" fontWeight="900" letterSpacing="4">
-          <textPath href="#cta-circle-path">GET IN TOUCH · GET IN TOUCH · GET IN TOUCH ·&nbsp;</textPath>
-        </text>
-      </svg>
-      <span className="absolute inset-4 rounded-full bg-white scale-0 group-hover:scale-100 transition-transform duration-500 ease-in-out" style={{ transformOrigin: "center" }} />
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="relative z-10 w-6 h-6 text-white group-hover:text-black" style={{ transition: "color 0.3s ease" }}>
-        <path d="M7 17L17 7M17 7H7M17 7v10" />
-      </svg>
-    </a>
-  </motion.div>
-);
-
-const MobileSocialStrip = () => {
-  const socials = [
-    { label: "Github", icon: Github, href: "https://github.com/SparshGarg999" },
-    { label: "LinkedIn", icon: Linkedin, href: "https://www.linkedin.com/in/sparsh-garg-2bb2483b2/" },
-    { label: "Email", icon: Mail, href: "mailto:sparshgarg307@gmail.com" },
-  ];
+export const Index: React.FC = () => {
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
-      className="flex flex-col items-center gap-6"
-    >
-      {socials.map(({ label, icon: Icon, href }) => (
-        <a key={label} href={href} target={href.startsWith("mailto") ? "_self" : "_blank"} rel="noopener noreferrer"
-          className="text-white hover:opacity-75 transition-opacity duration-300 block">
-          <Icon size={18} strokeWidth={2.5} />
-        </a>
-      ))}
-    </motion.div>
-  );
-};
-
-const Index = () => {
-  const footerContainerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: footerContainerRef,
-    offset: ["start end", "end end"]
-  });
-
-  // Create parallax effect: Footer starts higher up and moves to normal position as we scroll into it
-  const footerY = useTransform(scrollYProgress, [0, 1], ["-50%", "0%"]);
-
-  return (
-    <div className="min-h-screen relative bg-black selection:bg-white selection:text-black">
+    <div className="min-h-screen relative bg-slate-950 text-white selection:bg-cyan-500 selection:text-black">
       <BrandLogo />
-      <CursorFollower />
+      <AvailabilityBadge />
       <Navigation />
+      <SocialStrip />
 
-      {/* Fixed background About section */}
-      <div className="fixed inset-0 z-0 bg-white text-black">
+      {/* Floating Interactive 3D Tools */}
+      <CyberTerminal />
+      <AIAssistantWidget />
+
+      {/* --- HERO SECTION WITH 3D THREE.JS CANVAS --- */}
+      <section className="relative min-h-screen flex flex-col justify-between px-6 py-24 md:px-16 md:py-20 overflow-hidden bg-slate-950">
+        {/* Interactive Three.js WebGL Particle Core */}
+        <ThreeBackground interactive={true} />
+
+        {/* Ambient Top Glow Overlay */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-b from-cyan-500/15 via-rose-500/10 to-transparent blur-3xl pointer-events-none" />
+
+        {/* Top Spacer */}
+        <div className="h-10" />
+
+        {/* Center Hero Content */}
+        <div className="relative z-10 max-w-5xl my-auto">
+          {/* Badge Pill */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-xs font-bold mb-6 backdrop-blur-md"
+          >
+            <Sparkles size={13} className="text-cyan-300 animate-spin" />
+            <span>INTERACTIVE 3D WEBGL PORTFOLIO & AI HUB</span>
+          </motion.div>
+
+          {/* Main Hero Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter text-white uppercase leading-[0.9] mb-6"
+          >
+            DRIVEN <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400">
+              BY LOGIC.
+            </span>
+          </motion.h1>
+
+          {/* Dynamic Role Subtitle */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-lg sm:text-2xl md:text-3xl font-semibold text-slate-300 mb-8 max-w-3xl"
+          >
+            I engineer <TextRotator />
+          </motion.div>
+
+          {/* Action CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="flex flex-wrap items-center gap-4"
+          >
+            <a
+              href="#contributions"
+              className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-mono font-bold text-xs tracking-wider uppercase transition-all shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:shadow-[0_0_35px_rgba(6,182,212,0.6)] flex items-center gap-2"
+            >
+              <span>Explore Merged PRs</span>
+              <GitMerge size={15} />
+            </a>
+
+            <a
+              href="#work"
+              className="px-6 py-3.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700 text-white font-mono font-bold text-xs tracking-wider uppercase transition-all flex items-center gap-2 backdrop-blur-md"
+            >
+              <span>View 3D Projects</span>
+              <ArrowUpRight size={15} />
+            </a>
+
+            <a
+              href="#contact"
+              className="px-6 py-3.5 rounded-xl bg-transparent hover:bg-rose-500/10 border border-rose-500/40 text-rose-400 hover:text-rose-300 font-mono font-bold text-xs tracking-wider uppercase transition-all flex items-center gap-2"
+            >
+              <span>Contact Me</span>
+              <Mail size={15} />
+            </a>
+          </motion.div>
+        </div>
+
+        {/* Hero Bottom Credential Metrics Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-4 p-5 rounded-2xl bg-slate-900/70 border border-slate-800/90 backdrop-blur-xl max-w-5xl"
+        >
+          <div className="border-r border-slate-800/80 pr-4">
+            <div className="flex items-center gap-2 text-amber-400 font-mono text-xs font-bold mb-1">
+              <Award size={14} />
+              <span>LEETCODE KNIGHT</span>
+            </div>
+            <p className="text-xl md:text-2xl font-black text-white">1900+ Rating</p>
+            <p className="text-[10px] font-mono text-slate-400">Top 5% Global Contestant</p>
+          </div>
+
+          <div className="border-r border-slate-800/80 pr-4">
+            <div className="flex items-center gap-2 text-cyan-400 font-mono text-xs font-bold mb-1">
+              <GitMerge size={14} />
+              <span>OPEN SOURCE</span>
+            </div>
+            <p className="text-xl md:text-2xl font-black text-white">Google & Meta</p>
+            <p className="text-[10px] font-mono text-slate-400">TensorFlow, React, VS Code</p>
+          </div>
+
+          <div className="border-r border-slate-800/80 pr-4">
+            <div className="flex items-center gap-2 text-rose-400 font-mono text-xs font-bold mb-1">
+              <Cpu size={14} />
+              <span>ENTERPRISE AI</span>
+            </div>
+            <p className="text-xl md:text-2xl font-black text-white">Genpact</p>
+            <p className="text-[10px] font-mono text-slate-400">ServiceNow & LLM Automations</p>
+          </div>
+
+          <div>
+            <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs font-bold mb-1">
+              <ShieldCheck size={14} />
+              <span>NATIONAL AWARDS</span>
+            </div>
+            <p className="text-xl md:text-2xl font-black text-white">SIH '22 Runner-Up</p>
+            <p className="text-[10px] font-mono text-slate-400">Smart India Hackathon</p>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* --- OPEN-SOURCE MERGED PR MATRIX --- */}
+      <ContributionsMatrix />
+
+      {/* --- FEATURED 3D SYSTEMS & PROJECTS --- */}
+      <div id="work">
+        <SelectedWorks />
+      </div>
+
+      {/* --- SKILLS & PHILOSOPHY --- */}
+      <div id="philosophy">
+        <SkillsPhilosophy />
+      </div>
+
+      {/* --- ABOUT & BACKGROUND DATA --- */}
+      <div id="about">
         <About />
       </div>
 
-      {/* Hero */}
-      <section className="relative h-screen bg-black flex flex-col px-6 py-12 md:px-16 md:py-16 z-20 overflow-hidden">
-        <AvailabilityBadge />
-        <SocialStrip />
-        <SpinningCTA />
-        <div className="hidden lg:block"><SplashCursor /></div>
-
-        {/* Mobile Midpoint Buffer: 80px total height from top to clear hamburger (Hamburger at 24px + 56px height) */}
-        <div className="h-[32px] w-full md:hidden" /> {/* py-12 (48px) + 32px = 80px */}
-
-        {/* Dynamic Centering Container for Mobile Socials */}
-        <div className="flex-1 flex flex-col items-end justify-center md:hidden pr-0 z-10 pointer-events-none">
-          <div className="pointer-events-auto">
-            <MobileSocialStrip />
-          </div>
-        </div>
-
-        <div className="z-10 mt-auto mb-6 md:mb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="w-fit"
-          >
-            <a href="#contact" className="group relative overflow-hidden border border-white/30 px-5 py-3 flex items-center gap-3 hover:border-white transition-colors duration-500 w-fit mb-6 md:hidden">
-              <span className="absolute inset-0 bg-white translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out" />
-              <span className="relative font-sans font-black text-[10px] tracking-[0.25em] uppercase text-white group-hover:text-black transition-colors duration-300 z-10">Get in touch</span>
-              <svg className="relative w-3 h-3 text-white group-hover:text-black transition-colors duration-300 z-10" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M1 6h10M6 1l5 5-5 5" />
-              </svg>
-            </a>
-            <h1 className="font-sans font-bold text-7xl md:text-8xl lg:text-[9rem] xl:text-[11rem] leading-[0.85] tracking-tighter text-white uppercase text-left">
-              Driven<br />by logic
-            </h1>
-          </motion.div>
-        </div>
-
-        <div className="z-10 grid grid-cols-1 md:grid-cols-12 w-full gap-4 mb-8 md:mb-0">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-            className="col-span-1 md:col-span-5 lg:col-span-4"
-          >
-            <div className="w-12 h-[2px] bg-white mb-6 md:hidden" />
-            <h2 className="font-sans text-lg md:text-2xl font-bold text-white uppercase tracking-wider text-left mb-6 flex flex-wrap items-baseline gap-x-2">
-              <span>Specialized in</span>
-              <TextRotator />
-            </h2>
-            <p className="font-sans text-xs md:text-sm font-medium text-white/80 leading-relaxed tracking-wide uppercase text-left">
-              Software Engineer building enterprise applications and AI-powered systems. Experienced in LLMs, RAG, and multi-agent workflows.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Content stack */}
-      <div className="relative z-20 w-full bg-transparent">
-        <div id="about" className="h-screen w-full pointer-events-none" />
-
-        <div className="bg-black text-white relative z-20">
-          <SelectedWorks />
-        </div>
-
-        <div className="bg-white text-black relative z-20">
-          <VectorBridge />
-        </div>
-
-        <div className="bg-black text-white relative z-20">
-          <Testimonial />
-        </div>
-
-        {/* Change contact layer to z-20 and relative so it scrolls normally OVER the footer */}
-        <div id="contact" className="relative z-20 bg-white text-black">
-          <Contact />
-        </div>
+      {/* --- CONTACT SECTION --- */}
+      <div id="contact">
+        <Contact />
       </div>
 
-      {/* Parallax Footer Reveal Stack */}
-      <div ref={footerContainerRef} className="relative z-0 h-screen w-full overflow-hidden bg-black text-white">
-        <motion.div style={{ y: footerY }} className="h-full w-full">
-          <Footer />
-        </motion.div>
-      </div>
+      {/* --- FOOTER --- */}
+      <Footer />
     </div>
   );
 };
