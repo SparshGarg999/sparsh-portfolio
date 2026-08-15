@@ -24,7 +24,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       0.1,
       500
     );
-    camera.position.z = isMobile ? 110 : 75;
+    camera.position.z = isMobile ? 80 : 75;
 
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
@@ -32,21 +32,27 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       powerPreference: "high-performance",
     });
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 1.5));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.2 : 1.5));
     container.appendChild(renderer.domElement);
 
     // --- 3D Holographic Cyber Globe Group ---
     const globeGroup = new THREE.Group();
+    // On mobile: position globe gracefully in the upper viewport (y=11, z=-10) to frame header text
+    if (isMobile) {
+      globeGroup.position.set(0, 11, -8);
+    } else {
+      globeGroup.position.set(0, 0, 0);
+    }
     scene.add(globeGroup);
 
-    // 1. Central Wireframe Cyber Sphere (Vibrant Purple / Violet - Hero Outer Lattice)
-    const globeRadius = isMobile ? 16 : 20;
-    const globeGeo = new THREE.SphereGeometry(globeRadius, 26, 26);
+    // 1. Central Wireframe Cyber Sphere (Refined & Clean for Mobile)
+    const globeRadius = isMobile ? 11.5 : 20;
+    const globeGeo = new THREE.SphereGeometry(globeRadius, isMobile ? 20 : 26, isMobile ? 20 : 26);
     const globeMat = new THREE.MeshBasicMaterial({
       color: 0x9333ea, // Vibrant Purple
       wireframe: true,
       transparent: true,
-      opacity: 0.38,
+      opacity: isMobile ? 0.22 : 0.38,
     });
     const globeMesh = new THREE.Mesh(globeGeo, globeMat);
     globeGroup.add(globeMesh);
@@ -54,15 +60,15 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     // --- 2. SUPER-BRIGHT FLOWING MAGENTA & GOLDEN-AMBER ENERGY BALL CORE ---
     // Layer A: Outer Plasma Energy Current Lattice (Vibrant Electric Neon Magenta)
     const plasmaRadius = globeRadius * 0.65;
-    const plasmaGeo = new THREE.IcosahedronGeometry(plasmaRadius, 3);
+    const plasmaGeo = new THREE.IcosahedronGeometry(plasmaRadius, isMobile ? 2 : 3);
     const plasmaPosAttr = plasmaGeo.attributes.position as THREE.BufferAttribute;
     const originalPlasmaPositions = new Float32Array(plasmaPosAttr.array);
 
     const plasmaMat = new THREE.MeshBasicMaterial({
-      color: 0xe879f9, // Electric Neon Magenta (Harmonized with Purple & Crimson)
+      color: 0xe879f9, // Electric Neon Magenta
       wireframe: true,
       transparent: true,
-      opacity: 0.85,
+      opacity: isMobile ? 0.75 : 0.85,
       blending: THREE.AdditiveBlending,
     });
     const plasmaMesh = new THREE.Mesh(plasmaGeo, plasmaMat);
@@ -75,7 +81,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       color: 0xf43f5e, // Radiant Neon Crimson
       wireframe: true,
       transparent: true,
-      opacity: 0.85,
+      opacity: isMobile ? 0.75 : 0.85,
       blending: THREE.AdditiveBlending,
     });
     const vortexMesh = new THREE.Mesh(vortexGeo, vortexMat);
@@ -83,7 +89,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
 
     // Layer C: Ultra-Bright White/Gold Fusion Core
     const nucleusRadius = globeRadius * 0.32;
-    const nucleusGeo = new THREE.SphereGeometry(nucleusRadius, 20, 20);
+    const nucleusGeo = new THREE.SphereGeometry(nucleusRadius, 18, 18);
     const nucleusMat = new THREE.MeshBasicMaterial({
       color: 0xffffff, // Blinding White-Hot Fusion Heart
       wireframe: true,
@@ -95,7 +101,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     globeGroup.add(nucleusMesh);
 
     // Layer D: Inner Solid Radiant Golden-Rose Glow Sphere
-    const innerGlowGeo = new THREE.SphereGeometry(nucleusRadius * 0.75, 16, 16);
+    const innerGlowGeo = new THREE.SphereGeometry(nucleusRadius * 0.75, 14, 14);
     const innerGlowMat = new THREE.MeshBasicMaterial({
       color: 0xf59e0b, // Amber Gold Core Glow
       transparent: true,
@@ -105,12 +111,14 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const innerGlowMesh = new THREE.Mesh(innerGlowGeo, innerGlowMat);
     globeGroup.add(innerGlowMesh);
 
-    // --- 3. Glowing Orbital Rings (Neon Red, Crimson, and Magenta) ---
-    const ringGeo = new THREE.TorusGeometry(globeRadius * 1.38, 0.45, 8, 64);
+    // --- 3. Glowing Orbital Rings (Scaled neatly within mobile viewport) ---
+    const ringRadius = globeRadius * (isMobile ? 1.28 : 1.38);
+    const ringTube = isMobile ? 0.3 : 0.45;
+    const ringGeo = new THREE.TorusGeometry(ringRadius, ringTube, 8, 64);
     const ringMat1 = new THREE.MeshBasicMaterial({
       color: 0xf43f5e, // Neon Red / Rose
       transparent: true,
-      opacity: 0.6,
+      opacity: isMobile ? 0.45 : 0.6,
     });
     const ringMesh1 = new THREE.Mesh(ringGeo, ringMat1);
     ringMesh1.rotation.x = Math.PI / 2.3;
@@ -119,7 +127,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const ringMat2 = new THREE.MeshBasicMaterial({
       color: 0xe11d48, // Crimson Red
       transparent: true,
-      opacity: 0.5,
+      opacity: isMobile ? 0.4 : 0.5,
     });
     const ringMesh2 = new THREE.Mesh(ringGeo, ringMat2);
     ringMesh2.rotation.y = Math.PI / 3.2;
@@ -128,16 +136,16 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     const ringMat3 = new THREE.MeshBasicMaterial({
       color: 0xd946ef, // Electric Magenta Accent Ring
       transparent: true,
-      opacity: 0.4,
+      opacity: isMobile ? 0.35 : 0.4,
     });
     const ringMesh3 = new THREE.Mesh(ringGeo, ringMat3);
     ringMesh3.rotation.z = Math.PI / 4.2;
     globeGroup.add(ringMesh3);
 
     // 4. Orbiting Glowing Light Satellites
-    const beaconCount = 3;
+    const beaconCount = isMobile ? 2 : 3;
     const beaconMeshes: THREE.Mesh[] = [];
-    const beaconGeo = new THREE.SphereGeometry(0.45, 6, 6);
+    const beaconGeo = new THREE.SphereGeometry(isMobile ? 0.35 : 0.45, 6, 6);
     const beaconColors = [0xe879f9, 0xf43f5e, 0xf59e0b];
 
     for (let b = 0; b < beaconCount; b++) {
@@ -152,7 +160,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
     }
 
     // --- 5. Delicate Fine Particle Field (Globe is Hero) ---
-    const particleCount = isMobile ? 160 : 360;
+    const particleCount = isMobile ? 90 : 360;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
@@ -284,8 +292,14 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       if (!container) return;
       const width = container.clientWidth;
       const height = container.clientHeight;
+      const mobile = width < 768;
       camera.aspect = width / height;
-      camera.position.z = width < 768 ? 110 : 75;
+      camera.position.z = mobile ? 80 : 75;
+      if (mobile) {
+        globeGroup.position.set(0, 11, -8);
+      } else {
+        globeGroup.position.set(0, 0, 0);
+      }
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
     };

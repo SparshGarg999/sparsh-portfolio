@@ -56,14 +56,15 @@ export const Index: React.FC = () => {
       <UnifiedAICyberHub />
 
       {/* --- HERO SECTION WITH 3D PURPLE GLOBE & MAGENTA ENERGY CORE --- */}
-      <section className="relative min-h-[90vh] sm:min-h-[92vh] flex flex-col justify-between px-5 sm:px-8 md:px-14 py-16 sm:py-20 overflow-hidden bg-slate-950">
+      <section className="relative min-h-[92vh] flex flex-col justify-between px-4 xs:px-6 sm:px-8 md:px-14 py-12 sm:py-20 overflow-hidden bg-slate-950">
         {/* Three.js 3D WebGL Globe with Swirling Magenta Energy Ball Core */}
         <ThreeBackground interactive={true} />
 
-        {/* Ambient Top Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] sm:w-[900px] h-[300px] bg-gradient-to-b from-purple-500/15 via-rose-500/10 to-transparent blur-3xl pointer-events-none" />
+        {/* Ambient Top & Bottom Contrast Gradients for Mobile */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[280px] bg-gradient-to-b from-purple-500/10 via-transparent to-transparent blur-2xl pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent pointer-events-none md:hidden" />
 
-        <div className="h-4 sm:h-8" />
+        <div className="h-2 sm:h-8" />
 
         {/* Hero Headline Content */}
         <div className="relative z-10 max-w-4xl my-auto">
