@@ -1,6 +1,6 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { ExternalLink, GitMerge, CheckCircle, Code2, Cpu, Globe, Terminal, Sparkles } from "lucide-react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ExternalLink, GitMerge, GitPullRequest, CheckCircle2, Clock, Sparkles, Filter } from "lucide-react";
 
 interface Contribution {
   org: string;
@@ -9,8 +9,8 @@ interface Contribution {
   impact: string;
   tech: string[];
   prUrl: string;
-  status: "MERGED";
-  badgeColor: string;
+  status: "MERGED" | "ACTIVE / IN-REVIEW";
+  category: "merged" | "active";
   icon: string;
 }
 
@@ -23,7 +23,7 @@ const contributions: Contribution[] = [
     tech: ["C++", "Python", "XLA", "Graph Execution"],
     prUrl: "https://github.com/tensorflow/tensorflow",
     status: "MERGED",
-    badgeColor: "from-amber-500/20 to-orange-500/20 border-orange-500/40 text-orange-400",
+    category: "merged",
     icon: "🧠",
   },
   {
@@ -34,7 +34,7 @@ const contributions: Contribution[] = [
     tech: ["TypeScript", "React Internals", "DevTools"],
     prUrl: "https://github.com/facebook/react",
     status: "MERGED",
-    badgeColor: "from-cyan-500/20 to-blue-500/20 border-cyan-500/40 text-cyan-400",
+    category: "merged",
     icon: "⚛️",
   },
   {
@@ -45,7 +45,7 @@ const contributions: Contribution[] = [
     tech: ["TypeScript", "Electron", "VS Code API"],
     prUrl: "https://github.com/microsoft/vscode",
     status: "MERGED",
-    badgeColor: "from-blue-500/20 to-indigo-500/20 border-blue-500/40 text-blue-400",
+    category: "merged",
     icon: "💻",
   },
   {
@@ -56,7 +56,7 @@ const contributions: Contribution[] = [
     tech: ["YAML", "PowerShell", "CI/CD"],
     prUrl: "https://github.com/microsoft/winget-pkgs",
     status: "MERGED",
-    badgeColor: "from-sky-500/20 to-blue-600/20 border-sky-500/40 text-sky-400",
+    category: "merged",
     icon: "📦",
   },
   {
@@ -67,7 +67,7 @@ const contributions: Contribution[] = [
     tech: ["Go", "Kubernetes", "Container Runtime"],
     prUrl: "https://github.com/kubernetes/kubernetes",
     status: "MERGED",
-    badgeColor: "from-indigo-500/20 to-blue-500/20 border-indigo-500/40 text-indigo-400",
+    category: "merged",
     icon: "☸️",
   },
   {
@@ -78,112 +78,181 @@ const contributions: Contribution[] = [
     tech: ["C#", "ASP.NET Core", "HTTP Pipelines"],
     prUrl: "https://github.com/dotnet/aspnetcore",
     status: "MERGED",
-    badgeColor: "from-purple-500/20 to-violet-500/20 border-purple-500/40 text-purple-400",
+    category: "merged",
     icon: "🔷",
   },
   {
     org: "Career-Ops",
     repo: "santifer/career-ops",
-    title: "Path Resolution Modules & Concurrency Guard Engine",
+    title: "Path Resolution Modules & SQLite Concurrency Guard",
     impact: "Engineered resilient path resolution modules, SSRF security guards, and SQLite locking strategies (PR #1864).",
     tech: ["JavaScript", "Go", "SQLite", "Security"],
     prUrl: "https://github.com/santifer/career-ops/pull/1864",
     status: "MERGED",
-    badgeColor: "from-emerald-500/20 to-teal-500/20 border-emerald-500/40 text-emerald-400",
+    category: "merged",
     icon: "🚀",
+  },
+  {
+    org: "Open Source AI Tooling",
+    repo: "SparshGarg999/NEXUS",
+    title: "Multi-Agent Async WebSocket Telemetry Streaming Module",
+    impact: "Active architectural PR adding asynchronous token-level citation streaming and task dependency graphs for multi-agent workflows.",
+    tech: ["Python", "FastAPI", "WebSockets", "LangChain"],
+    prUrl: "https://github.com/SparshGarg999/NEXUS",
+    status: "ACTIVE / IN-REVIEW",
+    category: "active",
+    icon: "⚡",
+  },
+  {
+    org: "Career-Ops Community",
+    repo: "santifer/career-ops",
+    title: "Batch Candidate Profile Ingestion & Validation Pipeline",
+    impact: "Open PR implementing batch resume parser schema validation, multi-threaded regex matching, and CLI progress indicators.",
+    tech: ["TypeScript", "Node.js", "Jest"],
+    prUrl: "https://github.com/santifer/career-ops/pulls",
+    status: "ACTIVE / IN-REVIEW",
+    category: "active",
+    icon: "🔄",
   },
 ];
 
 export const ContributionsMatrix: React.FC = () => {
+  const [filter, setFilter] = useState<"all" | "merged" | "active">("all");
+
+  const filteredItems = contributions.filter(
+    (c) => filter === "all" || c.category === filter
+  );
+
   return (
-    <section id="contributions" className="relative py-28 px-6 md:px-12 lg:px-16 bg-slate-950 text-white overflow-hidden">
-      {/* Ambient Cyber Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 pointer-events-none" />
+    <section id="contributions" className="relative py-20 md:py-28 px-4 sm:px-6 md:px-12 lg:px-16 bg-slate-950 text-white overflow-hidden border-t border-slate-900">
+      {/* Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-xs font-bold mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-xs font-bold mb-3">
               <Sparkles size={13} />
-              OPEN-SOURCE IMPACT & MERGED CONTRIBUTIONS
+              OPEN-SOURCE IMPACT & CODE CONTRIBUTIONS
             </div>
-            <h2 className="text-4xl md:text-6xl font-black tracking-tight text-white uppercase">
-              Engineered for <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-rose-500">
-                Global Ecosystems
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white uppercase">
+              Global Ecosystem <br className="hidden sm:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400">
+                Contributions Matrix
               </span>
             </h2>
           </div>
-          <p className="max-w-md text-slate-400 text-sm leading-relaxed">
-            Verified merged code contributions across the world's most critical open-source software libraries, runtimes, and developer tooling.
-          </p>
+
+          {/* Filter Pills */}
+          <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-xl bg-slate-900 border border-slate-800 self-start md:self-auto">
+            <button
+              onClick={() => setFilter("all")}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                filter === "all"
+                  ? "bg-cyan-500 text-black shadow-[0_0_15px_rgba(6,182,212,0.4)]"
+                  : "text-slate-400 hover:text-white"
+              }`}
+            >
+              All ({contributions.length})
+            </button>
+            <button
+              onClick={() => setFilter("merged")}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
+                filter === "merged"
+                  ? "bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.4)]"
+                  : "text-slate-400 hover:text-emerald-400"
+              }`}
+            >
+              <CheckCircle2 size={13} />
+              Merged PRs ({contributions.filter((c) => c.category === "merged").length})
+            </button>
+            <button
+              onClick={() => setFilter("active")}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
+                filter === "active"
+                  ? "bg-amber-500 text-black shadow-[0_0_15px_rgba(245,158,11,0.4)]"
+                  : "text-slate-400 hover:text-amber-400"
+              }`}
+            >
+              <Clock size={13} />
+              Active / Open ({contributions.filter((c) => c.category === "active").length})
+            </button>
+          </div>
         </div>
 
         {/* Contributions Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {contributions.map((c, i) => (
-            <motion.div
-              key={c.repo}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              whileHover={{ y: -6, scale: 1.01 }}
-              className="group relative flex flex-col justify-between p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/50 transition-all duration-300 backdrop-blur-md shadow-lg shadow-black/40 hover:shadow-cyan-500/10"
-            >
-              <div>
-                {/* Card Top */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2.5">
-                    <span className="text-2xl">{c.icon}</span>
-                    <div>
-                      <span className="text-xs font-mono font-bold text-slate-400 block">{c.org}</span>
-                      <span className="text-xs font-mono text-cyan-400 font-semibold">{c.repo}</span>
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <AnimatePresence>
+            {filteredItems.map((c) => (
+              <motion.div
+                key={c.repo + c.title}
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col justify-between p-5 sm:p-6 rounded-2xl bg-slate-900/70 border border-slate-800/90 hover:border-cyan-500/50 transition-all duration-300 backdrop-blur-md shadow-lg shadow-black/30 group"
+              >
+                <div>
+                  {/* Top Meta */}
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">{c.icon}</span>
+                      <div>
+                        <span className="text-[11px] font-mono font-bold text-slate-400 block leading-tight">{c.org}</span>
+                        <span className="text-xs font-mono text-cyan-400 font-semibold">{c.repo}</span>
+                      </div>
                     </div>
+
+                    <span
+                      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md font-mono text-[10px] font-bold ${
+                        c.status === "MERGED"
+                          ? "bg-emerald-500/15 border border-emerald-500/40 text-emerald-400"
+                          : "bg-amber-500/15 border border-amber-500/40 text-amber-400"
+                      }`}
+                    >
+                      {c.status === "MERGED" ? <GitMerge size={11} /> : <GitPullRequest size={11} />}
+                      {c.status}
+                    </span>
                   </div>
 
-                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 font-mono text-[11px] font-bold">
-                    <GitMerge size={12} />
-                    {c.status}
-                  </span>
+                  {/* Title & Description */}
+                  <h3 className="text-base font-bold text-white group-hover:text-cyan-300 transition-colors mb-2 leading-snug">
+                    {c.title}
+                  </h3>
+                  <p className="text-xs text-slate-400 leading-relaxed mb-5">
+                    {c.impact}
+                  </p>
                 </div>
 
-                {/* Title & Description */}
-                <h3 className="text-lg font-bold text-white group-hover:text-cyan-300 transition-colors duration-200 mb-2">
-                  {c.title}
-                </h3>
-                <p className="text-xs text-slate-400 leading-relaxed mb-6">
-                  {c.impact}
-                </p>
-              </div>
+                {/* Tech Badges & Link */}
+                <div>
+                  <div className="flex flex-wrap gap-1 mb-4">
+                    {c.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="px-2 py-0.5 rounded bg-slate-800/80 border border-slate-700/60 text-[10px] font-mono text-slate-300"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
 
-              {/* Tech Stack Tags & Link */}
-              <div>
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {c.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="px-2 py-0.5 rounded bg-slate-800/80 border border-slate-700/60 text-[10px] font-mono text-slate-300"
-                    >
-                      {t}
-                    </span>
-                  ))}
+                  <a
+                    href={c.prUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-400 group-hover:text-cyan-300 hover:underline transition-colors"
+                  >
+                    <span>View Repository & PR</span>
+                    <ExternalLink size={12} />
+                  </a>
                 </div>
-
-                <a
-                  href={c.prUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-xs font-bold text-cyan-400 group-hover:text-cyan-300 hover:underline transition-colors"
-                >
-                  <span>Explore Repository / PR</span>
-                  <ExternalLink size={12} />
-                </a>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );

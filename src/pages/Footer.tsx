@@ -1,138 +1,52 @@
-import { motion, useScroll, useTransform, Variants } from "framer-motion";
-import { useRef } from "react";
+import React from "react";
+import { Github, Linkedin, Mail, ArrowUp } from "lucide-react";
 
-const Footer = () => {
-  const footerRef = useRef<HTMLElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: footerRef,
-    offset: ["start end", "end end"],
-  });
-
-  // Dynamically scrubs opacity & scale using scroll progression instead of transition
-  const textScale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
-  const textOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-    },
+export const Footer: React.FC = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <footer ref={footerRef} className="bg-black text-white font-sans pt-12 md:pt-20 border-t border-white h-screen flex flex-col">
-
-      {/* Top Section: Info Grid */}
-      <motion.div
-        className="px-6 md:px-12 lg:px-16 max-w-[1600px] mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-y-10 md:gap-x-12 shrink-0"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        {/* Column 1: IDENTIFICATION */}
-        <motion.div variants={itemVariants} className="flex flex-col gap-1">
-          <h3 className="font-sans text-xs font-bold uppercase tracking-widest mb-4 text-white/80">
-            Identification
-          </h3>
-          <p className="font-sans text-xs md:text-sm font-medium uppercase tracking-wide leading-relaxed">
-            Sparsh Garg
-          </p>
-          <p className="font-sans text-xs md:text-sm font-medium uppercase tracking-wide leading-relaxed text-white/60">
-            Software Engineer
-          </p>
-          <p className="font-sans text-xs md:text-sm font-medium uppercase tracking-wide leading-relaxed text-white/60">
-            Noida / Ajmer, India
-          </p>
-        </motion.div>
-
-        {/* Column 2: CHANNELS */}
-        <motion.div variants={itemVariants} className="flex flex-col gap-1">
-          <h3 className="font-sans text-xs font-bold uppercase tracking-widest mb-4 text-white/80">
-            Channels
-          </h3>
-          <div className="flex flex-col gap-2">
-            <a
-              href="mailto:sparshgarg307@gmail.com"
-              className="font-sans text-xs md:text-sm font-medium uppercase tracking-wide hover:underline underline-offset-4 decoration-1 w-fit flex items-center gap-1"
-            >
-              Email ↗
-            </a>
-            <a
-              href="https://www.linkedin.com/in/sparsh-garg-2bb2483b2/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-sans text-xs md:text-sm font-medium uppercase tracking-wide hover:underline underline-offset-4 decoration-1 w-fit flex items-center gap-1"
-            >
-              LinkedIn ↗
-            </a>
-            <a
-              href="https://github.com/SparshGarg999"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-sans text-xs md:text-sm font-medium uppercase tracking-wide hover:underline underline-offset-4 decoration-1 w-fit flex items-center gap-1"
-            >
-              GitHub ↗
-            </a>
-          </div>
-        </motion.div>
-
-        {/* Column 3: QUICK LINKS + YEAR */}
-        <motion.div variants={itemVariants} className="flex flex-col h-full justify-between">
-          <div className="flex flex-col gap-1">
-            <h3 className="font-sans text-xs font-bold uppercase tracking-widest mb-4 text-white/80">
-              Quick Links
-            </h3>
-            <div className="flex flex-col gap-2">
-              <a href="#about" className="font-sans text-xs md:text-sm font-medium uppercase tracking-wide hover:underline underline-offset-4 decoration-1 w-fit">
-                About ↗
-              </a>
-              <a href="#work" className="font-sans text-xs md:text-sm font-medium uppercase tracking-wide hover:underline underline-offset-4 decoration-1 w-fit">
-                Projects ↗
-              </a>
-              <a href="#philosophy" className="font-sans text-xs md:text-sm font-medium uppercase tracking-wide hover:underline underline-offset-4 decoration-1 w-fit">
-                Philosophy ↗
-              </a>
-              <a href="#contact" className="font-sans text-xs md:text-sm font-medium uppercase tracking-wide hover:underline underline-offset-4 decoration-1 w-fit">
-                Contact ↗
-              </a>
+    <footer className="bg-slate-950 text-white font-sans py-14 sm:py-16 px-5 sm:px-8 md:px-14 border-t border-slate-900 relative">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-400 font-mono">
+        <div className="flex items-center gap-3">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-cyan-500 to-rose-500 p-[1px]">
+            <div className="w-full h-full bg-black rounded-[6px] flex items-center justify-center font-mono font-bold text-[10px] text-cyan-400">
+              SG
             </div>
           </div>
-
-          <div className="mt-8 md:mt-0">
-            <p className="font-sans text-xs md:text-sm font-bold uppercase tracking-widest text-white">
-              2026
-            </p>
+          <div>
+            <p className="font-bold text-white">Sparsh Garg</p>
+            <p className="text-[10px] text-slate-500">Software Developer @ Genpact</p>
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
 
-      {/* Bottom Section: Branding Text */}
-      <motion.div
-        style={{ opacity: textOpacity, scale: textScale }}
-        className="w-full flex-1 flex flex-col justify-center items-center overflow-hidden select-none pb-4"
-      >
-        <h1 className="font-sans font-black text-[18vw] leading-[0.8] text-white uppercase tracking-tighter flex items-start">
-          Sparsh Garg
-          <span className="text-xl md:text-4xl lg:text-6xl font-medium mt-[2vw] ml-1 opacity-60">
-            ®
-          </span>
-        </h1>
-      </motion.div>
+        <div className="flex items-center gap-6">
+          <a href="https://github.com/SparshGarg999" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
+            <Github size={14} />
+            <span>GitHub</span>
+          </a>
+          <a href="https://www.linkedin.com/in/sparsh-garg/" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
+            <Linkedin size={14} />
+            <span>LinkedIn</span>
+          </a>
+          <a href="https://leetcode.com/u/SparshGarg/" target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition-colors">
+            <span>LeetCode</span>
+          </a>
+          <a href="mailto:sparshgarg307@gmail.com" className="hover:text-rose-400 transition-colors flex items-center gap-1.5">
+            <Mail size={14} />
+            <span>Email</span>
+          </a>
+        </div>
+
+        <button
+          onClick={scrollToTop}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition-all text-[11px]"
+        >
+          <span>Back to Top</span>
+          <ArrowUp size={12} />
+        </button>
+      </div>
     </footer>
   );
 };

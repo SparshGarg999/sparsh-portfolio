@@ -1,9 +1,10 @@
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { Mail, Send, CheckCircle2, AlertCircle, Sparkles, MessageSquare, Linkedin, Github } from "lucide-react";
 
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6_hmNogiRhIAkAdfWU9q0wQb2WdEvswPCTHCd9U-giehtMTgKcmZq2NsQES-XYuxd/exec";
 
-const Contact = () => {
+export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -25,10 +26,7 @@ const Contact = () => {
     setStatus("sending");
 
     try {
-      // ✅ Send as URLSearchParams — no-cors mode drops JSON headers,
-      //    but form-encoded bodies are always forwarded correctly.
       const body = new URLSearchParams(formData);
-
       await fetch(APPS_SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
@@ -43,132 +41,151 @@ const Contact = () => {
     }
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2, delayChildren: 0.3 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-    },
-  };
-
   return (
-    <section className="h-screen w-full bg-white text-black font-sans px-4 md:px-8 lg:px-12 overflow-hidden flex items-center justify-center relative">
-      <motion.div
-        className="grid grid-cols-1 lg:grid-cols-12 gap-y-8 lg:gap-x-16 max-w-[1400px] w-full mx-auto"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        {/* Left Column */}
-        <div className="lg:col-span-7 flex flex-col justify-between h-full py-2">
-          <motion.div variants={itemVariants} className="mb-8 lg:mb-0">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-[0.9] tracking-tight text-left text-black">
-              Contact <br />
-              Me <span className="inline-block ml-2 text-rose-600">→</span>
-            </h1>
-          </motion.div>
+    <section id="contact" className="relative min-h-screen w-full bg-slate-950 text-white font-sans px-5 sm:px-8 md:px-14 py-20 sm:py-28 flex items-center justify-center border-t border-slate-900 overflow-hidden">
+      {/* Ambient background glow */}
+      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-rose-500/5 blur-[120px] pointer-events-none" />
 
-          <motion.div variants={itemVariants} className="mt-8 lg:mt-0 hidden lg:block">
-            <h2 className="text-xs font-bold uppercase tracking-widest mb-4 text-black/60">
-              Contact Form
-            </h2>
-            <p className="text-base md:text-lg font-normal leading-relaxed text-black/80 max-w-md text-left">
-              Send me a message and I'll get back to you as soon as possible. Let's build something great together.
+      <div className="max-w-6xl w-full mx-auto relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          {/* Left Column: Heading & Info */}
+          <div className="lg:col-span-5 space-y-6">
+            <div>
+              <span className="text-xs font-mono font-bold text-rose-400 uppercase tracking-widest block mb-2">05. Connect & Collaborate</span>
+              <h2 className="text-4xl sm:text-5xl font-black uppercase tracking-tight text-white leading-tight">
+                Let's Build <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-pink-300 to-indigo-400">
+                  Something Exceptional
+                </span>
+              </h2>
+            </div>
+
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
+              Whether you're looking for high-throughput enterprise automation, multi-agent AI architectures, or exploring strategic engineering roles, my inbox is open.
             </p>
-          </motion.div>
-        </div>
 
-        {/* Right Column: Form */}
-        <motion.div className="lg:col-span-5 flex flex-col justify-center" variants={itemVariants}>
-          <form className="flex flex-col gap-5 text-black" onSubmit={handleSubmit}>
-
-            {/* Name */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-1">
-                <label htmlFor="firstName" className="text-xs font-bold uppercase tracking-wider text-black/70">First Name*</label>
-                <input
-                  type="text" id="firstName" name="firstName"
-                  value={formData.firstName} onChange={handleChange}
-                  className="w-full bg-transparent border-b border-black/30 py-1 text-lg font-medium focus:border-black focus:outline-none transition-colors text-black"
-                  required
-                />
+            <div className="space-y-3 pt-4 border-t border-slate-800 font-mono text-xs text-slate-300">
+              <div className="flex items-center gap-3">
+                <Mail size={15} className="text-rose-400" />
+                <a href="mailto:sparshgarg307@gmail.com" className="hover:text-rose-400 transition-colors">
+                  sparshgarg307@gmail.com
+                </a>
               </div>
-              <div className="flex flex-col gap-1">
-                <label htmlFor="lastName" className="text-xs font-bold uppercase tracking-wider text-black/70">Last Name*</label>
-                <input
-                  type="text" id="lastName" name="lastName"
-                  value={formData.lastName} onChange={handleChange}
-                  className="w-full bg-transparent border-b border-black/30 py-1 text-lg font-medium focus:border-black focus:outline-none transition-colors text-black"
-                  required
-                />
+              <div className="flex items-center gap-3">
+                <Linkedin size={15} className="text-cyan-400" />
+                <a href="https://www.linkedin.com/in/sparsh-garg/" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition-colors">
+                  linkedin.com/in/sparsh-garg
+                </a>
+              </div>
+              <div className="flex items-center gap-3">
+                <Github size={15} className="text-slate-200" />
+                <a href="https://github.com/SparshGarg999" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  github.com/SparshGarg999
+                </a>
               </div>
             </div>
+          </div>
 
-            {/* Email & Subject */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-1">
-                <label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-black/70">Email*</label>
-                <input
-                  type="email" id="email" name="email"
-                  value={formData.email} onChange={handleChange}
-                  className="w-full bg-transparent border-b border-black/30 py-1 text-lg font-medium focus:border-black focus:outline-none transition-colors text-black"
+          {/* Right Column: Contact Form */}
+          <div className="lg:col-span-7 p-6 sm:p-8 rounded-2xl bg-slate-900/70 border border-slate-800 backdrop-blur-xl shadow-xl shadow-black/40">
+            <form onSubmit={handleSubmit} className="space-y-4 font-sans text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="firstName" className="block text-xs font-mono font-bold text-slate-400 uppercase mb-1.5">First Name *</label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    required
+                    placeholder="Jane"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-rose-500 transition-colors text-sm"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="lastName" className="block text-xs font-mono font-bold text-slate-400 uppercase mb-1.5">Last Name *</label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    required
+                    placeholder="Doe"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-rose-500 transition-colors text-sm"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="email" className="block text-xs font-mono font-bold text-slate-400 uppercase mb-1.5">Email *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    placeholder="jane@company.com"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-rose-500 transition-colors text-sm"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="subject" className="block text-xs font-mono font-bold text-slate-400 uppercase mb-1.5">Subject *</label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                    placeholder="Project Inquiry / Engineering Opportunity"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-rose-500 transition-colors text-sm"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-xs font-mono font-bold text-slate-400 uppercase mb-1.5">Message *</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={4}
+                  value={formData.message}
+                  onChange={handleChange}
                   required
+                  placeholder="Tell me about your project or architecture..."
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-rose-500 transition-colors text-sm resize-none"
                 />
               </div>
-              <div className="flex flex-col gap-1">
-                <label htmlFor="subject" className="text-xs font-bold uppercase tracking-wider text-black/70">Subject*</label>
-                <input
-                  type="text" id="subject" name="subject"
-                  value={formData.subject} onChange={handleChange}
-                  className="w-full bg-transparent border-b border-black/30 py-1 text-lg font-medium focus:border-black focus:outline-none transition-colors text-black"
-                  required
-                />
-              </div>
-            </div>
 
-            {/* Message */}
-            <div className="flex flex-col gap-1">
-              <label htmlFor="message" className="text-xs font-bold uppercase tracking-wider text-black/70">Message*</label>
-              <textarea
-                id="message" name="message" rows={3}
-                value={formData.message} onChange={handleChange}
-                className="w-full bg-transparent border-b border-black/30 py-1 text-lg font-medium focus:border-black focus:outline-none transition-colors text-black resize-none"
-                required
-              />
-            </div>
-
-            {/* Submit */}
-            <div className="mt-4 flex flex-col gap-2">
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="group flex items-center gap-3 text-lg font-bold uppercase tracking-wider hover:text-black/75 transition-colors disabled:opacity-50 text-black"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-rose-600 to-indigo-600 hover:from-rose-500 hover:to-indigo-500 text-white font-mono font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(244,63,94,0.35)] flex items-center justify-center gap-2 disabled:opacity-50"
               >
-                {status === "sending" ? "Sending…" : "Send Message"}
-                <span className="group-hover:translate-x-2 transition-transform duration-300 text-rose-600">→</span>
+                {status === "sending" ? "Transmitting..." : "Send Message"}
+                <Send size={13} />
               </button>
 
               {status === "success" && (
-                <p className="text-sm text-green-600 font-medium">✓ Message sent! I'll get back to you soon.</p>
+                <div className="flex items-center gap-2 text-emerald-400 text-xs font-mono pt-2">
+                  <CheckCircle2 size={14} />
+                  <span>Message delivered successfully! I will get back to you shortly.</span>
+                </div>
               )}
               {status === "error" && (
-                <p className="text-sm text-red-600 font-medium">✗ Something went wrong. Please try again.</p>
+                <div className="flex items-center gap-2 text-rose-400 text-xs font-mono pt-2">
+                  <AlertCircle size={14} />
+                  <span>Transmission error. Please reach out directly to sparshgarg307@gmail.com</span>
+                </div>
               )}
-            </div>
-
-          </form>
-        </motion.div>
-      </motion.div>
+            </form>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
