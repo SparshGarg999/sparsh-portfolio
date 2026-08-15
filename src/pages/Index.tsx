@@ -55,9 +55,9 @@ export const Index: React.FC = () => {
       {/* Single Unified AI Cyber Assistant & Terminal Hub */}
       <UnifiedAICyberHub />
 
-      {/* --- HERO SECTION WITH 3D PURPLE GLOBE & RED ORBITS --- */}
+      {/* --- HERO SECTION WITH 3D PURPLE & CYAN CORE GLOBE & RED ORBITS --- */}
       <section className="relative min-h-[90vh] sm:min-h-[92vh] flex flex-col justify-between px-5 sm:px-8 md:px-14 py-16 sm:py-20 overflow-hidden bg-slate-950">
-        {/* Three.js 3D WebGL Purple Globe & Neon Red Orbits */}
+        {/* Three.js 3D WebGL Globe with Smooth Black Hole Singularity Attraction */}
         <ThreeBackground interactive={true} />
 
         {/* Ambient Top Glow */}
@@ -225,13 +225,13 @@ export const Index: React.FC = () => {
         <SelectedWorks />
       </div>
 
-      {/* --- CATEGORIZED TECH STACK --- */}
+      {/* --- REFINED SKILLS & TECHNICAL ARSENAL --- */}
       <section id="skills" className="py-20 md:py-28 px-5 sm:px-8 md:px-14 bg-slate-950 border-t border-slate-900">
         <div className="max-w-6xl mx-auto">
           <div className="mb-12">
-            <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest block mb-2">Tech Stack</span>
+            <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest block mb-2">Core Stack & Capabilities</span>
             <h2 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
-              Categorized Engineering Arsenal
+              Skills & <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-rose-400 to-pink-400">Technical Arsenal</span>
             </h2>
           </div>
 
