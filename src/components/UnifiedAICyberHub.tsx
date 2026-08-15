@@ -15,11 +15,12 @@ export const UnifiedAICyberHub: React.FC = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [eyeOffset, setEyeOffset] = useState({ x: 0, y: 0 });
   const [isBlinking, setIsBlinking] = useState(false);
+  const [isSmiling, setIsSmiling] = useState(false);
 
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hello! I'm Nova, Sparsh Garg's autonomous AI agent companion. Ask me anything about his work as an AI Engineer at Genpact, merged PRs in TensorFlow & VS Code, or switch to CLI mode for shell commands.",
+      content: "Hello! I'm Nova, Sparsh Garg's autonomous AI companion. Ask me anything about his engineering work at Genpact, merged PRs in TensorFlow & VS Code, or switch to CLI mode for shell commands.",
       time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     },
   ]);
@@ -57,11 +58,13 @@ export const UnifiedAICyberHub: React.FC = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Nova Blink on Global Click + Periodic Blinks
+  // Nova Blink and Smile Trigger on Click + Periodic Animation
   useEffect(() => {
     const handleGlobalClick = () => {
       setIsBlinking(true);
+      setIsSmiling(true);
       setTimeout(() => setIsBlinking(false), 160);
+      setTimeout(() => setIsSmiling(false), 1200); // Smiles for 1.2s on click
     };
 
     window.addEventListener("click", handleGlobalClick);
@@ -101,6 +104,8 @@ export const UnifiedAICyberHub: React.FC = () => {
     const userMsg: Message = { role: "user", content: query, time };
     setMessages((prev) => [...prev, userMsg]);
     setInputVal("");
+    setIsSmiling(true);
+    setTimeout(() => setIsSmiling(false), 1500);
 
     if (mode === "cli") {
       // CLI Terminal Commands
@@ -231,31 +236,37 @@ export const UnifiedAICyberHub: React.FC = () => {
 
   return (
     <>
-      {/* Floating Interactive Nova Mascot & AI Hub Trigger Button */}
+      {/* Floating Interactive Nova Avatar & Chat Trigger */}
       <motion.button
         ref={novaButtonRef}
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-3 p-2 pr-4 rounded-full bg-slate-950/90 border border-purple-500/50 shadow-[0_0_25px_rgba(168,85,247,0.45)] backdrop-blur-xl text-white hover:border-rose-500/70 transition-all duration-300 font-mono text-xs font-bold pointer-events-auto group"
-        aria-label="Toggle Nova AI Agent Hub"
-        title="Nova: Sparsh's AI Agent Hub · Click to Chat!"
+        onClick={() => {
+          setIsSmiling(true);
+          setIsOpen(!isOpen);
+          setTimeout(() => setIsSmiling(false), 1200);
+        }}
+        onMouseEnter={() => setIsSmiling(true)}
+        onMouseLeave={() => !isOpen && setIsSmiling(false)}
+        className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 p-2 pr-4 rounded-full bg-slate-950/90 border border-purple-500/50 shadow-[0_0_25px_rgba(168,85,247,0.45)] backdrop-blur-xl text-white hover:border-rose-500/70 transition-all duration-300 font-mono pointer-events-auto group"
+        aria-label="Chat with Nova AI"
+        title="Nova AI · Click to Chat!"
       >
-        {/* Nova Avatar Head with Tracking Eyes */}
+        {/* Nova Avatar Head with Tracking Eyes & Cute Smile */}
         <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-b from-purple-900/90 via-slate-950 to-slate-950 border border-purple-500/60 flex items-center justify-center p-1 shadow-inner">
           {/* Antennas */}
           <div className="absolute -top-1 left-2 w-1 h-2 rounded-t-full bg-rose-500 shadow-[0_0_5px_rgba(244,63,94,0.8)] animate-pulse" />
           <div className="absolute -top-1 right-2 w-1 h-2 rounded-t-full bg-rose-500 shadow-[0_0_5px_rgba(244,63,94,0.8)] animate-pulse" />
 
           {/* Face Plate */}
-          <div className="relative w-8 h-7 rounded-lg bg-slate-950 border border-purple-500/40 flex items-center justify-center gap-1.5 px-1">
+          <div className="relative w-8 h-7 rounded-lg bg-slate-950 border border-purple-500/40 flex items-center justify-center gap-1.5 px-1 overflow-hidden">
             {/* Left Eye */}
             <div className="relative w-2.5 h-2.5 rounded-full bg-slate-900 border border-rose-500/50 flex items-center justify-center overflow-hidden">
               <motion.div
                 animate={{
                   x: eyeOffset.x,
                   y: eyeOffset.y,
-                  scaleY: isBlinking ? 0.05 : 1,
+                  scaleY: isBlinking ? 0.05 : isSmiling ? 0.8 : 1,
                 }}
                 transition={{ duration: isBlinking ? 0.08 : 0.12, ease: "easeOut" }}
                 className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-rose-400 to-pink-500 shadow-[0_0_4px_rgba(244,63,94,1)]"
@@ -268,12 +279,23 @@ export const UnifiedAICyberHub: React.FC = () => {
                 animate={{
                   x: eyeOffset.x,
                   y: eyeOffset.y,
-                  scaleY: isBlinking ? 0.05 : 1,
+                  scaleY: isBlinking ? 0.05 : isSmiling ? 0.8 : 1,
                 }}
                 transition={{ duration: isBlinking ? 0.08 : 0.12, ease: "easeOut" }}
                 className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-rose-400 to-pink-500 shadow-[0_0_4px_rgba(244,63,94,1)]"
               />
             </div>
+
+            {/* Dynamic Mouth / Smile on Click & Hover */}
+            {isSmiling ? (
+              <motion.div
+                initial={{ scaleX: 0.5, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: 1 }}
+                className="absolute bottom-1 w-3 h-1.5 border-b-2 border-rose-400 rounded-b-full shadow-[0_0_5px_rgba(244,63,94,0.9)]"
+              />
+            ) : (
+              <div className="absolute bottom-1 w-2 h-0.5 rounded-full bg-purple-400/70" />
+            )}
           </div>
 
           {/* Active Ping Dot */}
@@ -283,13 +305,13 @@ export const UnifiedAICyberHub: React.FC = () => {
           </span>
         </div>
 
-        {/* Text Pill */}
+        {/* Clean, Polished Text Badge */}
         <div className="flex flex-col text-left">
-          <span className="text-[11px] font-bold text-white group-hover:text-purple-300 transition-colors flex items-center gap-1.5">
-            NOVA // AI HUB
+          <span className="text-xs font-bold text-white group-hover:text-purple-300 transition-colors flex items-center gap-1.5 leading-none mb-0.5">
+            Nova AI
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
           </span>
-          <span className="text-[9px] text-slate-400 font-mono">Ask AI or run CLI</span>
+          <span className="text-[10px] text-slate-400 font-mono leading-tight">Ask anything</span>
         </div>
       </motion.button>
 
@@ -303,14 +325,15 @@ export const UnifiedAICyberHub: React.FC = () => {
             transition={{ duration: 0.25, ease: "easeOut" }}
             className="fixed bottom-20 right-4 sm:right-8 z-50 w-[calc(100vw-2rem)] sm:w-[480px] h-[530px] bg-slate-950/95 border border-purple-500/40 rounded-2xl shadow-[0_0_40px_rgba(168,85,247,0.3)] backdrop-blur-xl flex flex-col overflow-hidden font-sans"
           >
-            {/* Header with Mode Switcher */}
+            {/* Header with Mode Switcher & Smiling Nova Mini Avatar */}
             <div className="flex items-center justify-between px-4 py-3 bg-slate-900/90 border-b border-purple-500/20 select-none">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <div className="w-3 h-3 rounded-full bg-rose-500 cursor-pointer" onClick={() => setIsOpen(false)} />
                 <div className="w-3 h-3 rounded-full bg-amber-500 cursor-pointer" />
                 <div className="w-3 h-3 rounded-full bg-emerald-500" />
-                <span className="ml-1 text-xs font-mono font-bold text-slate-300">
-                  Nova // Sparsh Garg AI Agent
+                
+                <span className="ml-1 text-xs font-mono font-bold text-slate-200 flex items-center gap-1.5">
+                  Nova // Sparsh AI Companion
                 </span>
               </div>
 
@@ -377,7 +400,7 @@ export const UnifiedAICyberHub: React.FC = () => {
               {isTyping && (
                 <div className="flex gap-2 items-center text-slate-400 text-xs font-mono">
                   <RefreshCw size={12} className="animate-spin text-purple-400" />
-                  <span>Nova is reasoning...</span>
+                  <span>Nova is thinking...</span>
                 </div>
               )}
               <div ref={messagesEndRef} />
