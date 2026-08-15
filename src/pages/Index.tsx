@@ -83,7 +83,7 @@ export const Index: React.FC = () => {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white uppercase leading-[0.95] mb-4 sm:mb-6"
+            className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white uppercase leading-[0.98] sm:leading-[0.95] mb-4 sm:mb-6"
           >
             DRIVEN <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-purple-300">
@@ -96,21 +96,21 @@ export const Index: React.FC = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-base sm:text-xl md:text-2xl font-semibold text-slate-300 mb-6 sm:mb-8"
+            className="text-sm xs:text-base sm:text-xl md:text-2xl font-semibold text-slate-300 mb-6 sm:mb-8 flex flex-wrap items-center gap-1.5"
           >
-            Specializing in <FocusRotator />
+            <span>Specializing in</span> <FocusRotator />
           </motion.div>
 
-          {/* Action CTAs */}
+          {/* Action CTAs - Fluid on mobile */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="flex flex-wrap items-center gap-3 sm:gap-4"
+            className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-4 w-full sm:w-auto"
           >
             <a
               href="#contributions"
-              className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-rose-600 hover:from-purple-500 hover:to-rose-500 text-white font-mono font-bold text-xs tracking-wider uppercase transition-all shadow-[0_0_20px_rgba(168,85,247,0.35)] flex items-center gap-2"
+              className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-rose-600 hover:from-purple-500 hover:to-rose-500 text-white font-mono font-bold text-xs tracking-wider uppercase transition-all shadow-[0_0_20px_rgba(168,85,247,0.35)] flex items-center justify-center gap-2 text-center"
             >
               <span>Code Contributions</span>
               <GitMerge size={14} />
@@ -118,7 +118,7 @@ export const Index: React.FC = () => {
 
             <a
               href="#work"
-              className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-white font-mono font-bold text-xs tracking-wider uppercase transition-all flex items-center gap-2 backdrop-blur-md"
+              className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-white font-mono font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-center gap-2 backdrop-blur-md text-center"
             >
               <span>Featured Projects</span>
               <ArrowUpRight size={14} />
@@ -126,7 +126,7 @@ export const Index: React.FC = () => {
 
             <a
               href="#contact"
-              className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-transparent hover:bg-purple-500/10 border border-purple-500/40 text-purple-300 hover:text-white font-mono font-bold text-xs tracking-wider uppercase transition-all flex items-center gap-2"
+              className="px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-transparent hover:bg-purple-500/10 border border-purple-500/40 text-purple-300 hover:text-white font-mono font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-center gap-2 text-center"
             >
               <span>Get In Touch</span>
               <Mail size={14} />
@@ -134,47 +134,47 @@ export const Index: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Hero Credential Strip */}
+        {/* Hero Credential Strip - Optimized Mobile 2x2 Grid with Clean Borders */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.4 }}
-          className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-slate-900/80 border border-slate-800 backdrop-blur-xl max-w-5xl mt-6"
+          className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-slate-900/85 border border-slate-800 backdrop-blur-xl max-w-5xl mt-6 shadow-xl"
         >
-          <div className="border-r border-slate-800 pr-2 sm:pr-4">
-            <div className="flex items-center gap-1.5 text-amber-400 font-mono text-[11px] font-bold mb-1">
-              <Award size={13} />
+          <div className="border-r border-slate-800/80 pr-2 sm:pr-4">
+            <div className="flex items-center gap-1.5 text-amber-400 font-mono text-[10px] sm:text-[11px] font-bold mb-1">
+              <Award size={12} />
               <span>LEETCODE KNIGHT</span>
             </div>
-            <p className="text-lg sm:text-2xl font-black text-white">1900+ Rating</p>
-            <p className="text-[10px] font-mono text-slate-400">Top 5% Global Algorithmic Rank</p>
+            <p className="text-base sm:text-2xl font-black text-white">1900+ Rating</p>
+            <p className="text-[9px] sm:text-[10px] font-mono text-slate-400">Top 5% Global Rank</p>
           </div>
 
-          <div className="md:border-r border-slate-800 pr-2 sm:pr-4">
-            <div className="flex items-center gap-1.5 text-purple-400 font-mono text-[11px] font-bold mb-1">
-              <GitMerge size={13} />
+          <div className="md:border-r border-slate-800/80 pr-2 sm:pr-4 pl-1 sm:pl-0">
+            <div className="flex items-center gap-1.5 text-purple-400 font-mono text-[10px] sm:text-[11px] font-bold mb-1">
+              <GitMerge size={12} />
               <span>OPEN SOURCE</span>
             </div>
-            <p className="text-lg sm:text-2xl font-black text-white">Google & Meta</p>
-            <p className="text-[10px] font-mono text-slate-400">TensorFlow, React, VS Code</p>
+            <p className="text-base sm:text-2xl font-black text-white">Google & Meta</p>
+            <p className="text-[9px] sm:text-[10px] font-mono text-slate-400">TensorFlow, React, VS Code</p>
           </div>
 
-          <div className="border-r border-slate-800 pr-2 sm:pr-4">
-            <div className="flex items-center gap-1.5 text-rose-400 font-mono text-[11px] font-bold mb-1">
-              <Cpu size={13} />
+          <div className="border-r border-slate-800/80 pr-2 sm:pr-4 pt-2 md:pt-0 border-t md:border-t-0">
+            <div className="flex items-center gap-1.5 text-rose-400 font-mono text-[10px] sm:text-[11px] font-bold mb-1">
+              <Cpu size={12} />
               <span>ENTERPRISE AI</span>
             </div>
-            <p className="text-lg sm:text-2xl font-black text-white">Genpact</p>
-            <p className="text-[10px] font-mono text-slate-400">AI Engineer & LLM Automations</p>
+            <p className="text-base sm:text-2xl font-black text-white">Genpact</p>
+            <p className="text-[9px] sm:text-[10px] font-mono text-slate-400">AI Engineer & LLMs</p>
           </div>
 
-          <div>
-            <div className="flex items-center gap-1.5 text-emerald-400 font-mono text-[11px] font-bold mb-1">
-              <ShieldCheck size={13} />
+          <div className="pl-1 sm:pl-0 pt-2 md:pt-0 border-t md:border-t-0">
+            <div className="flex items-center gap-1.5 text-emerald-400 font-mono text-[10px] sm:text-[11px] font-bold mb-1">
+              <ShieldCheck size={12} />
               <span>SIH '22 RUNNER-UP</span>
             </div>
-            <p className="text-lg sm:text-2xl font-black text-white">National Award</p>
-            <p className="text-[10px] font-mono text-slate-400">Smart India Hackathon</p>
+            <p className="text-base sm:text-2xl font-black text-white">National Award</p>
+            <p className="text-[9px] sm:text-[10px] font-mono text-slate-400">Smart India Hackathon</p>
           </div>
         </motion.div>
       </section>

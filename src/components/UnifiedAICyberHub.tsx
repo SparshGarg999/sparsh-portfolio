@@ -248,20 +248,20 @@ export const UnifiedAICyberHub: React.FC = () => {
         }}
         onMouseEnter={() => setIsSmiling(true)}
         onMouseLeave={() => !isOpen && setIsSmiling(false)}
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 p-2 pr-4 rounded-full bg-slate-950/90 border border-purple-500/50 shadow-[0_0_25px_rgba(168,85,247,0.45)] backdrop-blur-xl text-white hover:border-rose-500/70 transition-all duration-300 font-mono pointer-events-auto group"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex items-center gap-2 p-1.5 sm:p-2 pr-3.5 sm:pr-4 rounded-full bg-slate-950/95 border border-purple-500/50 shadow-[0_0_25px_rgba(168,85,247,0.45)] backdrop-blur-xl text-white hover:border-rose-500/70 transition-all duration-300 font-mono pointer-events-auto group"
         aria-label="Chat with Nova AI"
         title="Nova AI · Click to Chat!"
       >
         {/* Nova Avatar Head with Tracking Eyes & Cute Smile */}
-        <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-b from-purple-900/90 via-slate-950 to-slate-950 border border-purple-500/60 flex items-center justify-center p-1 shadow-inner">
+        <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-b from-purple-900/90 via-slate-950 to-slate-950 border border-purple-500/60 flex items-center justify-center p-0.5 sm:p-1 shadow-inner">
           {/* Antennas */}
-          <div className="absolute -top-1 left-2 w-1 h-2 rounded-t-full bg-rose-500 shadow-[0_0_5px_rgba(244,63,94,0.8)] animate-pulse" />
-          <div className="absolute -top-1 right-2 w-1 h-2 rounded-t-full bg-rose-500 shadow-[0_0_5px_rgba(244,63,94,0.8)] animate-pulse" />
+          <div className="absolute -top-1 left-1.5 sm:left-2 w-1 h-1.5 sm:h-2 rounded-t-full bg-rose-500 shadow-[0_0_5px_rgba(244,63,94,0.8)] animate-pulse" />
+          <div className="absolute -top-1 right-1.5 sm:right-2 w-1 h-1.5 sm:h-2 rounded-t-full bg-rose-500 shadow-[0_0_5px_rgba(244,63,94,0.8)] animate-pulse" />
 
           {/* Face Plate */}
-          <div className="relative w-8 h-7 rounded-lg bg-slate-950 border border-purple-500/40 flex items-center justify-center gap-1.5 px-1 overflow-hidden">
+          <div className="relative w-6 h-5 sm:w-8 sm:h-7 rounded-md sm:rounded-lg bg-slate-950 border border-purple-500/40 flex items-center justify-center gap-1 sm:gap-1.5 px-0.5 sm:px-1 overflow-hidden">
             {/* Left Eye */}
-            <div className="relative w-2.5 h-2.5 rounded-full bg-slate-900 border border-rose-500/50 flex items-center justify-center overflow-hidden">
+            <div className="relative w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-slate-900 border border-rose-500/50 flex items-center justify-center overflow-hidden">
               <motion.div
                 animate={{
                   x: eyeOffset.x,
@@ -269,12 +269,12 @@ export const UnifiedAICyberHub: React.FC = () => {
                   scaleY: isBlinking ? 0.05 : isSmiling ? 0.8 : 1,
                 }}
                 transition={{ duration: isBlinking ? 0.08 : 0.12, ease: "easeOut" }}
-                className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-rose-400 to-pink-500 shadow-[0_0_4px_rgba(244,63,94,1)]"
+                className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-gradient-to-r from-rose-400 to-pink-500 shadow-[0_0_4px_rgba(244,63,94,1)]"
               />
             </div>
 
             {/* Right Eye */}
-            <div className="relative w-2.5 h-2.5 rounded-full bg-slate-900 border border-rose-500/50 flex items-center justify-center overflow-hidden">
+            <div className="relative w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-slate-900 border border-rose-500/50 flex items-center justify-center overflow-hidden">
               <motion.div
                 animate={{
                   x: eyeOffset.x,
@@ -282,7 +282,7 @@ export const UnifiedAICyberHub: React.FC = () => {
                   scaleY: isBlinking ? 0.05 : isSmiling ? 0.8 : 1,
                 }}
                 transition={{ duration: isBlinking ? 0.08 : 0.12, ease: "easeOut" }}
-                className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-rose-400 to-pink-500 shadow-[0_0_4px_rgba(244,63,94,1)]"
+                className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-gradient-to-r from-rose-400 to-pink-500 shadow-[0_0_4px_rgba(244,63,94,1)]"
               />
             </div>
 
@@ -291,10 +291,10 @@ export const UnifiedAICyberHub: React.FC = () => {
               <motion.div
                 initial={{ scaleX: 0.5, opacity: 0 }}
                 animate={{ scaleX: 1, opacity: 1 }}
-                className="absolute bottom-1 w-3 h-1.5 border-b-2 border-rose-400 rounded-b-full shadow-[0_0_5px_rgba(244,63,94,0.9)]"
+                className="absolute bottom-0.5 sm:bottom-1 w-2.5 sm:w-3 h-1 sm:h-1.5 border-b-2 border-rose-400 rounded-b-full shadow-[0_0_5px_rgba(244,63,94,0.9)]"
               />
             ) : (
-              <div className="absolute bottom-1 w-2 h-0.5 rounded-full bg-purple-400/70" />
+              <div className="absolute bottom-0.5 sm:bottom-1 w-1.5 sm:w-2 h-0.5 rounded-full bg-purple-400/70" />
             )}
           </div>
 
@@ -307,15 +307,15 @@ export const UnifiedAICyberHub: React.FC = () => {
 
         {/* Clean, Polished Text Badge */}
         <div className="flex flex-col text-left">
-          <span className="text-xs font-bold text-white group-hover:text-purple-300 transition-colors flex items-center gap-1.5 leading-none mb-0.5">
+          <span className="text-[11px] sm:text-xs font-bold text-white group-hover:text-purple-300 transition-colors flex items-center gap-1 leading-none mb-0.5">
             Nova AI
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
           </span>
-          <span className="text-[10px] text-slate-400 font-mono leading-tight">Ask anything</span>
+          <span className="text-[9px] sm:text-[10px] text-slate-400 font-mono leading-tight">Ask anything</span>
         </div>
       </motion.button>
 
-      {/* Unified Modal Window */}
+      {/* Unified Modal Window - Responsive mobile drawer */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -323,7 +323,7 @@ export const UnifiedAICyberHub: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.92 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed bottom-20 right-4 sm:right-8 z-50 w-[calc(100vw-2rem)] sm:w-[480px] h-[530px] bg-slate-950/95 border border-purple-500/40 rounded-2xl shadow-[0_0_40px_rgba(168,85,247,0.3)] backdrop-blur-xl flex flex-col overflow-hidden font-sans"
+            className="fixed bottom-16 right-2 left-2 sm:left-auto sm:right-8 sm:bottom-20 z-50 sm:w-[480px] max-h-[82vh] h-[520px] bg-slate-950/98 border border-purple-500/40 rounded-2xl shadow-[0_0_40px_rgba(168,85,247,0.3)] backdrop-blur-xl flex flex-col overflow-hidden font-sans"
           >
             {/* Header with Mode Switcher & Smiling Nova Mini Avatar */}
             <div className="flex items-center justify-between px-4 py-3 bg-slate-900/90 border-b border-purple-500/20 select-none">

@@ -89,7 +89,7 @@ export const Contact: React.FC = () => {
           </div>
 
           {/* Right Column: Contact Form */}
-          <div className="lg:col-span-7 p-6 sm:p-8 rounded-2xl bg-slate-900/70 border border-slate-800 backdrop-blur-xl shadow-xl shadow-black/40">
+          <div className="lg:col-span-7 p-5 sm:p-8 rounded-2xl bg-slate-900/70 border border-slate-800 backdrop-blur-xl shadow-xl shadow-black/40">
             <form onSubmit={handleSubmit} className="space-y-4 font-sans text-sm">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -102,7 +102,7 @@ export const Contact: React.FC = () => {
                     onChange={handleChange}
                     required
                     placeholder="Jane"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-rose-500 transition-colors text-sm"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-rose-500 transition-colors text-base sm:text-sm"
                   />
                 </div>
                 <div>
@@ -115,7 +115,7 @@ export const Contact: React.FC = () => {
                     onChange={handleChange}
                     required
                     placeholder="Doe"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-rose-500 transition-colors text-sm"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-rose-500 transition-colors text-base sm:text-sm"
                   />
                 </div>
               </div>
@@ -131,7 +131,7 @@ export const Contact: React.FC = () => {
                     onChange={handleChange}
                     required
                     placeholder="jane@company.com"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-rose-500 transition-colors text-sm"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-rose-500 transition-colors text-base sm:text-sm"
                   />
                 </div>
                 <div>
@@ -144,7 +144,7 @@ export const Contact: React.FC = () => {
                     onChange={handleChange}
                     required
                     placeholder="Project Inquiry / Engineering Opportunity"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-rose-500 transition-colors text-sm"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-rose-500 transition-colors text-base sm:text-sm"
                   />
                 </div>
               </div>
@@ -159,14 +159,14 @@ export const Contact: React.FC = () => {
                   onChange={handleChange}
                   required
                   placeholder="Tell me about your project or architecture..."
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white placeholder-slate-600 focus:outline-none focus:border-rose-500 transition-colors text-sm resize-none"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-rose-500 transition-colors text-base sm:text-sm resize-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-rose-600 to-indigo-600 hover:from-rose-500 hover:to-indigo-500 text-white font-mono font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(244,63,94,0.35)] flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-rose-600 to-indigo-600 hover:from-rose-500 hover:to-indigo-500 text-white font-mono font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(244,63,94,0.35)] flex items-center justify-center gap-2 disabled:opacity-50 active:scale-[0.98]"
               >
                 {status === "sending" ? "Transmitting..." : "Send Message"}
                 <Send size={13} />
