@@ -186,7 +186,7 @@ export const UnifiedAICyberHub: React.FC = () => {
           response = (
             <div className="space-y-1 text-xs font-mono text-slate-200">
               <p>📧 Email: <a href="mailto:sparshgarg307@gmail.com" className="text-purple-300 underline">sparshgarg307@gmail.com</a></p>
-              <p>💼 LinkedIn: <a href="https://www.linkedin.com/in/sparsh-garg/" target="_blank" rel="noopener noreferrer" className="text-purple-300 underline">linkedin.com/in/sparsh-garg</a></p>
+              <p>💼 LinkedIn: <a href="https://www.linkedin.com/in/sparsh-garg-2bb2483b2/" target="_blank" rel="noopener noreferrer" className="text-purple-300 underline">linkedin.com/in/sparsh-garg-2bb2483b2</a></p>
               <p>🐙 GitHub: <a href="https://github.com/SparshGarg999" target="_blank" rel="noopener noreferrer" className="text-purple-300 underline">github.com/SparshGarg999</a></p>
             </div>
           );
@@ -220,7 +220,7 @@ export const UnifiedAICyberHub: React.FC = () => {
         } else if (q.includes("knight") || q.includes("leetcode") || q.includes("rating")) {
           reply = "Sparsh is a LeetCode Knight with a peak rating of 1900+, placing him in the top 5% globally in algorithmic problem solving.";
         } else if (q.includes("contact") || q.includes("email") || q.includes("hire")) {
-          reply = "You can contact Sparsh directly at sparshgarg307@gmail.com or on LinkedIn at linkedin.com/in/sparsh-garg/!";
+          reply = "You can contact Sparsh directly at sparshgarg307@gmail.com or on LinkedIn at linkedin.com/in/sparsh-garg-2bb2483b2/!";
         } else {
           reply = "Sparsh Garg is an AI Engineer at Genpact and a LeetCode Knight specializing in multi-agent AI systems, Python, FastAPI, React, C++, and high-performance engineering. Ask me anything!";
         }

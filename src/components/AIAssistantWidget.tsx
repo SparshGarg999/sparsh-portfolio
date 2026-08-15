@@ -50,7 +50,7 @@ export const AIAssistantWidget: React.FC = () => {
       return "Sparsh is a LeetCode Knight with a peak rating of 1900+, placing him in the top 5% globally in data structures, graph theory, and dynamic programming algorithms.";
     }
     if (q.includes("contact") || q.includes("email") || q.includes("hire") || q.includes("reach")) {
-      return "You can reach Sparsh directly at sparshgarg307@gmail.com, connect on LinkedIn at linkedin.com/in/sparsh-garg/, or submit a message through the contact form below!";
+      return "You can reach Sparsh directly at sparshgarg307@gmail.com, connect on LinkedIn at linkedin.com/in/sparsh-garg-2bb2483b2/, or submit a message through the contact form below!";
     }
     return "Sparsh Garg is a Software Developer at Genpact and a LeetCode Knight specializing in multi-agent AI systems, Python, FastAPI, React, C++, and enterprise workflow automation. Feel free to ask about his projects or open-source work!";
   };

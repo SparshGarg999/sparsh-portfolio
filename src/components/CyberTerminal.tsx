@@ -133,7 +133,7 @@ export const CyberTerminal: React.FC = () => {
         response = (
           <div className="space-y-1 text-xs text-slate-200">
             <p>📧 Email: <a href="mailto:sparshgarg307@gmail.com" className="text-cyan-400 underline">sparshgarg307@gmail.com</a></p>
-            <p>💼 LinkedIn: <a href="https://www.linkedin.com/in/sparsh-garg/" target="_blank" rel="noopener noreferrer" className="text-cyan-400 underline">linkedin.com/in/sparsh-garg</a></p>
+            <p>💼 LinkedIn: <a href="https://www.linkedin.com/in/sparsh-garg-2bb2483b2/" target="_blank" rel="noopener noreferrer" className="text-cyan-400 underline">linkedin.com/in/sparsh-garg-2bb2483b2</a></p>
             <p>🐙 GitHub: <a href="https://github.com/SparshGarg999" target="_blank" rel="noopener noreferrer" className="text-cyan-400 underline">github.com/SparshGarg999</a></p>
           </div>
         );
