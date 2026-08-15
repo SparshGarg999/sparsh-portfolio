@@ -119,7 +119,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       beaconMeshes.push(bMesh);
     }
 
-    // --- 6. Uniform Spherical Particle Field with Outward Ripple Wave on Click ---
+    // --- 6. Uniform Spherical Particle Field with Slow-Motion Fluid Organic Ripple ---
     const particleCount = isMobile ? 180 : 420;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
@@ -130,8 +130,9 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       ny: number;
       nz: number;
       r: number;
-      initialAngle: number;
-      speed: number;
+      theta: number;
+      phi: number;
+      driftSpeed: number;
     }
     const particleData: ParticleData[] = [];
 
@@ -162,8 +163,9 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
         ny,
         nz,
         r,
-        initialAngle: theta,
-        speed: 0.3 + Math.random() * 0.5,
+        theta,
+        phi,
+        driftSpeed: 0.3 + Math.random() * 0.4,
       });
 
       const colorRoll = Math.random();
@@ -182,19 +184,19 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       size: isMobile ? 1.4 : 1.7,
       vertexColors: true,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.65,
       blending: THREE.AdditiveBlending,
     });
 
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
-    // --- Outward Harmonic Ripple Wave State ---
-    let rippleProgress = 999; // 999 = idle, 0 to 2.5 = active ripple wave
+    // --- Slow-Motion Organic Fluid Ripple State ---
+    let rippleProgress = 999; // 999 = idle, 0 to 4.0 = active slow graceful ripple
     let globeImpulse = 0;
 
     const handleGlobalClick = () => {
-      // Trigger smooth outward harmonic ripple wave
+      // Trigger slow graceful fluid wave (over ~3.5s)
       rippleProgress = 0;
       globeImpulse = 1.0;
     };
@@ -232,7 +234,7 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
 
     window.addEventListener("resize", handleResize, { passive: true });
 
-    // --- Silky 60 FPS Animation Loop ---
+    // --- Silky 60 FPS Fluid Animation Loop ---
     let animationFrameId: number;
     let clock = new THREE.Clock();
 
@@ -245,29 +247,29 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
       mouseY += (targetY - mouseY) * 0.04;
 
       // Globe & Rings Rotation
-      globeGroup.rotation.y = elapsed * 0.12 + mouseX * 0.015;
-      globeGroup.rotation.x = Math.sin(elapsed * 0.08) * 0.1 - mouseY * 0.015;
+      globeGroup.rotation.y = elapsed * 0.1 + mouseX * 0.015;
+      globeGroup.rotation.x = Math.sin(elapsed * 0.06) * 0.08 - mouseY * 0.015;
 
-      // Pulse Cyan Inner Core
-      innerCoreMesh.rotation.y = -elapsed * 0.22;
-      innerCoreMesh.rotation.z = elapsed * 0.15;
-      globeImpulse *= 0.92;
-      const coreScale = 1 + Math.sin(elapsed * 2) * 0.04 + globeImpulse * 0.12;
+      // Gentle Pulse Cyan Inner Core
+      innerCoreMesh.rotation.y = -elapsed * 0.16;
+      innerCoreMesh.rotation.z = elapsed * 0.1;
+      globeImpulse *= 0.96; // Smooth, slow decay
+      const coreScale = 1 + Math.sin(elapsed * 1.5) * 0.03 + globeImpulse * 0.08;
       innerCoreMesh.scale.set(coreScale, coreScale, coreScale);
 
       // Nucleus Spin
-      nucleusMesh.rotation.x = elapsed * 0.3;
-      nucleusMesh.rotation.y = -elapsed * 0.25;
+      nucleusMesh.rotation.x = elapsed * 0.2;
+      nucleusMesh.rotation.y = -elapsed * 0.18;
 
       // Ring Rotations
-      ringMesh1.rotation.z = elapsed * 0.16;
-      ringMesh2.rotation.x = elapsed * 0.13;
-      ringMesh3.rotation.y = elapsed * 0.15;
+      ringMesh1.rotation.z = elapsed * 0.12;
+      ringMesh2.rotation.x = elapsed * 0.1;
+      ringMesh3.rotation.y = elapsed * 0.11;
 
-      // Animate Orbiting Beacons along rings
+      // Animate Orbiting Beacons smoothly along rings
       const orbitR = globeRadius * 1.38;
       for (let b = 0; b < beaconCount; b++) {
-        const bSpeed = elapsed * (0.8 + b * 0.3);
+        const bSpeed = elapsed * (0.6 + b * 0.2);
         beaconMeshes[b].position.set(
           Math.cos(bSpeed) * orbitR,
           Math.sin(bSpeed) * Math.cos(b * 1.2) * orbitR,
@@ -275,36 +277,44 @@ export const ThreeBackground: React.FC<ThreeBackgroundProps> = ({ interactive = 
         );
       }
 
-      // Smooth Harmonic Ripple Wave on Particles
+      // Slow-Motion Organic Fluid Wave across particles
       const posAttr = particleGeo.attributes.position as THREE.BufferAttribute;
       const posArr = posAttr.array as Float32Array;
 
-      if (rippleProgress < 2.5) {
-        rippleProgress += 0.04;
-        const waveRadius = globeRadius + rippleProgress * 32; // Expanding wavefront
-        const waveThickness = 14; // Width of the ripple crest
-
-        for (let i = 0; i < particleCount; i++) {
-          const i3 = i * 3;
-          const p = particleData[i];
-          const distDiff = p.r - waveRadius;
-
-          let waveDisplacement = 0;
-          if (Math.abs(distDiff) < waveThickness) {
-            const envelope = Math.cos((distDiff / waveThickness) * (Math.PI / 2));
-            const fade = Math.max(0, 1 - rippleProgress / 2.5);
-            waveDisplacement = envelope * fade * 7.5; // Smooth outward displacement
-          }
-
-          const currentR = p.r + waveDisplacement;
-          posArr[i3] = p.nx * currentR;
-          posArr[i3 + 1] = p.ny * currentR;
-          posArr[i3 + 2] = p.nz * currentR;
-        }
-        posAttr.needsUpdate = true;
+      // Advance slow graceful wave progress
+      if (rippleProgress < 4.0) {
+        rippleProgress += 0.012; // Slow, fluid propagation (takes ~3.5 seconds)
       }
 
-      particles.rotation.y = elapsed * 0.02;
+      const waveRadius = globeRadius + rippleProgress * 22; // Gentle outward wavefront speed
+      const waveThickness = 28; // Wide, soft, silky wave crest
+
+      for (let i = 0; i < particleCount; i++) {
+        const i3 = i * 3;
+        const p = particleData[i];
+
+        // Continuous gentle floating organic breathing
+        const organicDrift = Math.sin(elapsed * 0.7 * p.driftSpeed + p.theta * 2 + p.phi) * 1.8;
+
+        // Slow graceful ripple wave calculation
+        let rippleDisplacement = 0;
+        if (rippleProgress < 4.0) {
+          const distDiff = p.r - waveRadius;
+          if (Math.abs(distDiff) < waveThickness) {
+            const envelope = Math.cos((distDiff / waveThickness) * (Math.PI / 2));
+            const fade = Math.max(0, 1 - rippleProgress / 4.0);
+            rippleDisplacement = envelope * fade * 8.5; // Soft, undulating silky rise
+          }
+        }
+
+        const finalR = p.r + organicDrift + rippleDisplacement;
+        posArr[i3] = p.nx * finalR;
+        posArr[i3 + 1] = p.ny * finalR;
+        posArr[i3 + 2] = p.nz * finalR;
+      }
+      posAttr.needsUpdate = true;
+
+      particles.rotation.y = elapsed * 0.015;
 
       renderer.render(scene, camera);
     };
