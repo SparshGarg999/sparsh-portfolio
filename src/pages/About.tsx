@@ -78,10 +78,10 @@ const About = () => {
               {/* Job 1 */}
               <div>
                 <p className="font-sans text-xl md:text-2xl lg:text-3xl font-bold leading-tight tracking-tight">
-                  Genpact
+                  Enterprise AI & Systems Engineering
                 </p>
                 <p className="font-sans text-xl md:text-2xl lg:text-3xl font-normal text-black/70 leading-tight tracking-tight">
-                  Software Developer (Jul 2024 – Present)
+                  AI & Software Engineer (Jul 2024 – Present)
                 </p>
               </div>
 

@@ -20,7 +20,7 @@ export const UnifiedAICyberHub: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hello! I'm Nova, Sparsh Garg's autonomous AI companion. Ask me anything about his engineering work at Genpact, merged PRs in TensorFlow & VS Code, or switch to CLI mode for shell commands.",
+      content: "Hello! I'm Nova, Sparsh Garg's autonomous AI companion. Ask me anything about his multi-agent AI architectures, merged PRs in TensorFlow & VS Code, or switch to CLI mode for shell commands.",
       time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     },
   ]);
@@ -90,7 +90,7 @@ export const UnifiedAICyberHub: React.FC = () => {
   }, [messages, isOpen, mode]);
 
   const quickPrompts = [
-    "What is Sparsh's role at Genpact?",
+    "What is Sparsh's core expertise?",
     "Show merged PRs in Google & Meta",
     "What is NEXUS AI?",
     "How to contact Sparsh?",
@@ -132,7 +132,7 @@ export const UnifiedAICyberHub: React.FC = () => {
           response = (
             <div className="space-y-1 text-slate-200 text-xs font-mono">
               <p className="text-rose-400 font-bold">Sparsh Garg</p>
-              <p>AI Engineer at <span className="text-purple-300 font-semibold">Genpact</span>, architecting autonomous multi-agent AI systems and LLM intelligence pipelines.</p>
+              <p><span className="text-purple-300 font-semibold">AI & Systems Engineer</span>, architecting autonomous multi-agent AI systems and LLM intelligence pipelines.</p>
               <p>LeetCode Knight (1900+ Rating) | SIH '22 National Runner-Up</p>
             </div>
           );
@@ -211,8 +211,8 @@ export const UnifiedAICyberHub: React.FC = () => {
       setTimeout(() => {
         const q = query.toLowerCase();
         let reply = "";
-        if (q.includes("genpact") || q.includes("role") || q.includes("work") || q.includes("job")) {
-          reply = "Sparsh is an AI Engineer at Genpact, architecting autonomous multi-agent AI systems, Large Language Model workflows, and advanced RAG pipelines for enterprise automation.";
+        if (q.includes("role") || q.includes("work") || q.includes("job") || q.includes("experience")) {
+          reply = "Sparsh is an AI & Systems Engineer, architecting autonomous multi-agent AI systems, Large Language Model workflows, and advanced RAG pipelines for enterprise automation.";
         } else if (q.includes("open source") || q.includes("pr") || q.includes("tensorflow") || q.includes("react") || q.includes("vscode") || q.includes("kubernetes")) {
           reply = "Sparsh has merged PRs in tier-1 repositories: Google TensorFlow (PR #123015), Facebook React (DevTools Fix), Microsoft VS Code (PR #324132), Kubernetes (PR #140623), and Career-Ops (PR #1864)!";
         } else if (q.includes("nexus") || q.includes("project")) {
@@ -222,7 +222,7 @@ export const UnifiedAICyberHub: React.FC = () => {
         } else if (q.includes("contact") || q.includes("email") || q.includes("hire")) {
           reply = "You can contact Sparsh directly at sparshgarg307@gmail.com or on LinkedIn at linkedin.com/in/sparsh-garg-2bb2483b2/!";
         } else {
-          reply = "Sparsh Garg is an AI Engineer at Genpact and a LeetCode Knight specializing in multi-agent AI systems, Python, FastAPI, React, C++, and high-performance engineering. Ask me anything!";
+          reply = "Sparsh Garg is an AI & Systems Engineer and a LeetCode Knight specializing in multi-agent AI systems, Python, FastAPI, React, C++, and high-performance engineering. Ask me anything!";
         }
 
         setMessages((prev) => [

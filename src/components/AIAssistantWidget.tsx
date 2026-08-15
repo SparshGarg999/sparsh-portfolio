@@ -15,7 +15,7 @@ export const AIAssistantWidget: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hi! I'm Sparsh Garg's AI Assistant. Ask me anything about his enterprise AI automations at Genpact, merged open-source PRs in TensorFlow & React, or algorithmic problem solving!",
+      content: "Hi! I'm Sparsh Garg's AI Assistant. Ask me anything about his multi-agent AI architectures, merged open-source PRs in TensorFlow & React, or algorithmic problem solving!",
       time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     },
   ]);
@@ -29,7 +29,7 @@ export const AIAssistantWidget: React.FC = () => {
   }, [messages, isOpen]);
 
   const quickPrompts = [
-    "What is Sparsh's role at Genpact?",
+    "What is Sparsh's core expertise?",
     "Tell me about his Open Source PRs",
     "What is NEXUS AI?",
     "How to contact Sparsh?",
@@ -37,8 +37,8 @@ export const AIAssistantWidget: React.FC = () => {
 
   const generateAnswer = (prompt: string): string => {
     const q = prompt.toLowerCase();
-    if (q.includes("genpact") || q.includes("role") || q.includes("work") || q.includes("job")) {
-      return "Sparsh is currently a Software Developer at Genpact, specializing in enterprise workflow automations across ServiceNow and Esker, integrating Large Language Models (LLMs) and multi-agent RAG pipelines for business automation.";
+    if (q.includes("role") || q.includes("work") || q.includes("job") || q.includes("experience")) {
+      return "Sparsh is an AI & Systems Engineer, specializing in enterprise workflow automations, Large Language Models (LLMs), and multi-agent RAG pipelines for business automation.";
     }
     if (q.includes("open source") || q.includes("pr") || q.includes("tensorflow") || q.includes("react") || q.includes("vscode") || q.includes("kubernetes")) {
       return "Sparsh has multiple merged pull requests in major industry repositories: Google TensorFlow (XLA constant propagation), Facebook React (DevTools Store crash fix), Microsoft VS Code (editor UI and command routing), Microsoft Winget Packages, and Kubernetes!";
@@ -52,7 +52,7 @@ export const AIAssistantWidget: React.FC = () => {
     if (q.includes("contact") || q.includes("email") || q.includes("hire") || q.includes("reach")) {
       return "You can reach Sparsh directly at sparshgarg307@gmail.com, connect on LinkedIn at linkedin.com/in/sparsh-garg-2bb2483b2/, or submit a message through the contact form below!";
     }
-    return "Sparsh Garg is a Software Developer at Genpact and a LeetCode Knight specializing in multi-agent AI systems, Python, FastAPI, React, C++, and enterprise workflow automation. Feel free to ask about his projects or open-source work!";
+    return "Sparsh Garg is an AI & Systems Engineer and a LeetCode Knight specializing in multi-agent AI systems, Python, FastAPI, React, C++, and enterprise workflow automation. Feel free to ask about his projects or open-source work!";
   };
 
   const handleSend = (textToSend?: string) => {

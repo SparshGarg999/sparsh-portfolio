@@ -76,7 +76,7 @@ export const Index: React.FC = () => {
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 font-mono text-[11px] font-bold mb-4 sm:mb-6 backdrop-blur-md"
           >
             <Sparkles size={11} className="text-rose-400" />
-            <span>AI ENGINEER @ GENPACT · LEETCODE KNIGHT · OPEN SOURCE</span>
+            <span>AI & SYSTEMS ENGINEER · LEETCODE KNIGHT · OPEN SOURCE</span>
           </motion.div>
 
           {/* Main Headline */}
@@ -165,8 +165,8 @@ export const Index: React.FC = () => {
               <Cpu size={12} />
               <span>ENTERPRISE AI</span>
             </div>
-            <p className="text-base sm:text-2xl font-black text-white">Genpact</p>
-            <p className="text-[9px] sm:text-[10px] font-mono text-slate-400">AI Engineer & LLMs</p>
+            <p className="text-base sm:text-2xl font-black text-white">Autonomous</p>
+            <p className="text-[9px] sm:text-[10px] font-mono text-slate-400">Multi-Agent & LLM Systems</p>
           </div>
 
           <div className="pl-1 sm:pl-0 pt-2 md:pt-0 border-t md:border-t-0">
@@ -196,7 +196,7 @@ export const Index: React.FC = () => {
 
             <div className="lg:col-span-8 space-y-6 text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
               <p>
-                I am an AI Engineer at <strong className="text-white font-semibold">Genpact</strong>, architecting autonomous multi-agent AI systems, Large Language Model workflows, and advanced RAG pipelines for enterprise-scale automations.
+                I am an <strong className="text-white font-semibold">AI & Systems Engineer</strong>, architecting autonomous multi-agent AI systems, Large Language Model workflows, and advanced RAG pipelines for enterprise-scale automations.
               </p>
               <p>
                 As a core open-source contributor, I have authored merged PRs in tier-1 repositories including <strong className="text-white">Google TensorFlow</strong> (XLA constant propagation), <strong className="text-white">Facebook React</strong> (DevTools Store Suspense fix), <strong className="text-white">Microsoft VS Code</strong>, and <strong className="text-white">Kubernetes</strong>.

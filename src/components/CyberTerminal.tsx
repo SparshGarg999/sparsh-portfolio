@@ -19,7 +19,7 @@ export const CyberTerminal: React.FC = () => {
       response: (
         <div className="space-y-1 text-cyan-300">
           <p className="text-emerald-400 font-bold">● SYSTEM READY // SPARSH GARG AI CORE v3.5</p>
-          <p>Role: Software Developer @ Genpact | Multi-Agent AI Architect</p>
+          <p>Role: AI & Systems Engineer | Multi-Agent AI Architect</p>
           <p>Status: Merged contributor to TensorFlow, React, VS Code, Kubernetes</p>
           <p className="text-amber-300">Type <span className="text-white font-bold bg-white/10 px-1.5 py-0.5 rounded">help</span> to view available terminal commands.</p>
         </div>
@@ -65,7 +65,7 @@ export const CyberTerminal: React.FC = () => {
         response = (
           <div className="space-y-1.5 text-slate-200">
             <p className="text-rose-400 font-bold">Sparsh Garg</p>
-            <p>Software Developer at <span className="text-cyan-300 font-semibold">Genpact</span>, specializing in ServiceNow & Esker workflow automations with LLMs.</p>
+            <p><span className="text-cyan-300 font-semibold">AI & Systems Engineer</span>, specializing in autonomous workflow automations with LLMs and multi-agent RAG systems.</p>
             <p>Passionate about multi-agent systems, graph execution runtimes, and high-performance full-stack architectures.</p>
             <p>🏆 Smart India Hackathon 2022 National Runner-Up | LeetCode Knight (1900+ Rating)</p>
           </div>

@@ -43,7 +43,7 @@ export const HeaderNav: React.FC = () => {
               SPARSH GARG
               <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
             </span>
-            <span className="text-[9px] font-mono text-slate-400 leading-tight">AI Engineer @ Genpact</span>
+            <span className="text-[9px] font-mono text-slate-400 leading-tight">AI & Systems Engineer</span>
           </div>
         </a>
 

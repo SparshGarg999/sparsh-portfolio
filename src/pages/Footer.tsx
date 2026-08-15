@@ -17,7 +17,7 @@ export const Footer: React.FC = () => {
           </div>
           <div className="text-left">
             <p className="font-bold text-white">Sparsh Garg</p>
-            <p className="text-[10px] text-slate-500">AI Engineer @ Genpact</p>
+            <p className="text-[10px] text-slate-500">AI & Systems Engineer</p>
           </div>
         </div>
 
